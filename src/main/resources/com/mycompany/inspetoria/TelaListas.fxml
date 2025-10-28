@@ -31,7 +31,6 @@
                 <Menu mnemonicParsing="false" text="Editar">
                   <items>
                     <MenuItem fx:id="miMotivosInfracao" mnemonicParsing="false" text="Motivos de infração" />
-                        <MenuItem fx:id="miVeterinarios" mnemonicParsing="false" text="Veterinários" />
                         <MenuItem fx:id="miPreferencias" mnemonicParsing="false" text="Preferências" />
                   </items>
                 </Menu>

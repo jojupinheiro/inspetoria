@@ -107,21 +107,30 @@
                                     <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="300.0">
                                        <children>
                                           <Label styleClass="lblPequeno" text="Nome" />
-                                          <TextField fx:id="txtCategoriaVacinas" />
+                                          <TextField fx:id="txtNome" />
                                           <Label layoutX="30.0" layoutY="109.0" styleClass="lblPequeno" text="CRMV">
                                              <VBox.margin>
                                                 <Insets top="10.0" />
                                              </VBox.margin>
                                           </Label>
-                                          <TextField fx:id="txtCategoriaVacinas1" layoutX="30.0" layoutY="126.0" />
+                                          <TextField fx:id="txtCrmv" layoutX="30.0" layoutY="126.0" />
                                           <Label layoutX="30.0" layoutY="176.0" styleClass="lblPequeno" text="IF">
                                              <VBox.margin>
                                                 <Insets top="10.0" />
                                              </VBox.margin>
                                           </Label>
-                                          <TextField fx:id="txtCategoriaVacinas11" layoutX="30.0" layoutY="193.0" />
+                                          <TextField fx:id="txtIf" layoutX="30.0" layoutY="193.0" />
                                           <HBox alignment="CENTER_RIGHT" prefWidth="200.0" spacing="40.0">
                                              <children>
+                                                <Button fx:id="btnLimpar" layoutX="131.0" layoutY="30.0" mnemonicParsing="false" text="Limpar">
+                                                   <styleClass>
+                                                      <String fx:value="botoesSalvar" />
+                                                      <String fx:value="botoesPadrao" />
+                                                   </styleClass>
+                                                   <HBox.margin>
+                                                      <Insets top="20.0" />
+                                                   </HBox.margin>
+                                                </Button>
                                                 <Button fx:id="btnInserir" mnemonicParsing="false" text="Inserir">
                                                    <HBox.margin>
                                                       <Insets top="20.0" />
@@ -146,7 +155,7 @@
                                     <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="400.0">
                                        <children>
                                           <Label styleClass="lblPequeno" text="Veterinários cadastrados" />
-                                          <ListView fx:id="listViewCategorias" prefHeight="150.0" prefWidth="200.0" />
+                                          <ListView fx:id="listView" prefHeight="150.0" prefWidth="200.0" />
                                        </children>
                                        <padding>
                                           <Insets left="20.0" right="20.0" />

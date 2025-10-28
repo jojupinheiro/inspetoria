@@ -31,7 +31,6 @@ public class TelaListasController implements Initializable {
     @FXML    private MenuItem miCadastrarProdutor;
     @FXML    private MenuItem miPreferencias;
     @FXML    private MenuItem miVerProdutores;
-    @FXML    private MenuItem miVeterinarios;
     @FXML    private VBox vBoxLegendas;
 
     @Override

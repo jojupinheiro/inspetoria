@@ -20,4 +20,19 @@ public class VeterinarioService {
     public List<Veterinario> getAll() {
         return dao.getAll();
     }
+    
+    public boolean excluir(Veterinario veterinario) {
+        return dao.excluir(veterinario);
+    }
+    
+    public boolean salvarOuAtualizar(Veterinario veterinario) {
+        //Tenho que testar se é uma inclusão ou alteração
+        if (veterinario.getId() <= 0) {
+            //É inclusão
+            return dao.inserir(veterinario);
+        } else {
+            //È alteração
+            return dao.editar(veterinario);
+        }
+    }
 }

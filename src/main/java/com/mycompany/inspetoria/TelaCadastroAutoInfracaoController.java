@@ -115,7 +115,6 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
     List<Municipio> listaMunicipios;
     List<Produtor> listaProdutores;
     List<MotivoInfracao> listaMotivos;
-    List<Veterinario> listaVeterinario;
     
     public void setAI (AutoInfracao ai, Map<String, Integer> animaisEnvolvidos){
         this.autoInfracao = ai;
@@ -193,8 +192,7 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
         ObservableList<MotivoInfracao> listaObsMotivos = FXCollections.observableArrayList(listaMotivos);
         sComboBoxMotivo.setItems(listaObsMotivos);
         
-        listaVeterinario = new VeterinarioService().getAll();
-        ObservableList<Veterinario> listaObsVeterinario = FXCollections.observableArrayList(listaVeterinario);
+        ObservableList<Veterinario> listaObsVeterinario = FXCollections.observableArrayList(Statics.listaVeterinarios);
         sComboBoxFEA.setItems(listaObsVeterinario);
         
         ObservableList<String> listaObsRedator = FXCollections.observableArrayList("Anderson Tasca", "Antonio Borges Werner", "Cristiano Silveira", 
