@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="487.0" prefWidth="748.0" styleClass="fundo1" stylesheets="@../../../styles/telalistas.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.inspetoria.TelaCadastroMotivoController">
+   <children>
+      <GridPane prefWidth="702.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="169.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="362.0" minWidth="10.0" prefWidth="283.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="222.0" minWidth="10.0" prefWidth="222.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="125.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="186.0" minHeight="10.0" prefHeight="143.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="118.0" minHeight="10.0" prefHeight="118.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+               <children>
+                  <CheckBox fx:id="ckbAdvertencia" contentDisplay="CENTER" mnemonicParsing="false" text="Prevê advertência?">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </CheckBox>
+               </children>
+            </VBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-width: 2;" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
+               <children>
+                  <VBox prefHeight="266.0" prefWidth="306.0" spacing="3.0">
+                     <children>
+                        <Label text="Enquadramento">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Lei">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <RadioButton fx:id="rbLeiPrincipal" mnemonicParsing="false" text="13.467/2010">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="lei" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <RadioButton fx:id="rbLeiOutra" mnemonicParsing="false" text="Outra:" toggleGroup="$lei">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </RadioButton>
+                              <TextField fx:id="txtLeiOutra" prefHeight="27.0" prefWidth="188.0" />
+                           </children>
+                        </HBox>
+                        <Label layoutX="22.0" layoutY="45.0" text="Decreto">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <RadioButton fx:id="rbDecretoPrincipal" mnemonicParsing="false" text="52.434/2015">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="decreto" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <RadioButton fx:id="rbDecretoOutro" mnemonicParsing="false" text="Outro:" toggleGroup="$decreto">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </RadioButton>
+                              <TextField fx:id="txtDecretoOutro" prefHeight="27.0" prefWidth="188.0" />
+                           </children>
+                        </HBox>
+                        <Label layoutX="20.0" layoutY="123.0" text="Penalidade">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <RadioButton fx:id="rbPenalidadePrincipal" layoutX="20.0" layoutY="143.0" mnemonicParsing="false" text="52.434/2015">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="penalidade" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="163.0">
+                           <children>
+                              <RadioButton fx:id="rbPenalidadeOutra" mnemonicParsing="false" text="Outro:" toggleGroup="$penalidade">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </RadioButton>
+                              <TextField fx:id="txtPenalidadeOutra" prefHeight="27.0" prefWidth="188.0" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label text="Artigo">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="45.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="txtArtigoLei" prefHeight="27.0" prefWidth="188.0" />
+                        <Label layoutX="10.0" layoutY="10.0" text="Artigo">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="37.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="txtArtigoDecreto" prefHeight="27.0" prefWidth="188.0" />
+                        <Label layoutX="10.0" layoutY="27.0" text="Artigo">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="37.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="txtArtigoPenalidade" prefHeight="27.0" prefWidth="188.0" />
+                     </children>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
+               <children>
+                  <Label text="Multa inicial (UPF)">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtMultaInicial" maxWidth="100.0" prefHeight="27.0" prefWidth="100.0" />
+                  <Label layoutX="10.0" layoutY="20.0" text="Adicional por animal (UPF)">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="txtAdicionalAnimal" layoutX="10.0" layoutY="37.0" maxWidth="100.0" prefHeight="27.0" prefWidth="100.0" />
+               </children>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </VBox>
+            <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <children>
+                  <Label text="Descrição da infração" />
+                  <TextArea fx:id="txtDescricao" maxHeight="80.0" maxWidth="240.0" prefHeight="80.0" prefWidth="240.0" wrapText="true" />
+               </children>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </VBox>
+            <VBox alignment="BOTTOM_LEFT" layoutX="25.0" layoutY="364.0" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="3">
+               <children>
+                  <Label text="Resumo da infração" />
+                  <TextArea fx:id="txtResumo" maxHeight="80.0" maxWidth="240.0" prefHeight="80.0" prefWidth="240.0" wrapText="true" />
+               </children>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </VBox>
+            <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+               <children>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="btnSalvar" mnemonicParsing="false" prefWidth="140.0" style="-fx-background-color: #064721; -fx-background-radius: 50;" text="Salvar" textFill="WHITE">
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="5.0" />
+                                 </HBox.margin>
+                                 <graphic>
+                                    <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../images/salvar.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <effect>
+                                    <InnerShadow />
+                                 </effect>
+                              </Button>
+                              <Button fx:id="btnCancelar" mnemonicParsing="false" prefWidth="140.0" style="-fx-background-color: #ED9898; -fx-text-fill: black; -fx-background-radius: 50;" text="Cancelar">
+                                 <HBox.margin>
+                                    <Insets left="5.0" right="10.0" />
+                                 </HBox.margin>
+                                 <graphic>
+                                    <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../images/sair.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <effect>
+                                    <InnerShadow />
+                                 </effect>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <Button fx:id="btnLimpar" alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" style="-fx-background-radius: 50;" text="Limpar">
+                           <graphic>
+                              <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../images/excluir.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </padding>
+      </GridPane>
+   </children>
+</AnchorPane>

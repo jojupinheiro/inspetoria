@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.SearchableComboBox?>
+
+<AnchorPane id="AnchorPane" prefHeight="642.0" prefWidth="966.0" styleClass="fundo1" stylesheets="@../../../styles/telalistas.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.inspetoria.TelaCadastroAutoInfracaoController">
+   <children>
+      <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="125.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label text="Número AI*" />
+                  <TextField fx:id="txtNumeroAI" alignment="CENTER" maxWidth="100.0" prefWidth="100.0" />
+                  <Label fx:id="lblErroNumero" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="15.0" layoutY="40.0" text="Data lavratura*" />
+                  <DatePicker fx:id="dpDtLavratura" prefWidth="250.0" />
+                  <Label fx:id="lblErroDtLavratura" layoutX="15.0" layoutY="61.0" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+               <children>
+                  <Label text="Autuado*" />
+                  <HBox prefWidth="200.0">
+                     <children>
+                        <SearchableComboBox fx:id="sComboBoxAutuado" prefWidth="250.0" />
+                        <Button fx:id="btnInserirProdutor" mnemonicParsing="false">
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../images/plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <tooltip>
+                              <Tooltip text="Inserir produtor" />
+                           </tooltip>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Label fx:id="lblErroAutuado" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="Hora lavratura*" />
+                  <HBox prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="txtHora" alignment="CENTER" maxWidth="100.0" promptText="00:00" style="-fx-alignment: CENTER; -fx-background-radius: 5;" />
+                        <Button fx:id="btnAtualizarHorario" mnemonicParsing="false" styleClass="botoesInserir">
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../images/refresh.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Atualiza para o horário atual" />
+                           </tooltip>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Label fx:id="lblErroHoraLavratura" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+               <GridPane.margin>
+                  <Insets left="5.0" right="5.0" />
+               </GridPane.margin>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
+               <children>
+                  <Label text="Nº processo" />
+                  <TextField fx:id="txtProcesso" alignment="CENTER" prefWidth="180.0" />
+               </children>
+               <GridPane.margin>
+                  <Insets left="5.0" right="5.0" />
+               </GridPane.margin>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
+               <children>
+                  <Label text="Data de Ciência" />
+                  <DatePicker fx:id="dpDtCiencia" prefWidth="250.0" />
+                  <Label layoutX="10.0" layoutY="51.0" text="Data Limite Defesa">
+                     <padding>
+                        <Insets top="15.0" />
+                     </padding>
+                  </Label>
+                  <DatePicker fx:id="dpDtLimiteDefesa" editable="false" focusTraversable="false" layoutX="10.0" layoutY="68.0" prefWidth="250.0" />
+               </children>
+               <GridPane.margin>
+                  <Insets left="5.0" right="5.0" />
+               </GridPane.margin>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <Label text="Motivo*" />
+                  <HBox prefWidth="200.0">
+                     <children>
+                        <SearchableComboBox fx:id="sComboBoxMotivo" prefWidth="250.0" />
+                        <Button fx:id="btnInserirMotivo" mnemonicParsing="false" styleClass="botoesInserir">
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../images/plus.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Insere um novo motivo de infração" />
+                           </tooltip>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Label fx:id="lblErroMotivo" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+               <GridPane.margin>
+                  <Insets left="5.0" right="5.0" />
+               </GridPane.margin>
+            </VBox>
+            <VBox style="-fx-border-color: black;" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="3">
+               <children>
+                  <HBox alignment="TOP_CENTER">
+                     <children>
+                        <Label text="Animais">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                        <VBox spacing="13.0">
+                           <children>
+                              <Label text="Bovinos">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="10.0" text="Bubalinos">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="27.0" text="Ovinos">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="44.0" text="Caprinos">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="61.0" text="Suínos">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="61.0" text="Equídeos">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="61.0" text="Peixes (nº total)">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="78.0" text="Aves (nº total)">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="129.0" text="Abelha (nº caixa)">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="129.0" text="Outra, qual?">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets top="5.0" />
+                           </padding>
+                        </VBox>
+                        <VBox spacing="3.0">
+                           <children>
+                              <TextField fx:id="txtBovinos" prefWidth="60.0" />
+                              <TextField fx:id="txtBubalinos" layoutX="10.0" layoutY="10.0" prefWidth="60.0" />
+                              <TextField fx:id="txtOvinos" layoutX="10.0" layoutY="10.0" prefWidth="60.0" />
+                              <TextField fx:id="txtCaprinos" layoutX="10.0" layoutY="35.0" prefWidth="60.0" />
+                              <TextField fx:id="txtSuinos" layoutX="10.0" layoutY="10.0" prefWidth="60.0" />
+                              <TextField fx:id="txtEquideos" layoutX="10.0" layoutY="35.0" prefWidth="60.0" />
+                              <TextField fx:id="txtPeixes" layoutX="10.0" layoutY="60.0" prefWidth="60.0" />
+                              <TextField fx:id="txtAves" layoutX="10.0" layoutY="85.0" prefWidth="60.0" />
+                              <TextField fx:id="txtAbelhas" layoutX="10.0" layoutY="160.0" prefWidth="60.0" />
+                              <TextField fx:id="txtOutra" layoutX="10.0" layoutY="185.0" prefWidth="60.0" />
+                           </children>
+                        </VBox>
+                        <VBox layoutX="10.0" layoutY="10.0" spacing="13.0">
+                           <children>
+                              <Label>
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="10.0">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblLoteOvinos" layoutX="10.0" layoutY="27.0">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblLoteCaprinos" layoutX="10.0" layoutY="44.0">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblLoteSuinos" layoutX="10.0" layoutY="61.0">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="10.0" layoutY="61.0">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblLotePeixes" layoutX="10.0" layoutY="61.0">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblLoteAves" layoutX="10.0" layoutY="78.0">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblLoteAbelha" layoutX="10.0" layoutY="129.0">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets top="5.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="31.0" layoutY="21.0" prefHeight="35.0">
+                     <children>
+                        <Label fx:id="lblMulta" textFill="RED">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets left="20.0" top="10.0" />
+               </padding>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="3">
+               <children>
+                  <Label text="Redator" />
+                  <SearchableComboBox fx:id="sComboBoxRedator" prefWidth="250.0" />
+                  <Label layoutX="15.0" layoutY="50.0" text="FEA que assinou">
+                     <padding>
+                        <Insets top="15.0" />
+                     </padding>
+                  </Label>
+                  <SearchableComboBox fx:id="sComboBoxFEA" layoutX="15.0" layoutY="59.0" prefWidth="250.0" />
+               </children>
+               <padding>
+                  <Insets left="5.0" right="15.0" />
+               </padding>
+            </VBox>
+            <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <children>
+                  <Label text="Observação" />
+                  <TextArea fx:id="txtObservacao" maxHeight="80.0" maxWidth="240.0" prefHeight="80.0" prefWidth="240.0" wrapText="true" />
+               </children>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="btnSalvar" mnemonicParsing="false" prefWidth="140.0" style="-fx-background-color: #064721; -fx-background-radius: 50;" text="Salvar" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets left="10.0" right="5.0" />
+                           </HBox.margin>
+                           <graphic>
+                              <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../images/salvar.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
+                        <Button fx:id="btnCancelar" mnemonicParsing="false" prefWidth="140.0" style="-fx-background-color: #ED9898; -fx-text-fill: black; -fx-background-radius: 50;" text="Cancelar">
+                           <HBox.margin>
+                              <Insets left="5.0" right="10.0" />
+                           </HBox.margin>
+                           <graphic>
+                              <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../images/sair.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Button fx:id="btnLimpar" alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" style="-fx-background-radius: 50;" text="Limpar">
+                     <graphic>
+                        <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/excluir.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <InnerShadow />
+                     </effect>
+                  </Button>
+               </children>
+            </VBox>
+            <VBox alignment="BOTTOM_LEFT" layoutX="25.0" layoutY="271.0" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="4">
+               <children>
+                  <Label text="Histórico" />
+                  <TextArea fx:id="txtHistorico" maxHeight="80.0" maxWidth="240.0" prefHeight="80.0" prefWidth="240.0" wrapText="true" />
+               </children>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <CheckBox fx:id="ckbReincidente" contentDisplay="CENTER" mnemonicParsing="false" text="Reincidente?">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </CheckBox>
+                  <CheckBox fx:id="ckbAdvertencia" mnemonicParsing="false" text="Advertência?">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </CheckBox>
+                  <CheckBox fx:id="ckbDesconto" contentDisplay="CENTER" mnemonicParsing="false" text="Desconto?">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </CheckBox>
+               </children>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+               <GridPane.margin>
+                  <Insets left="30.0" />
+               </GridPane.margin>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+               <children>
+                  <Label text="Município da autuação*" />
+                  <HBox prefWidth="200.0">
+                     <children>
+                        <SearchableComboBox fx:id="sComboBoxMunicipio" prefWidth="250.0" />
+                        <Button fx:id="btnInserirMunicipio" mnemonicParsing="false" styleClass="botoesInserir">
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../images/plus.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Insere um novo município" />
+                           </tooltip>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Label fx:id="lblErroMunicipio" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets right="20.0" />
+               </padding>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <children>
+                  <Label text="Enquadramento adicional" />
+                  <TextField fx:id="txtEnquadramentoAdicional" alignment="CENTER" prefWidth="180.0" />
+               </children>
+               <padding>
+                  <Insets left="5.0" right="15.0" />
+               </padding>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </padding>
+      </GridPane>
+   </children>
+</AnchorPane>

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.SearchableComboBox?>
+
+<AnchorPane id="AnchorPane" prefHeight="640.0" prefWidth="815.0" styleClass="fundo1" stylesheets="@../../../styles/telalistas.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.inspetoria.TelaCadastroProdutorController">
+   <children>
+      <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="125.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+               <children>
+                  <Label text="Nome*" />
+                  <TextField fx:id="txtNome" alignment="CENTER" maxWidth="300.0" prefWidth="250.0" />
+                  <Label fx:id="lblErroNome" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="140.0" spacing="5.0">
+                           <children>
+                              <RadioButton fx:id="rbPF" mnemonicParsing="false" text="Pessoa Física">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="pessoa" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton fx:id="rbPJ" mnemonicParsing="false" text="Pessoa Jurídica" toggleGroup="$pessoa" />
+                           </children>
+                        </VBox>
+                        <Label fx:id="lblErroTipoPessoa" textFill="RED">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets left="5.0" right="5.0" />
+               </GridPane.margin>
+               <children>
+                  <Label text="CPF ou CNPJ*" />
+                  <TextField fx:id="txtCpf" alignment="CENTER" maxWidth="300.0" prefWidth="250.0">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label fx:id="lblErroCPF" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="41.0" text="RG" />
+                  <TextField fx:id="txtRg" alignment="CENTER" layoutX="10.0" layoutY="58.0" maxWidth="300.0" prefWidth="250.0">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </TextField>
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" style="-fx-border-width: 0 0 2 2; -fx-border-color: black;" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets bottom="10.0" />
+               </GridPane.margin>
+               <padding>
+                  <Insets left="15.0" top="20.0" />
+               </padding>
+               <children>
+                  <Label text="Logradouro" />
+                  <TextField fx:id="txtLogradouro" alignment="CENTER" maxWidth="300.0" prefWidth="250.0" />
+               </children>
+            </VBox>
+            <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="5.0" style="-fx-border-width: 2 2 0 0; -fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets top="10.0" />
+               </GridPane.margin>
+               <children>
+                  <Label text="Número" />
+                  <TextField fx:id="txtNumero" alignment="CENTER" maxWidth="150.0" prefWidth="150.0" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="5.0" style="-fx-border-width: 2; -fx-border-color: black;" GridPane.rowIndex="3" GridPane.rowSpan="2">
+               <padding>
+                  <Insets left="15.0" right="15.0" />
+               </padding>
+               <children>
+                  <Label layoutX="25.0" layoutY="45.0" text="Contato">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="Telefone 1" />
+                  <TextField fx:id="txtTelefone1" alignment="CENTER" maxWidth="300.0" prefWidth="250.0" />
+                  <Label layoutX="25.0" layoutY="104.0" text="Telefone 2">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="txtTelefone2" alignment="CENTER" layoutX="25.0" layoutY="121.0" maxWidth="300.0" prefWidth="250.0" />
+                  <Label layoutX="25.0" layoutY="125.0" text="E-mail">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="txtEmail" alignment="CENTER" layoutX="25.0" layoutY="142.0" maxWidth="300.0" prefWidth="250.0" />
+               </children>
+               <GridPane.margin>
+                  <Insets right="5.0" top="10.0" />
+               </GridPane.margin>
+            </VBox>
+            <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+               <children>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="btnSalvar" mnemonicParsing="false" prefWidth="140.0" style="-fx-background-color: #064721; -fx-background-radius: 50;" text="Salvar" textFill="WHITE">
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="5.0" />
+                                 </HBox.margin>
+                                 <graphic>
+                                    <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../images/salvar.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <effect>
+                                    <InnerShadow />
+                                 </effect>
+                              </Button>
+                              <Button fx:id="btnCancelar" mnemonicParsing="false" prefWidth="140.0" style="-fx-background-color: #ED9898; -fx-text-fill: black; -fx-background-radius: 50;" text="Cancelar">
+                                 <HBox.margin>
+                                    <Insets left="5.0" right="10.0" />
+                                 </HBox.margin>
+                                 <graphic>
+                                    <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../images/sair.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <effect>
+                                    <InnerShadow />
+                                 </effect>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <Button fx:id="btnLimpar" alignment="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" style="-fx-background-radius: 50;" text="Limpar">
+                           <graphic>
+                              <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../images/excluir.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <effect>
+                              <InnerShadow />
+                           </effect>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" style="-fx-border-width: 0 2 2 0; -fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <padding>
+                  <Insets left="5.0" right="15.0" top="20.0" />
+               </padding>
+               <GridPane.margin>
+                  <Insets bottom="10.0" />
+               </GridPane.margin>
+               <children>
+                  <Label text="Município*" />
+                  <SearchableComboBox fx:id="sComboBoxMunicipio" prefWidth="250.0" />
+                  <Label fx:id="lblErroMunicipio" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="5.0" style="-fx-border-width: 2 0 0 2; -fx-border-color: black;" GridPane.rowIndex="1">
+               <padding>
+                  <Insets left="15.0" right="20.0" />
+               </padding>
+               <children>
+                  <Label layoutX="25.0" layoutY="73.0" text="Endereço">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="Tipo de logradouro" />
+                  <SearchableComboBox fx:id="sComboBoxTipoLogradouro" maxWidth="120.0" prefWidth="120.0" />
+               </children>
+               <GridPane.margin>
+                  <Insets top="10.0" />
+               </GridPane.margin>
+            </VBox>
+            <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <children>
+                  <Label text="Observação" />
+                  <TextArea fx:id="txtObservacao" maxHeight="80.0" maxWidth="260.0" prefHeight="80.0" prefWidth="250.0" wrapText="true" />
+               </children>
+               <padding>
+                  <Insets left="15.0" />
+               </padding>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </padding>
+      </GridPane>
+   </children>
+</AnchorPane>
