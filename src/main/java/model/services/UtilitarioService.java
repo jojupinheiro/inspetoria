@@ -21,6 +21,14 @@ public class UtilitarioService {
         return dao.getMunicipios();
     }
     
+    public Municipio getMunicipioPadrao(){
+        return dao.getMunicipioPadrao();
+    }
+    
+    public boolean editarMunicipioPadrao(Municipio municipio){
+        return dao.editarMunicipioPadrao(municipio);
+    }
+    
     public boolean inserirMunicipio(Municipio municipio) {
         return dao.inserirMunicipio(municipio);
     }

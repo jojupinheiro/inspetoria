@@ -93,6 +93,10 @@ public class AutoInfracao {
     public int getNumeroAi() {
         return numeroAi;
     }
+    
+    public String getNumeroAiCompleto() {
+        return municipioLavratura.getCodIbge() + " / " + numeroAi;
+    }
 
     public void setNumeroAi(int numeroAi) {
         this.numeroAi = numeroAi;

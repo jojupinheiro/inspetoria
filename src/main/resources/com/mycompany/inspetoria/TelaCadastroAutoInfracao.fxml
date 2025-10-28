@@ -61,12 +61,12 @@
                   <Insets />
                </GridPane.margin>
             </VBox>
-            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.columnSpan="2">
                <children>
                   <Label text="Autuado*" />
                   <HBox prefWidth="200.0">
                      <children>
-                        <SearchableComboBox fx:id="sComboBoxAutuado" prefWidth="250.0" />
+                        <SearchableComboBox fx:id="sComboBoxAutuado" prefWidth="450.0" />
                         <Button fx:id="btnInserirProdutor" mnemonicParsing="false">
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
@@ -82,6 +82,21 @@
                               <Tooltip text="Inserir produtor" />
                            </tooltip>
                         </Button>
+                        <Button fx:id="btnEditarProdutor" layoutX="260.0" layoutY="10.0" mnemonicParsing="false">
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../images/pessoa.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <tooltip>
+                              <Tooltip text="Editar produtor" />
+                           </tooltip>
+                        </Button>
                      </children>
                   </HBox>
                   <Label fx:id="lblErroAutuado" textFill="RED">
@@ -89,28 +104,43 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label text="Hora lavratura*" />
-                  <HBox prefWidth="200.0">
+                  <HBox prefHeight="100.0" prefWidth="200.0" />
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="40.0">
                      <children>
-                        <TextField fx:id="txtHora" alignment="CENTER" maxWidth="100.0" promptText="00:00" style="-fx-alignment: CENTER; -fx-background-radius: 5;" />
-                        <Button fx:id="btnAtualizarHorario" mnemonicParsing="false" styleClass="botoesInserir">
-                           <graphic>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../images/refresh.png" />
-                                 </image>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </ImageView>
-                           </graphic>
-                           <tooltip>
-                              <Tooltip text="Atualiza para o horário atual" />
-                           </tooltip>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label text="Hora lavratura*" />
+                              <HBox prefWidth="200.0">
+                                 <children>
+                                    <TextField fx:id="txtHora" alignment="CENTER" maxWidth="100.0" promptText="00:00" style="-fx-alignment: CENTER; -fx-background-radius: 5;" />
+                                    <Button fx:id="btnAtualizarHorario" mnemonicParsing="false" styleClass="botoesInserir">
+                                       <graphic>
+                                          <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../images/refresh.png" />
+                                             </image>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </ImageView>
+                                       </graphic>
+                                       <tooltip>
+                                          <Tooltip text="Atualiza para o horário atual" />
+                                       </tooltip>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="180.0">
+                           <children>
+                              <Label text="Nº processo" />
+                              <TextField fx:id="txtProcesso" alignment="CENTER" prefWidth="180.0" />
+                           </children>
+                        </VBox>
                      </children>
                   </HBox>
                   <Label fx:id="lblErroHoraLavratura" textFill="RED">
@@ -118,15 +148,6 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-               </children>
-               <GridPane.margin>
-                  <Insets left="5.0" right="5.0" />
-               </GridPane.margin>
-            </VBox>
-            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
-               <children>
-                  <Label text="Nº processo" />
-                  <TextField fx:id="txtProcesso" alignment="CENTER" prefWidth="180.0" />
                </children>
                <GridPane.margin>
                   <Insets left="5.0" right="5.0" />

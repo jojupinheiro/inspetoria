@@ -3,8 +3,6 @@ package com.mycompany.inspetoria;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,7 +11,6 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import model.classes.AutoInfracao;
 import model.classes.Produtor;
-import model.services.ProdutorService;
 
 /**
  *
@@ -105,6 +102,65 @@ public class Telas {
             e.printStackTrace();
         }
     }
+    
+    public static void inserirMotivo(Window janela){
+        try {
+            URL url = Telas.class.getResource("TelaCadastroMotivo.fxml");
+            FXMLLoader loader = new FXMLLoader(url);
+            Parent parent = loader.load();
+            Scene scene = new Scene(parent);
+            Stage stage = new Stage();
+            stage.setTitle("Cadastro de Motivo de Infração");
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.setMinWidth(750);
+            stage.setMinHeight(480);
+            stage.initOwner(janela);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public static void inserirMunicipio(Window janela){
+        try {
+            URL url = Telas.class.getResource("TelaInserirMunicipio.fxml");
+            FXMLLoader loader = new FXMLLoader(url);
+            Parent parent = loader.load();
+            Scene scene = new Scene(parent);
+            Stage stage = new Stage();
+            stage.setTitle("Cadastro de Município");
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.setMinWidth(700);
+            stage.setMinHeight(200);
+            stage.initOwner(janela);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static void configuracoes(Window janela){
+        try {
+            URL url = Telas.class.getResource("TelaConfiguracoes.fxml");
+            FXMLLoader loader = new FXMLLoader(url);
+            Parent parent = loader.load();
+            Scene scene = new Scene(parent);
+            Stage stage = new Stage();
+            stage.setTitle("Preferências");
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.setMinWidth(750);
+            stage.setMinHeight(465);
+            stage.initOwner(janela);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     
 }

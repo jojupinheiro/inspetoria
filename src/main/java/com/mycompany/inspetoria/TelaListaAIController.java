@@ -52,6 +52,7 @@ import utils.Utils;
  */
 public class TelaListaAIController implements Initializable {
 
+    @FXML    private Button btnAtualizar;
     @FXML    private Button btnFiltrar;
     @FXML    private Button btnLimpar;
     @FXML    private Button btnNovo;
@@ -81,7 +82,7 @@ public class TelaListaAIController implements Initializable {
     @FXML    private TableColumn<AutoInfracao, String> tCMotivo;
     @FXML    private TableColumn<AutoInfracao, String> tCMunicipioLavratura;
     @FXML    private TableColumn<AutoInfracao, String> tCMunicipioAutuado;
-    @FXML    private TableColumn<AutoInfracao, Integer> tCNumero;
+    @FXML    private TableColumn<AutoInfracao, String> tCNumero;
     @FXML    private TableColumn<AutoInfracao, String> tCObs;
     @FXML    private TableColumn<AutoInfracao, String> tCProcesso;
     @FXML    private TableColumn<AutoInfracao, String> tCRedator;
@@ -110,7 +111,7 @@ public class TelaListaAIController implements Initializable {
         tCMotivo.setCellValueFactory(new PropertyValueFactory<>("resumoMotivo"));
         tCMunicipioAutuado.setCellValueFactory(new PropertyValueFactory<>("nomeMunicipioAutuado"));
         tCMunicipioLavratura.setCellValueFactory(new PropertyValueFactory<>("nomeMunicipio"));
-        tCNumero.setCellValueFactory(new PropertyValueFactory<>("numeroAi"));
+        tCNumero.setCellValueFactory(new PropertyValueFactory<>("numeroAiCompleto"));
         tCObs.setCellValueFactory(new PropertyValueFactory<>("observacoes"));
         tCProcesso.setCellValueFactory(new PropertyValueFactory<>("processo"));
         tCRedator.setCellValueFactory(new PropertyValueFactory<>("redator"));
@@ -313,6 +314,7 @@ public class TelaListaAIController implements Initializable {
         ckbRedator.selectedProperty().addListener((t, ov, nv) -> tCRedator.setVisible(nv));
         ckbReincidente.selectedProperty().addListener((t, ov, nv) -> tCReincidente.setVisible(nv));
         
+        btnAtualizar.setOnAction((t) -> atualizaTabela(filtroSelecionado, txtFiltro));
         
         atualizaTabela(filtroSelecionado, txtFiltro);
     }    

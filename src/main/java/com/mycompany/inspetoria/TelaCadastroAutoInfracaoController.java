@@ -54,6 +54,7 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
 
     @FXML    private Button btnAtualizarHorario;
     @FXML    private Button btnCancelar;
+    @FXML    private Button btnEditarProdutor;
     @FXML    private Button btnInserirMotivo;
     @FXML    private Button btnInserirMunicipio;
     @FXML    private Button btnInserirProdutor;
@@ -62,7 +63,6 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
     @FXML    private CheckBox ckbAdvertencia;
     @FXML    private CheckBox ckbDesconto;
     @FXML    private CheckBox ckbReincidente;
-    @FXML    private ComboBox cmbFiltro;
     @FXML    private DatePicker dpDtCiencia;
     @FXML    private DatePicker dpDtLavratura;
     @FXML    private DatePicker dpDtLimiteDefesa;
@@ -88,7 +88,6 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
     @FXML    private TextField txtAves;
     @FXML    private TextField txtBovinos;
     @FXML    private TextField txtBubalinos;
-    @FXML    private TextField txtBusca;
     @FXML    private TextField txtCaprinos;
     @FXML    private TextField txtEnquadramentoAdicional;
     @FXML    private TextField txtEquideos;
@@ -162,6 +161,7 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
         MascarasFX.mascaraNumeroInteiro(txtOutra);
         MascarasFX.mascaraNumeroInteiro(txtNumeroAI);
         sComboBoxMotivo.setDisable(true);
+        btnEditarProdutor.setVisible(false);
 //        atualizarHorario();
         Utils.atualizarHorario(txtHora);
         dpDtLavratura.setValue(LocalDate.now());
@@ -175,10 +175,18 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
         sComboBoxAutuado.setItems(listaObsProdutor);
         
         sComboBoxAutuado.setOnAction((t) -> { 
-            if (sComboBoxAutuado != null){
+            if (sComboBoxAutuado.getValue() != null){
                 sComboBoxMotivo.setDisable(false);
+                btnEditarProdutor.setVisible(true);
                 verificarReincidencia();
             }
+        });
+        
+        btnEditarProdutor.setOnAction((t) -> {
+            Telas.editarProdutor(sComboBoxAutuado.getValue(), btnCancelar.getScene().getWindow());
+            listaProdutores = new ProdutorService().getNomesECpfs(0, "");
+            ObservableList<Produtor> listaObs = FXCollections.observableArrayList(listaProdutores);
+            sComboBoxAutuado.setItems(listaObs);
         });
         
         listaMotivos = new MotivoInfracaoService().getAll();
@@ -193,7 +201,8 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
                 "Igo Antonio Lobler", "João Juliano Pinheiro", "Rebeca Dopke");
         sComboBoxRedator.setItems(listaObsRedator);
         
-        txtNumeroAI.setText(String.valueOf(new AutoInfracaoService().getProximoNumeroAI()));
+        sComboBoxMunicipio.setValue(Statics.municipioPadrao);
+        txtNumeroAI.setText(String.valueOf(new AutoInfracaoService().getProximoNumeroAI(sComboBoxMunicipio.getValue().getId())));
         
         txtOvinos.setOnAction((t) -> lblLoteOvinos.setText(calcularLote("ovinos", txtOvinos.getText())  + " (lote de 5)" ) );
         txtCaprinos.setOnAction((t) -> lblLoteCaprinos.setText(calcularLote("caprinos", txtCaprinos.getText()) + " (lote de 5)"));
@@ -321,14 +330,14 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
             }
         });
         
-        btnLimpar.setOnAction((t) -> {
-            cmbFiltro.getSelectionModel().select(-1);
-            txtBusca.setText("");
-
-        });
-        
         ckbAdvertencia.setOnAction((t) -> setValorMulta());
-        dpDtCiencia.setOnAction((t) -> dpDtLimiteDefesa.setValue(dpDtCiencia.getValue().plusDays(15)));
+        dpDtCiencia.setOnAction((t) -> {
+            if(dpDtCiencia.getValue() != null){
+                dpDtLimiteDefesa.setValue(dpDtCiencia.getValue().plusDays(15));
+            }else{
+                dpDtLimiteDefesa.setValue(null);
+            }
+        });
         btnAtualizarHorario.setOnAction((t) -> Utils.atualizarHorario(txtHora));
         btnInserirProdutor.setOnAction((t) -> inserirProdutor(btnSalvar.getScene().getWindow()));
         btnCancelar.setOnAction((t) -> ((Stage) btnCancelar.getScene().getWindow()).close());
@@ -347,12 +356,12 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
     
     private void limparCampos(){
         animaisEnvolvidos.clear();
-        txtNumeroAI.setText(String.valueOf(new AutoInfracaoService().getProximoNumeroAI()));
         dpDtLavratura.setValue(LocalDate.now());
         txtHora.setText("");
         sComboBoxAutuado.setValue(null);
         txtProcesso.setText("");
-        sComboBoxMunicipio.setValue(null);
+        sComboBoxMunicipio.setValue(Statics.municipioPadrao);
+        txtNumeroAI.setText(String.valueOf(new AutoInfracaoService().getProximoNumeroAI(sComboBoxMunicipio.getValue().getId())));
         sComboBoxMotivo.setValue(null);
         dpDtCiencia.setValue(null);
         dpDtLimiteDefesa.setValue(null);
@@ -382,51 +391,17 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
     }
     
     private void inserirMunicipio(Window janela){
-        try {
-            URL url = getClass().getResource("TelaInserirMunicipio.fxml");
-            FXMLLoader loader = new FXMLLoader(url);
-            Parent parent = loader.load();
-            Scene scene = new Scene(parent);
-            Stage stage = new Stage();
-            stage.setTitle("Cadastro de Município");
-            stage.setScene(scene);
-            stage.centerOnScreen();
-            stage.setMinWidth(700);
-            stage.setMinHeight(200);
-            stage.initOwner(janela);
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.showAndWait();
-            
-            listaMunicipios = new UtilitarioService().getMunicipios();
-            ObservableList<Municipio> listaObsMunicipios = FXCollections.observableArrayList(listaMunicipios);
-            sComboBoxMunicipio.setItems(listaObsMunicipios);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Telas.inserirMunicipio(janela);
+        listaMunicipios = new UtilitarioService().getMunicipios();
+        ObservableList<Municipio> listaObsMunicipios = FXCollections.observableArrayList(listaMunicipios);
+        sComboBoxMunicipio.setItems(listaObsMunicipios);
     }
     
-    private void inserirMotivo(Window janela){
-        try {
-            URL url = getClass().getResource("TelaCadastroMotivo.fxml");
-            FXMLLoader loader = new FXMLLoader(url);
-            Parent parent = loader.load();
-            Scene scene = new Scene(parent);
-            Stage stage = new Stage();
-            stage.setTitle("Cadastro de Motivo de Infração");
-            stage.setScene(scene);
-            stage.centerOnScreen();
-            stage.setMinWidth(750);
-            stage.setMinHeight(480);
-            stage.initOwner(janela);
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.showAndWait();
-            
-            listaMotivos = new MotivoInfracaoService().getAll();
-            ObservableList<MotivoInfracao> listaObsMotivos = FXCollections.observableArrayList(listaMotivos);
-            sComboBoxMotivo.setItems(listaObsMotivos);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void inserirMotivo(Window janela) {
+        Telas.inserirMotivo(janela);
+        listaMotivos = new MotivoInfracaoService().getAll();
+        ObservableList<MotivoInfracao> listaObsMotivos = FXCollections.observableArrayList(listaMotivos);
+        sComboBoxMotivo.setItems(listaObsMotivos);
     }
     
     private void salvarAI(){

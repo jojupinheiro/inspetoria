@@ -36,6 +36,7 @@ import utils.Utils;
  */
 public class TelaListaProdutoresController implements Initializable {
 
+    @FXML    private Button btnAtualizar;
     @FXML    private Button btnFiltrar;
     @FXML    private Button btnLimpar;
     @FXML    private Button btnNovo;
@@ -88,6 +89,11 @@ public class TelaListaProdutoresController implements Initializable {
         tCRg.setCellValueFactory(new PropertyValueFactory<>("Rg"));
         tCTelefone1.setCellValueFactory(new PropertyValueFactory<>("Telefone1"));
         tCTelefone2.setCellValueFactory(new PropertyValueFactory<>("Telefone2"));
+        
+        ckbEmail.setSelected(true);
+        ckbEndereco.setSelected(true);
+        ckbRg.setSelected(true);
+        ckbTelefone2.setSelected(true);
         
         tCNome.setCellFactory(col -> new TableCell<Produtor, String>() {
             // Cria um ImageView para o ícone
@@ -154,7 +160,7 @@ public class TelaListaProdutoresController implements Initializable {
         
         btnNovo.setOnAction((t) -> Telas.cadastrarProdutor(btnNovo.getScene().getWindow()));
         
-        ObservableList<String> listaObs = FXCollections.observableArrayList("CPF/CNPJ", "Município", "Nome", "Pessoa física", "Pessoa Jurídica");
+        ObservableList<String> listaObs = FXCollections.observableArrayList("CPF/CNPJ", "Município", "Nome", "Pessoa física", "Pessoa Jurídica", "Possui observação");
         cmbFiltro.setItems(listaObs);
         
         ckbEmail.selectedProperty().addListener((t, ov, nv) -> tCEmail.setVisible(nv));
@@ -170,6 +176,8 @@ public class TelaListaProdutoresController implements Initializable {
                 atualizaTabela();
             }
         });
+        
+        btnAtualizar.setOnAction((t) -> carregarDadosEConfigurarFiltros());
         
         carregarDadosEConfigurarFiltros();
     }    
@@ -229,6 +237,9 @@ public class TelaListaProdutoresController implements Initializable {
             }
             if (filtroSelecionado.equals("Pessoa Jurídica")) {
                 return produtor.isTipoProdutor();
+            }
+            if (filtroSelecionado.equals("Possui observação")){
+                return produtor.getObservacao() != null && !produtor.getObservacao().equals("");
             }
 
             // Caso 3: Filtros que USAM o texto de busca

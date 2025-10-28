@@ -9,6 +9,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -70,6 +71,21 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                  </Button>
+                  <Button fx:id="btnAtualizar" layoutX="902.0" layoutY="30.0" maxHeight="35.0" maxWidth="35.0" minHeight="30.0" minWidth="35.0" mnemonicParsing="false" onAction="#onLimparFiltros" prefHeight="30.0" prefWidth="35.0" style="-fx-background-color: WHITE; -fx-text-fill: BLACK; -fx-background-radius: 100;" textAlignment="RIGHT">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/refresh.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <tooltip>
+                        <Tooltip text="Atualizar a tabela" />
+                     </tooltip>
                   </Button>
                </children>
                <padding>

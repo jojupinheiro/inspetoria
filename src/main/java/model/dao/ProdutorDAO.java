@@ -341,12 +341,10 @@ public class ProdutorDAO {
                 stmt.setString(2, contato.getTelefone2());
                 stmt.setString(3, contato.getEmail());
                 stmt.executeUpdate();
-                System.out.println(contato);
 
                 rs = stmt.getGeneratedKeys();
                 if (rs.next()) {
                     newContatoId = rs.getInt(1); // Pega o pk_id_contato gerado
-                    System.out.println("Inseriu o contato. ID:   " + newContatoId);
                 }
                 DB.closeResultSet(rs);
                 DB.closeStatement(stmt);

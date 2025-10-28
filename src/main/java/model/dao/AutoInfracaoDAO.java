@@ -75,7 +75,7 @@ public class AutoInfracaoDAO {
 
             //preparando a String sql para execução
             sql += filtroSql;
-            sql += "ORDER BY numero_ai";
+            sql += "ORDER BY numero_ai DESC";
             stmt = con.prepareStatement(sql);
             if (txtFiltro == null) {
                 txtFiltro = "";
@@ -155,13 +155,14 @@ public class AutoInfracaoDAO {
         return list;
     }
 
-    public int getProximoNumeroAI() {
+    public int getProximoNumeroAI(int idMunicipio) {
         PreparedStatement stmt = null;
         ResultSet res = null;
         int proximoNumero = 0;
         try {
-            String sql = "SELECT MAX(numero_ai) AS valor_maximo FROM ai;";
+            String sql = "SELECT MAX(numero_ai) AS valor_maximo FROM ai WHERE fk_municipio_lavratura_ai = ?;";
             stmt = con.prepareStatement(sql);
+            stmt.setInt(1, idMunicipio);
             res = stmt.executeQuery();
 
             while (res.next()) {
@@ -217,7 +218,7 @@ public class AutoInfracaoDAO {
 
                 stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-                int proximoNumero = getProximoNumeroAI();
+                int proximoNumero = getProximoNumeroAI(ai.getMunicipioLavratura().getId());
 
                 dataLavratura = ai.getDataLavratura();
                 horaLavratura = ai.getHoraLocalTime();

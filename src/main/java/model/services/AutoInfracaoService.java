@@ -24,8 +24,8 @@ public class AutoInfracaoService {
         return dao.getAll(filtroSelecionado, txtFiltro);
     }
     
-    public int getProximoNumeroAI(){
-        return dao.getProximoNumeroAI();
+    public int getProximoNumeroAI(int idMunicipio){
+        return dao.getProximoNumeroAI(idMunicipio);
     }
 
     public boolean salvarOuAtualizar(AutoInfracao ai, Map<String, Integer> animaisEnvolvidos) {

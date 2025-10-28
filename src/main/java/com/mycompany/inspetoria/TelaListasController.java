@@ -29,6 +29,7 @@ public class TelaListasController implements Initializable {
     @FXML    private MenuItem miAutoInfracao;
     @FXML    private MenuItem miMotivosInfracao;
     @FXML    private MenuItem miCadastrarProdutor;
+    @FXML    private MenuItem miPreferencias;
     @FXML    private MenuItem miVerProdutores;
     @FXML    private MenuItem miVeterinarios;
     @FXML    private VBox vBoxLegendas;
@@ -37,7 +38,6 @@ public class TelaListasController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         vBoxLegendas.setVisible(false);
         
-
         btnAutosInfracao.setOnAction((t) -> {
             try {
                 AnchorPane view = FXMLLoader.load(getClass().getResource("TelaListaAI.fxml"));
@@ -58,6 +58,7 @@ public class TelaListasController implements Initializable {
             vBoxLegendas.setVisible(false);
         });
         
+        miPreferencias.setOnAction((t) -> Telas.configuracoes(btnAutosInfracao.getScene().getWindow()));
         miAutoInfracao.setOnAction((t) -> Telas.cadastrarAutoInfracao(btnAutosInfracao.getScene().getWindow()));
         miCadastrarProdutor.setOnAction((t) -> Telas.cadastrarProdutor(btnAutosInfracao.getScene().getWindow()));
     }    

@@ -51,6 +51,46 @@ public class UtilitarioDAO {
         return list;
     }
     
+    public Municipio getMunicipioPadrao() {
+        Municipio municipio = null;
+        ResultSet res = null;
+        PreparedStatement stmt = null;
+        try {
+            String sql = "SELECT mp.fk_id_municipio, m.* FROM municipioPadrao mp "
+                    + "JOIN municipio m ON (m.pk_id_municipio = mp.fk_id_municipio) ";
+            stmt = con.prepareStatement(sql);
+            res = stmt.executeQuery();
+            
+            while (res.next()) {
+                int idmunicipio = res.getInt("m.pk_id_municipio");
+                String nomeMunicipio = res.getString("nome_municipio");
+                String codIbge = res.getString("cod_ibge_municipio");
+                municipio = new Municipio(idmunicipio, nomeMunicipio, codIbge);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return municipio;
+    }
+    
+    public boolean editarMunicipioPadrao(Municipio municipio){
+        PreparedStatement stmt = null;
+        boolean result = false;
+        try {
+            String sql = "UPDATE municipiopadrao SET fk_id_municipio = ? WHERE pk_id_municipio = 1;";
+            stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            stmt.setInt(1, municipio.getId());
+            
+            stmt.executeUpdate();
+            result = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DB.closeStatement(stmt);
+            return result;
+        }
+    }
+    
     public boolean inserirMunicipio(Municipio municipio) {
         PreparedStatement stmt = null;
         boolean result = false;
