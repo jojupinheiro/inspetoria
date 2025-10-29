@@ -2,6 +2,7 @@ package model.services;
 
 import java.util.List;
 import model.classes.Municipio;
+import model.classes.Programa;
 import model.dao.UtilitarioDAO;
 import model.db.DB;
 
@@ -58,5 +59,9 @@ public class UtilitarioService {
     
     public boolean excluirRedator (String redator){
         return dao.excluirRedator(redator);
+    }
+    
+    public List<Programa> getProgramas() {
+        return dao.getProgramas();
     }
 }

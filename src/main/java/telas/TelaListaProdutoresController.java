@@ -1,4 +1,4 @@
-package com.mycompany.inspetoria;
+package telas;
 
 import java.net.URL;
 import java.util.List;
@@ -238,7 +238,12 @@ public class TelaListaProdutoresController implements Initializable {
             return row;
         });
         
-        btnNovo.setOnAction((t) -> Telas.cadastrarProdutor(btnNovo.getScene().getWindow()));
+        btnNovo.setOnAction((t) -> {
+            Produtor novoProdutor = Telas.cadastrarProdutor(btnNovo.getScene().getWindow());
+            if (novoProdutor != null){
+                tblProdutores.getItems().add(novoProdutor);
+            }
+        });
         
         ObservableList<String> listaObs = FXCollections.observableArrayList("CPF/CNPJ", "Município", "Nome", "Pessoa física", "Pessoa Jurídica", "Possui observação");
         cmbFiltro.setItems(listaObs);

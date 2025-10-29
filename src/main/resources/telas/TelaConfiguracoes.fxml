@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="464.0" prefWidth="748.0" styleClass="fundo1" stylesheets="@../../../styles/telalistas.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.inspetoria.TelaConfiguracoesController">
+<AnchorPane id="AnchorPane" prefHeight="464.0" prefWidth="748.0" styleClass="fundo1" stylesheets="@../styles/telalistas.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="telas.TelaConfiguracoesController">
    <children>
       <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -60,7 +60,7 @@
                                              <graphic>
                                                 <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
-                                                      <Image url="@../../../images/plus.png" />
+                                                      <Image url="@../images/plus.png" />
                                                    </image>
                                                    <cursor>
                                                       <Cursor fx:constant="HAND" />

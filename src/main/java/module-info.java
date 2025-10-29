@@ -1,4 +1,4 @@
-module com.mycompany.inspetoria {
+module telas {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.base;
@@ -6,8 +6,8 @@ module com.mycompany.inspetoria {
     requires java.sql;
     requires org.controlsfx.controls;
 
-    opens com.mycompany.inspetoria to javafx.fxml;
-    exports com.mycompany.inspetoria;
+    opens telas to javafx.fxml;
+    exports telas;
     opens model.classes to javafx.fxml;
     exports model.classes;
 }

@@ -1,4 +1,4 @@
-package com.mycompany.inspetoria;
+package telas;
 
 import java.io.IOException;
 import java.net.URL;
@@ -10,6 +10,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import model.classes.AutoInfracao;
+import model.classes.AutoInterdicao;
 import model.classes.Produtor;
 
 /**
@@ -35,6 +36,29 @@ public class Telas {
             stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    
+    public static AutoInterdicao cadastrarAutoInterdicao(Window janela) {
+        try {
+            URL url = Telas.class.getResource("TelaCadastroAutoInterdicao.fxml");
+            FXMLLoader loader = new FXMLLoader(url);
+            Parent parent = loader.load();
+            TelaCadastroAutoInterdicaoController controller = loader.getController();
+            Scene scene = new Scene(parent);
+            Stage stage = new Stage();
+            stage.setTitle("Cadastro de Auto de interdição");
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.setMinWidth(1200);
+            stage.setMinHeight(690);
+            stage.initOwner(janela);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.showAndWait();
+            return controller.getAISalvo();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
     }
     

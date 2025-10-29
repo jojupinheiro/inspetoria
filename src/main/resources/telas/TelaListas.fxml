@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="698.0" prefWidth="1149.0" stylesheets="@../../../styles/telalistas.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.inspetoria.TelaListasController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="698.0" prefWidth="1149.0" stylesheets="@../../../styles/telalistas.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="telas.TelaListasController">
    <top>
       <AnchorPane prefHeight="27.0" BorderPane.alignment="CENTER">
          <children>
@@ -45,7 +45,7 @@
       </AnchorPane>
    </top>
    <left>
-      <AnchorPane prefHeight="646.0" prefWidth="166.0" styleClass="fundo1" stylesheets="@../../../styles/telalistas.css" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="646.0" prefWidth="166.0" styleClass="fundo1" stylesheets="@../styles/telalistas.css" BorderPane.alignment="CENTER">
          <children>
             <VBox layoutX="-19.0" layoutY="31.0" prefHeight="646.0" prefWidth="20.0" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
@@ -98,7 +98,7 @@
          </children></AnchorPane>
    </left>
    <center>
-      <GridPane styleClass="fundo1" stylesheets="@../../../styles/telalistas.css" BorderPane.alignment="CENTER">
+      <GridPane styleClass="fundo1" stylesheets="@../styles/telalistas.css" BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

@@ -1,4 +1,4 @@
-package com.mycompany.inspetoria;
+package telas;
 
 import java.io.IOException;
 import java.net.URL;
@@ -140,6 +140,8 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
             
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        MascarasFX.mascaraData(dpDtCiencia);
+        MascarasFX.mascaraData(dpDtLavratura);
         MascarasFX.mascaraHorario(txtHora);
         MascarasFX.mascaraNumeroInteiro(txtBovinos);
         MascarasFX.mascaraNumeroInteiro(txtBubalinos);

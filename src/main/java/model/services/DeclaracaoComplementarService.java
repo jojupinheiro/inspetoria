@@ -27,8 +27,8 @@ public class DeclaracaoComplementarService {
         return dao.getProximoNumeroDC(idMunicipio);
     }
     
-    public boolean testarNumeroDC(int idMunicipio, int numeroDc) {
-        return dao.testarNumeroDC(idMunicipio, numeroDc);
+    public boolean testarNumeroDC(int idMunicipio, int numeroDc, int ano) {
+        return dao.testarNumeroDC(idMunicipio, numeroDc, ano);
     }
 
     public boolean salvarOuAtualizar(DeclaracaoComplementar declaracaoComplementar) {

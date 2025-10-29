@@ -21,7 +21,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="642.0" prefWidth="966.0" styleClass="fundo1" stylesheets="@../../../styles/telalistas.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.inspetoria.TelaCadastroAutoInfracaoController">
+<AnchorPane id="AnchorPane" prefHeight="642.0" prefWidth="966.0" styleClass="fundo1" stylesheets="@../styles/telalistas.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="telas.TelaCadastroAutoInfracaoController">
    <children>
       <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
@@ -71,7 +71,7 @@
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../images/plus.png" />
+                                    <Image url="@../images/plus.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -86,7 +86,7 @@
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../images/pessoa.png" />
+                                    <Image url="@../images/pessoa.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -117,7 +117,7 @@
                                        <graphic>
                                           <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../../../images/refresh.png" />
+                                                <Image url="@../images/refresh.png" />
                                              </image>
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />
@@ -178,7 +178,7 @@
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../images/plus.png" />
+                                    <Image url="@../images/plus.png" />
                                  </image>
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
@@ -391,7 +391,7 @@
                            <graphic>
                               <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../images/salvar.png" />
+                                    <Image url="@../images/salvar.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -409,7 +409,7 @@
                            <graphic>
                               <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../images/sair.png" />
+                                    <Image url="@../images/sair.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -426,7 +426,7 @@
                      <graphic>
                         <ImageView fitHeight="26.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../images/excluir.png" />
+                              <Image url="@../images/excluir.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -483,7 +483,7 @@
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../images/plus.png" />
+                                    <Image url="@../images/plus.png" />
                                  </image>
                                  <cursor>
                                     <Cursor fx:constant="HAND" />

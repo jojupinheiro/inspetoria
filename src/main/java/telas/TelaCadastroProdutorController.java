@@ -1,4 +1,4 @@
-package com.mycompany.inspetoria;
+package telas;
 
 import java.net.URL;
 import java.util.List;
@@ -127,13 +127,15 @@ public class TelaCadastroProdutorController implements Initializable {
         btnCancelar.setOnAction((t) -> ((Stage) btnCancelar.getScene().getWindow()).close() );
         btnLimpar.setOnAction((t) -> limparCampos() );
         btnSalvar.setOnAction((t) -> salvar() );
+        
+        rbPF.setSelected(true);
     }    
     
     private void limparCampos(){
         txtNome.setText("");
         txtCpf.setText("");
         txtRg.setText("");
-        rbPF.setSelected(false);
+        rbPF.setSelected(true);
         rbPJ.setSelected(false);
         sComboBoxTipoLogradouro.getSelectionModel().select("");
         sComboBoxMunicipio.getSelectionModel().select(null);

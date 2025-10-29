@@ -1,4 +1,4 @@
-package com.mycompany.inspetoria;
+package telas;
 
 import java.net.URL;
 import java.time.LocalDate;

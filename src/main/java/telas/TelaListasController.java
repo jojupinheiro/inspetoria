@@ -1,4 +1,4 @@
-package com.mycompany.inspetoria;
+package telas;
 
 import java.io.IOException;
 import java.net.URL;
@@ -50,6 +50,16 @@ public class TelaListasController implements Initializable {
         btnDeclaracoesComplementares.setOnAction((t) -> {
             try {
                 AnchorPane view = FXMLLoader.load(getClass().getResource("TelaListaDeclComp.fxml"));
+                borderPane.setCenter(view);
+            } catch (IOException ex) {
+                Logger.getLogger(TelaListasController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            vBoxLegendas.setVisible(false);
+        });
+        
+        btnAutosInterdicao.setOnAction((t) -> {
+            try {
+                AnchorPane view = FXMLLoader.load(getClass().getResource("TelaListaAutoInterdicao.fxml"));
                 borderPane.setCenter(view);
             } catch (IOException ex) {
                 Logger.getLogger(TelaListasController.class.getName()).log(Level.SEVERE, null, ex);

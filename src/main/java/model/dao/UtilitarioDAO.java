@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import model.classes.Municipio;
+import model.classes.Programa;
 import model.db.DB;
 
 /**
@@ -211,5 +212,34 @@ public class UtilitarioDAO {
             DB.closeStatement(stmt);
             return result;
         }
+    }
+    
+    public List<Programa> getProgramas() {
+        List<Programa> list = new ArrayList<>();
+        ResultSet res = null;
+        PreparedStatement stmt = null;
+        
+        try {
+            String sql = "SELECT * FROM programa ORDER BY sigla_programa ";
+            
+            stmt = con.prepareStatement(sql);
+            
+            res = stmt.executeQuery();
+            
+            while (res.next()) {
+                
+                int idPrograma = res.getInt("pk_id_programa");
+                String nomePrograma = res.getString("nome_programa");
+                String sigla = res.getString("sigla_programa");
+                String observacoes = res.getString("observacoes_programa");
+                Programa programa = new Programa(idPrograma, sigla, nomePrograma, observacoes);
+                                
+                list.add(programa);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return list;
     }
 }

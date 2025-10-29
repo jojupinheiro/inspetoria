@@ -62,7 +62,7 @@
                 <version>0.0.8</version>
                 <configuration>
                     <!-- Apontando para a classe que contém o método `main` -->
-                    <mainClass>com.mycompany.inspetoria.App</mainClass>
+                    <mainClass>telas.App</mainClass>
                 </configuration>
             </plugin>
         </plugins>

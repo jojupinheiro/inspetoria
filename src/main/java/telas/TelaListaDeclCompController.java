@@ -1,4 +1,4 @@
-package com.mycompany.inspetoria;
+package telas;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -25,6 +25,7 @@ import model.services.DeclaracaoComplementarService;
 import model.services.ProdutorService;
 import model.services.UtilitarioService;
 import org.controlsfx.control.SearchableComboBox;
+import utils.MascarasFX;
 import utils.Utils;
 
 /**
@@ -61,6 +62,8 @@ public class TelaListaDeclCompController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        MascarasFX.mascaraData(dpData);
+        
         tcData.setCellValueFactory(new PropertyValueFactory<>("Data"));
         tcNumero.setCellValueFactory(new PropertyValueFactory<>("Numero"));
         tcObservacoes.setCellValueFactory(new PropertyValueFactory<>("Observacoes"));
@@ -125,11 +128,12 @@ public class TelaListaDeclCompController implements Initializable {
         Produtor produtor = scmbProdutor.getValue();
         Municipio municipio = cmbMunicipio.getValue();
         String observacoes = txtObservacoes.getText() != null ? txtObservacoes.getText().trim() : "";
+        int ano = data.getYear();
         
         //Teste para saber se já não foi inserido uma DC com esse número
         int numeroDc = Integer.parseInt(txtNumero.getText());
         int proximoNumero = new DeclaracaoComplementarService().getProximoNumeroDC(cmbMunicipio.getValue().getId());
-        boolean numeroJaUtilizado = new DeclaracaoComplementarService().testarNumeroDC(municipio.getId(), numeroDc);
+        boolean numeroJaUtilizado = new DeclaracaoComplementarService().testarNumeroDC(municipio.getId(), numeroDc, ano);
         
         if (numeroJaUtilizado){
             Alert al = new Alert(Alert.AlertType.INFORMATION);

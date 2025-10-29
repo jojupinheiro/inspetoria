@@ -1,4 +1,4 @@
-package com.mycompany.inspetoria;
+package telas;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

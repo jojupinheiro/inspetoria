@@ -93,26 +93,42 @@ public class DeclaracaoComplementarDAO {
         return proximoNumero;
     }
     
-    public boolean testarNumeroDC(int idMunicipio, int numeroDc) {
-        PreparedStatement stmt = null;
-        ResultSet res = null;
-        boolean result = false;
-        int proximoNumero = 0;
-        try {
-            String sql = "SELECT numero_dc FROM dc WHERE fk_municipio_dc = ? AND numero_dc = ?;";
-            stmt = con.prepareStatement(sql);
+    public boolean testarNumeroDC(int idMunicipio, int numeroDc, int ano) {
+        // SQL otimizado:
+        // 1. Adicionamos a cláusula "AND YEAR(data_dc) = ?" para filtrar pelo ano.
+        // 2. Trocamos "SELECT numero_dc" por "SELECT 1" e adicionamos "LIMIT 1".
+        //    Isso é mais eficiente, pois só queremos saber "se existe" (true/false),
+        //    e não quais são os dados. O banco pode parar a busca no primeiro item que encontrar.
+        String sql = "SELECT 1 FROM dc WHERE fk_municipio_dc = ? AND numero_dc = ? AND YEAR(data_dc) = ? LIMIT 1;";
+
+        // Usar "try-with-resources" é a prática moderna e segura em Java.
+        // Ele garante que 'stmt' e 'res' sejam fechados automaticamente,
+        // mesmo que ocorra um erro (SQLException).
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            // 1. Definir o ID do município
             stmt.setInt(1, idMunicipio);
+            // 2. Definir o número do DC
             stmt.setInt(2, numeroDc);
-            res = stmt.executeQuery();
+            // 3. Definir o novo parâmetro: ano
+            stmt.setInt(3, ano);
 
-            while (res.next()) {
-                result = true;
+            try (ResultSet res = stmt.executeQuery()) {
+
+                // res.next() move o cursor para a primeira linha.
+                // Se houver uma linha (ou seja, o registro foi encontrado), ele retorna true.
+                // Se não houver resultados, ele retorna false.
+                return res.next();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        return result;
+        } catch (SQLException e) {
+            // É uma boa prática logar o erro.
+            e.printStackTrace();
+
+            // Se uma exceção SQL ocorrer (ex: falha na conexão, tabela não existe),
+            // é mais seguro retornar 'false'.
+            return false;
+        }
     }
 
     public boolean inserir(DeclaracaoComplementar dc) {
