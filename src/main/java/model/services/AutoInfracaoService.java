@@ -27,6 +27,10 @@ public class AutoInfracaoService {
     public int getProximoNumeroAI(int idMunicipio){
         return dao.getProximoNumeroAI(idMunicipio);
     }
+    
+    public List<String> getMunicipiosComAI(){
+        return dao.getMunicipiosComAI();
+    }
 
     public boolean salvarOuAtualizar(AutoInfracao ai, Map<String, Integer> animaisEnvolvidos) {
         //Tenho que testar se é uma inclusão ou alteração

@@ -1,24 +1,17 @@
 package model.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import model.classes.AutoInfracao;
 import model.classes.Contato;
 import model.classes.Endereco;
-import model.classes.MotivoInfracao;
 import model.classes.Municipio;
 import model.classes.Produtor;
-import model.classes.Veterinario;
 import model.db.DB;
 
 /**

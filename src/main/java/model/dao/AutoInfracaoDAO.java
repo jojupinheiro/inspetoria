@@ -67,6 +67,9 @@ public class AutoInfracaoDAO {
                     filtroSql = "WHERE mot.resumo_descricao_motivo_ai LIKE ? ";
                     break;
                 case 4:
+                    filtroSql = "WHERE ai.fk_municipio_lavratura_ai = ? ";
+                    break;
+                case 5:
                     filtroSql = "WHERE ai.numero_ai LIKE ? ";
                     break;
                 default:
@@ -152,6 +155,26 @@ public class AutoInfracaoDAO {
             e.printStackTrace();
         }
 
+        return list;
+    }
+    
+    public List<String> getMunicipiosComAI(){
+        List<String> list = new ArrayList<>();
+        ResultSet res = null;
+        PreparedStatement stmt = null;
+        
+        try {
+            String sql = "SELECT DISTINCT m.nome_municipio FROM municipio m JOIN ai ON m.pk_id_municipio = ai.fk_municipio_lavratura_ai ORDER BY m.nome_municipio ";
+            stmt = con.prepareStatement(sql);
+            res = stmt.executeQuery();
+            
+            while (res.next()) {
+                String nomeMunicipio = res.getString("m.nome_municipio");
+                list.add(nomeMunicipio);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return list;
     }
 

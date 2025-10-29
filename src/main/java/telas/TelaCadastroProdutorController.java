@@ -102,9 +102,6 @@ public class TelaCadastroProdutorController implements Initializable {
             if (keyEvent.getCode() == KeyCode.TAB) txtTelefone1.requestFocus();
         });
         
-        txtCpf.setEditable(false);
-        txtCpf.setDisable(true);
-        
         rbPF.setOnAction((t) -> {
             txtCpf.setEditable(true);
             txtCpf.setDisable(false);

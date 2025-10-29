@@ -445,15 +445,34 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
             if (dpDtLavratura.getValue() == null) exc.adicionarErro("dtLavratura", "Insira a data de lavratura!");
             if (txtHora.getText().equals("")) exc.adicionarErro("horaLavratura", "Insira a hora da lavratura!");
             
-            if (autoInfracao == null) autoInfracao = new AutoInfracao(numeroAI, dtLavratura, municipio, 
-                    motivo, enqAdicional, advertencia, reincidente, desconto, autuado);
-            autoInfracao.setProcesso(processo);
-            autoInfracao.setObservacoes(observacao);
-            autoInfracao.setHistorico(historico);
-            autoInfracao.setHora(horaLavratura);
-            autoInfracao.setDataCiencia(dtCiencia);
-            autoInfracao.setRedator(redator);
-            autoInfracao.setFea(fea);
+            if (autoInfracao == null) {
+                autoInfracao = new AutoInfracao(numeroAI, dtLavratura, municipio, motivo, enqAdicional, advertencia, reincidente, desconto, autuado);
+                autoInfracao.setProcesso(processo);
+                autoInfracao.setObservacoes(observacao);
+                autoInfracao.setHistorico(historico);
+                autoInfracao.setHora(horaLavratura);
+                autoInfracao.setDataCiencia(dtCiencia);
+                autoInfracao.setRedator(redator);
+                autoInfracao.setFea(fea);
+            }else{
+                autoInfracao.setProcesso(processo);
+                autoInfracao.setObservacoes(observacao);
+                autoInfracao.setHistorico(historico);
+                autoInfracao.setHora(horaLavratura);
+                autoInfracao.setDataCiencia(dtCiencia);
+                autoInfracao.setRedator(redator);
+                autoInfracao.setFea(fea);
+                autoInfracao.setNumeroAi(numeroAI);
+                autoInfracao.setDataLavratura(dtLavratura);
+                autoInfracao.setMunicipioLavratura(municipio);
+                autoInfracao.setMotivo(motivo);
+                autoInfracao.setEnquadramentoAdicional(enqAdicional);
+                autoInfracao.setAdvertencia(advertencia);
+                autoInfracao.setReincidencia(reincidente);
+                autoInfracao.setDesconto(desconto);
+                autoInfracao.setAutuado(autuado);
+            }
+            
             
             if (!exc.getErrors().isEmpty()) {
                 throw exc;

@@ -47,7 +47,7 @@
                               <Insets />
                            </opaqueInsets>
                         </TextField>
-                        <ComboBox fx:id="cmbMotivos" maxWidth="350.0" prefWidth="220.0" promptText="Selecione" />
+                        <ComboBox fx:id="cmbFiltroGenerico" maxWidth="350.0" prefWidth="220.0" promptText="Selecione" />
                         <HBox fx:id="boxDatas" minWidth="280.0" prefWidth="281.0">
                            <children>
                               <DatePicker fx:id="dpDataInicio" prefHeight="26.0" prefWidth="125.0" promptText="dd/mm/aaaa" />

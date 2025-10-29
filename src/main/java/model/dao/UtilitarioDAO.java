@@ -147,7 +147,23 @@ public class UtilitarioDAO {
     }
     
     public boolean editarMunicipio (Municipio municipio){
-        return true;
+        PreparedStatement stmt = null;
+        boolean result = false;
+        try {
+            String sql = "UPDATE municipio SET nome_municipio = ?, cod_ibge_municipio = ? WHERE pk_id_municipio = ?;";
+            stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, municipio.getNome() );
+            stmt.setString(2, municipio.getCodIbge() );
+            stmt.setInt(3, municipio.getId() );
+            
+            stmt.executeUpdate();
+            result = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DB.closeStatement(stmt);
+            return result;
+        }
     }
     
     public List<String> getRedatores(){

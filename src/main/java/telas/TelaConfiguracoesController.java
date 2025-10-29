@@ -25,20 +25,27 @@ public class TelaConfiguracoesController implements Initializable {
     @FXML    private ComboBox<Municipio> cmbMunicipio;
     @FXML    private Button btnInserirMunicipio;
     @FXML    private Button btnExcluir;
+    @FXML    private Button btnExcluirMunicipio;
     @FXML    private Button btnExcluirRedator;
     @FXML    private Button btnLimpar;
+    @FXML    private Button btnLimparMunicipio;
     @FXML    private Button btnLimparRedator;
     @FXML    private Button btnInserir;
     @FXML    private Button btnInserirRedator;
+    @FXML    private Button btnSalvarMunicipio;
     @FXML    private ListView<Veterinario> listView;
+    @FXML    private ListView<Municipio> listViewMunicipio;
     @FXML    private ListView<String> listViewRedator;
+    @FXML    private TextField txtCodIBGE;
     @FXML    private TextField txtCrmv;
     @FXML    private TextField txtIf;
+    @FXML    private TextField txtMunicipio;
     @FXML    private TextField txtNome;
     @FXML    private TextField txtNomeRedator;
     
     List<Municipio> listaMunicipios;
     Veterinario veterinario;
+    Municipio municipio;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -96,7 +103,7 @@ public class TelaConfiguracoesController implements Initializable {
             }
             listarVeterinarios();
             btnExcluir.setVisible(false);
-            limparCampos();
+            limparCamposVeterinario();
         });
         
         btnInserir.setOnAction((t) -> {
@@ -114,11 +121,11 @@ public class TelaConfiguracoesController implements Initializable {
             if(!txtNome.getText().equals("") && !txtIf.getText().equals("")){
                 new VeterinarioService().salvarOuAtualizar(veterinario);
             }
-            limparCampos();
+            limparCamposVeterinario();
             listarVeterinarios();
         });
         
-        btnLimpar.setOnAction((t) -> limparCampos());
+        btnLimpar.setOnAction((t) -> limparCamposVeterinario());
         
         listarVeterinarios();
         //FIM VETERINÁRIOS --------------------------------------------------------------------------------------------
@@ -146,6 +153,63 @@ public class TelaConfiguracoesController implements Initializable {
         
         listarRedatores();
         //FIM REDATORES -----------------------------------------------------------------------------------------------
+        
+        //INÍCIO MUNICÍPIO --------------------------------------------------------------------------------------------
+        listViewMunicipio.setCellFactory(lv -> new ListCell<Municipio>() {
+            @Override
+            protected void updateItem(Municipio municipio, boolean empty) {
+                super.updateItem(municipio, empty);
+                if (empty || municipio == null) {
+                    setText(null);
+                    setTooltip(null);
+                } else {
+                    setText(municipio.getNome() );
+                }
+            }
+        });
+        
+        listViewMunicipio.setOnMouseClicked((mouseEvent) -> {
+            if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                btnExcluirMunicipio.setVisible(true);
+            }
+            if (mouseEvent.getClickCount() == 2 && mouseEvent.getButton().equals(MouseButton.PRIMARY) && listViewMunicipio.getSelectionModel().getSelectedItem() != null) {
+                municipio = listViewMunicipio.getSelectionModel().getSelectedItem();
+                txtMunicipio.setText(municipio.getNome());
+                txtCodIBGE.setText(municipio.getCodIbge());
+                btnSalvarMunicipio.setText("Alterar");
+            }
+        });
+        
+        btnExcluirMunicipio.setOnAction((t) -> {
+            if(listViewMunicipio.getSelectionModel().getSelectedIndex() >= 0){
+                new UtilitarioService().excluirMunicipio(listViewMunicipio.getSelectionModel().getSelectedItem());
+            }
+            listarMunicipios();
+            btnExcluirMunicipio.setVisible(false);
+            limparCamposMunicipio();
+        });
+        
+        btnSalvarMunicipio.setOnAction((t) -> {
+            String nomeMunicipio = txtMunicipio.getText().trim();
+            String codIBGE = txtCodIBGE.getText().trim();
+            if (municipio == null){
+                municipio = new Municipio(nomeMunicipio, codIBGE);
+            }else{
+                municipio.setNome(nomeMunicipio);
+                municipio.setCodIbge(codIBGE);
+            }
+            
+            if(!txtMunicipio.getText().equals("") && !txtCodIBGE.getText().equals("")){
+                new UtilitarioService().salvarOuAtualizar(municipio);
+            }
+            limparCamposMunicipio();
+            listarMunicipios();
+        });
+        
+        btnLimpar.setOnAction((t) -> limparCamposMunicipio());
+        
+        listarMunicipios();
+        //FIM MUNICÍPIO -----------------------------------------------------------------------------------------------
     }    
     
     private void inserirRedator(){
@@ -164,13 +228,19 @@ public class TelaConfiguracoesController implements Initializable {
         listView.setItems(listaObsTipoVacina);
     }
     
+    private void listarMunicipios() {
+        listaMunicipios = new UtilitarioService().getMunicipios();
+        ObservableList<Municipio> listaObsMunicipio = FXCollections.observableArrayList(listaMunicipios);                                                                         
+        listViewMunicipio.setItems(listaObsMunicipio);
+    }
+    
     private void listarRedatores() {
         Statics.listaRedatores = new UtilitarioService().getRedatores();
         ObservableList<String> listaObsRedatores = FXCollections.observableArrayList(Statics.listaRedatores);                                                                         
         listViewRedator.setItems(listaObsRedatores);
     }
     
-    private void limparCampos(){
+    private void limparCamposVeterinario(){
         txtCrmv.setText("");
         txtIf.setText("");
         txtNome.setText("");
@@ -178,5 +248,14 @@ public class TelaConfiguracoesController implements Initializable {
         listView.getSelectionModel().select(null);
         btnExcluir.setVisible(false);
         btnInserir.setText("Inserir");
+    }
+    
+    private void limparCamposMunicipio(){
+        txtMunicipio.setText("");
+        txtCodIBGE.setText("");
+        municipio = null;
+        listViewMunicipio.getSelectionModel().select(null);
+        btnExcluirMunicipio.setVisible(false);
+        btnSalvarMunicipio.setText("Inserir");
     }
 }

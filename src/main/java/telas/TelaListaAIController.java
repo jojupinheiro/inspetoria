@@ -9,6 +9,8 @@ import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -35,6 +37,7 @@ import model.classes.MotivoInfracao;
 import model.classes.Produtor;
 import model.services.AutoInfracaoService;
 import model.services.MotivoInfracaoService;
+import model.services.ProdutorService;
 import utils.Utils;
 
 /**
@@ -57,7 +60,7 @@ public class TelaListaAIController implements Initializable {
     @FXML    private CheckBox ckbRedator;
     @FXML    private CheckBox ckbReincidente;
     @FXML    private ComboBox<String> cmbFiltro;
-    @FXML    private ComboBox<MotivoInfracao> cmbMotivos;
+    @FXML    private ComboBox<Object> cmbFiltroGenerico;
     @FXML    private DatePicker dpDataFim;
     @FXML    private DatePicker dpDataInicio;
     @FXML    private HBox boxDatas;
@@ -86,6 +89,7 @@ public class TelaListaAIController implements Initializable {
     private String txtFiltro;
     private int filtroSelecionado = -1;
     List<MotivoInfracao> listaMotivos;
+    List<String> listaMunicipios;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -109,8 +113,8 @@ public class TelaListaAIController implements Initializable {
         tCRedator.setCellValueFactory(new PropertyValueFactory<>("redator"));
         tCReincidente.setCellValueFactory(new PropertyValueFactory<>("reincidente"));
         
-        cmbMotivos.setVisible(false);
-        cmbMotivos.setManaged(false);
+        cmbFiltroGenerico.setVisible(false);
+        cmbFiltroGenerico.setManaged(false);
        
         tableViewAutosInfracao.setRowFactory(
                 new Callback<TableView<AutoInfracao>, TableRow<AutoInfracao>>() {
@@ -224,79 +228,110 @@ public class TelaListaAIController implements Initializable {
         });
         
         listaMotivos = new MotivoInfracaoService().getAll();
+        listaMunicipios = new AutoInfracaoService().getMunicipiosComAI();
         ObservableList<MotivoInfracao> listaObsMotivos = FXCollections.observableArrayList(listaMotivos);
-        cmbMotivos.setItems(listaObsMotivos);
+      
+        cmbFiltroGenerico.setOnAction((t) -> {
+            Object valorSelecionado = cmbFiltroGenerico.getValue();
+            // O toString() funcionará tanto para MotivoInfracao (se o método toString() estiver correto)
+            // quanto para String (município)
+            txtFiltro = (valorSelecionado != null) ? valorSelecionado.toString() : "";
+            atualizaTabela(filtroSelecionado, txtFiltro);
+        });
         
-        cmbMotivos.setOnAction((t) -> atualizaTabela(filtroSelecionado, cmbMotivos.getValue() != null ? cmbMotivos.getValue().toString() : "") );
-        
-        ObservableList<String> listaObs = FXCollections.observableArrayList("Autuado", "CPF do autuado", "Data de lavratura", "Motivo da infração", "Número do AI");
+        ObservableList<String> listaObs = FXCollections.observableArrayList("Autuado", "CPF do autuado", "Data de lavratura", "Motivo da infração", "Município de lavratura", "Número do AI");
         cmbFiltro.setItems(listaObs);
-        
+
         btnLimpar.setOnAction((t) -> {
             cmbFiltro.getSelectionModel().select(-1);
             txtBusca.setText("");
             dpDataFim.setValue(null);
             dpDataInicio.setValue(null);
-            cmbMotivos.setValue(null);
+            cmbFiltroGenerico.setValue(null);
+            cmbFiltroGenerico.setItems(null); // Limpa as opções
+            
+            // A ação do cmbFiltro (linha 304) vai esconder os campos
+            filtroSelecionado = -1;
+            txtFiltro = null;
+            atualizaTabela(filtroSelecionado, txtFiltro); // Mostra tabela sem filtros
         });
 
+        // Este botão é necessário para o filtro de DATA e para filtros de TEXTO
         btnFiltrar.setOnAction((t) -> {
-            if (filtroSelecionado == 2){
+            if (filtroSelecionado == 2){ // Filtro de Data
+                if(dpDataInicio.getValue() == null || dpDataFim.getValue() == null){
+                    Alert al = new Alert(Alert.AlertType.WARNING, "É preciso preencher a data de início e fim.", ButtonType.OK);
+                    al.showAndWait();
+                    return;
+                }
                 String dtInicial = dpDataInicio.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                 String dtFinal = dpDataFim.getValue().plusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                 txtFiltro = dtInicial + " " + dtFinal;
-            }else{
+            }else{ // Filtros de Texto (Autuado, CPF, Numero AI)
                 txtFiltro = txtBusca.getText();
             }
             atualizaTabela(filtroSelecionado, txtFiltro);
         });
 
+        // Ação para o txtBusca (apertar Enter)
         txtBusca.setOnAction((t) -> {
-            if (filtroSelecionado != 2 && filtroSelecionado != -1){
+            // Filtros 0, 1, 5 (Autuado, CPF, Numero AI)
+            if (filtroSelecionado == 0 || filtroSelecionado == 1 || filtroSelecionado == 5){
                 txtFiltro = txtBusca.getText();
                 atualizaTabela(filtroSelecionado, txtFiltro);
             }
         });
         
+        // ATUALIZADO: Lógica principal de seleção de filtro
         cmbFiltro.setOnAction((t) -> {
             try {
                 filtroSelecionado = cmbFiltro.getSelectionModel().getSelectedIndex();
-                if (filtroSelecionado == 2) {
-                    txtBusca.setVisible(false);
-                    txtBusca.setManaged(false);
+                
+                // 1. Esconde todos os controles de filtro dinâmicos
+                txtBusca.setVisible(false);
+                txtBusca.setManaged(false);
+                boxDatas.setVisible(false);
+                boxDatas.setManaged(false);
+                cmbFiltroGenerico.setVisible(false);
+                cmbFiltroGenerico.setManaged(false);
+                cmbFiltroGenerico.setItems(null); // Limpa os itens do ComboBox
+
+                // 2. Mostra o controle correto baseado na seleção
+                if (filtroSelecionado == 2) { // Data de lavratura
                     boxDatas.setVisible(true);
                     boxDatas.setManaged(true);
-                    cmbMotivos.setVisible(false);
-                    cmbMotivos.setManaged(false);
-                } else if(filtroSelecionado == 3){
-                    txtBusca.setVisible(false);
-                    txtBusca.setManaged(false);
-                    boxDatas.setVisible(false);
-                    boxDatas.setManaged(false);
-                    cmbMotivos.setVisible(true);
-                    cmbMotivos.setManaged(true);
-                }else {
+                } else if (filtroSelecionado == 3) { // Motivo da infração
+                    ObservableList<Object> obsMotivos = FXCollections.observableArrayList(listaMotivos);
+                    cmbFiltroGenerico.setItems(obsMotivos); // Popula com Motivos
+                    cmbFiltroGenerico.setVisible(true);
+                    cmbFiltroGenerico.setManaged(true);
+                } else if (filtroSelecionado == 4) { // Município de lavratura
+                    ObservableList<Object> obsMunicipios = FXCollections.observableArrayList(listaMunicipios);
+                    cmbFiltroGenerico.setItems(obsMunicipios); // Popula com Municípios
+                    cmbFiltroGenerico.setVisible(true);
+                    cmbFiltroGenerico.setManaged(true);
+                } else if (filtroSelecionado != -1) { // Filtros de texto (0, 1, 5)
                     txtBusca.setVisible(true);
                     txtBusca.setManaged(true);
-                    boxDatas.setVisible(false);
-                    boxDatas.setManaged(false);
-                    cmbMotivos.setVisible(false);
-                    cmbMotivos.setManaged(false);
+                } else {
+                    // Nenhum filtro selecionado (-1), apenas limpa a tabela
+                    txtFiltro = null;
                     atualizaTabela(filtroSelecionado, txtFiltro);
                 }
 
             } catch (Exception e) {
-                filtroSelecionado = 0;
+                filtroSelecionado = -1; // Reseta em caso de erro
                 e.printStackTrace();
             }
         });
+        
         boxDatas.setVisible(false);
         boxDatas.setManaged(false);
-        
-        btnNovo.setOnAction((t) ->  {
+     
+        btnNovo.setOnAction((t) -> {
             Telas.cadastrarAutoInfracao(btnNovo.getScene().getWindow());
             atualizaTabela(filtroSelecionado, txtFiltro);
-                });
+        });
         ckbDesconto.selectedProperty().addListener((t, ov, nv) -> tCDesconto.setVisible(nv));
         ckbFea.selectedProperty().addListener((t, ov, nv) -> tCFEA.setVisible(nv));
         ckbHistorico.selectedProperty().addListener((t, ov, nv) -> tCHistorico.setVisible(nv));
@@ -312,7 +347,7 @@ public class TelaListaAIController implements Initializable {
     }    
     
     public void atualizaTabela(int filtroSelecionado, String txtFiltro) {
-        // Buscar os dados no banco de dados na tabela pet
+        // Buscar os dados no banco de dados na tabela ai
         listaAI = new AutoInfracaoService().getAll(filtroSelecionado, txtFiltro);
         // ObservableList
         ObservableList<AutoInfracao> listaObs = FXCollections.observableArrayList(listaAI);
@@ -322,7 +357,6 @@ public class TelaListaAIController implements Initializable {
         Utils.formatTableColumnDate(tCDtCiencia);
         Utils.formatTableColumnDate(tCDtLimiteDefesa);
         Utils.formatTableColumnCpfOuCnpj(tCCpf);
-//        Utils.formatTableColumnPeso(tableColumnPeso);
     }
     
 }
