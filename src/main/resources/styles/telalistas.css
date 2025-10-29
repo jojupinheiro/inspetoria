@@ -5,10 +5,12 @@
 *{
     -cor-bordas-controles: #999999;
     -cor-texto-prompts: #A9A9A9;
+    -cor-fundo-padrao: #d1f5de;
+    -cor-fundo-secundaria: #679c84;
 }
 
 .fundo1{
-    -fx-background-color: #d1f5de;
+    -fx-background-color: -cor-fundo-padrao;
 }
 
 .btn-listas{
@@ -59,19 +61,17 @@
 }
 
 .tab:selected{
-    -fx-background-color:  #8AA6A3;
+    -fx-background-color:  -cor-fundo-padrao;
     -fx-font-weight: bolder;
     -fx-font-size: 14;
     -fx-border-width: 1px 1px 0px 1px !important;
-}
-.tab{
-    -fx-background-color:  #8AA6A3;
-    -fx-font-size: 13;
+    -fx-background-insets: 0 0 -1px 0;
 }
 
 .tab-pane .tab-header-area .tab-header-background {
-    -fx-background-color: -cor3; 
-
+    -fx-background-color: -cor-fundo-secundaria; 
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: black;
 }
 
 .tab-pane .tab-header-area .tab {
@@ -79,7 +79,9 @@
     -fx-border-width: 1px ;  
     -fx-border-style: solid;  
     -fx-border-radius: 10px 10px 0px 0px;
-    -fx-spacing: 10px;
+    -fx-background-color:  -cor-fundo-padrao;
+    -fx-background-radius: 10 10 0 0;
+    -fx-font-size: 13;
 }
 
 /* --- REGRAS PARA FORMATAÇÃO CONDICIONAL DA TABELA --- */

@@ -17,4 +17,5 @@ public class Statics {
 
     public static Municipio municipioPadrao = new UtilitarioService().getMunicipioPadrao();
     public static List<Veterinario> listaVeterinarios = new VeterinarioService().getAll();
+    public static List<String> listaRedatores = new UtilitarioService().getRedatores();
 }

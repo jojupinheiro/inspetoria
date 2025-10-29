@@ -18,7 +18,6 @@ import model.classes.Municipio;
 import model.classes.Veterinario;
 import model.services.UtilitarioService;
 import model.services.VeterinarioService;
-import org.controlsfx.control.SearchableComboBox;
 
 
 public class TelaConfiguracoesController implements Initializable {
@@ -26,12 +25,17 @@ public class TelaConfiguracoesController implements Initializable {
     @FXML    private ComboBox<Municipio> cmbMunicipio;
     @FXML    private Button btnInserirMunicipio;
     @FXML    private Button btnExcluir;
+    @FXML    private Button btnExcluirRedator;
     @FXML    private Button btnLimpar;
+    @FXML    private Button btnLimparRedator;
     @FXML    private Button btnInserir;
+    @FXML    private Button btnInserirRedator;
     @FXML    private ListView<Veterinario> listView;
+    @FXML    private ListView<String> listViewRedator;
     @FXML    private TextField txtCrmv;
     @FXML    private TextField txtIf;
     @FXML    private TextField txtNome;
+    @FXML    private TextField txtNomeRedator;
     
     List<Municipio> listaMunicipios;
     Veterinario veterinario;
@@ -82,6 +86,7 @@ public class TelaConfiguracoesController implements Initializable {
                 txtNome.setText(veterinario.getNome());
                 txtCrmv.setText(veterinario.getCrmv());
                 txtIf.setText(veterinario.getIdentidadeFuncional());
+                btnInserir.setText("Alterar");
             }
         });
         
@@ -91,6 +96,7 @@ public class TelaConfiguracoesController implements Initializable {
             }
             listarVeterinarios();
             btnExcluir.setVisible(false);
+            limparCampos();
         });
         
         btnInserir.setOnAction((t) -> {
@@ -108,7 +114,7 @@ public class TelaConfiguracoesController implements Initializable {
             if(!txtNome.getText().equals("") && !txtIf.getText().equals("")){
                 new VeterinarioService().salvarOuAtualizar(veterinario);
             }
-            veterinario = null;
+            limparCampos();
             listarVeterinarios();
         });
         
@@ -116,7 +122,41 @@ public class TelaConfiguracoesController implements Initializable {
         
         listarVeterinarios();
         //FIM VETERINÁRIOS --------------------------------------------------------------------------------------------
+        
+        
+        //INÍCIO REDATORES --------------------------------------------------------------------------------------------
+        listViewRedator.setOnMouseClicked((mouseEvent) -> {
+            if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                btnExcluirRedator.setVisible(true);
+            }
+         });
+        
+        btnInserirRedator.setOnAction((t) -> inserirRedator());
+        txtNomeRedator.setOnAction((t) -> inserirRedator());
+        
+        btnExcluirRedator.setOnAction((t) -> {
+            if(listViewRedator.getSelectionModel().getSelectedIndex() >= 0){
+                new UtilitarioService().excluirRedator(listViewRedator.getSelectionModel().getSelectedItem());
+            }
+            listarRedatores();
+            btnExcluirRedator.setVisible(false);
+        });
+        
+        btnLimparRedator.setOnAction((t) -> txtNomeRedator.setText(""));
+        
+        listarRedatores();
+        //FIM REDATORES -----------------------------------------------------------------------------------------------
     }    
+    
+    private void inserirRedator(){
+        String nomeRedator = txtNomeRedator.getText().trim();
+            if(!txtNomeRedator.getText().equals("")){
+                new UtilitarioService().salvarRedator(nomeRedator);
+            }
+            txtNomeRedator.setText("");
+            listarRedatores();
+            txtNomeRedator.requestFocus();
+    }
     
     private void listarVeterinarios() {
         Statics.listaVeterinarios = new VeterinarioService().getAll();
@@ -124,10 +164,19 @@ public class TelaConfiguracoesController implements Initializable {
         listView.setItems(listaObsTipoVacina);
     }
     
+    private void listarRedatores() {
+        Statics.listaRedatores = new UtilitarioService().getRedatores();
+        ObservableList<String> listaObsRedatores = FXCollections.observableArrayList(Statics.listaRedatores);                                                                         
+        listViewRedator.setItems(listaObsRedatores);
+    }
+    
     private void limparCampos(){
         txtCrmv.setText("");
         txtIf.setText("");
         txtNome.setText("");
         veterinario = null;
+        listView.getSelectionModel().select(null);
+        btnExcluir.setVisible(false);
+        btnInserir.setText("Inserir");
     }
 }

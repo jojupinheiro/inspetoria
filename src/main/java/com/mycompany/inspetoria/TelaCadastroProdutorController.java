@@ -56,6 +56,7 @@ public class TelaCadastroProdutorController implements Initializable {
     @FXML    private TextField txtTelefone2;
     
     private Produtor produtor;
+    private Produtor produtorSalvo = null;
     
     public void setProdutor(Produtor produtor) {
         this.produtor = produtor;
@@ -191,6 +192,7 @@ public class TelaCadastroProdutorController implements Initializable {
             if (new ProdutorService().salvarOuAtualizar(produtor)) {
                 // Deu certo
                 // Posso fechar a janela
+                this.produtorSalvo = this.produtor;
                 ((Stage) btnCancelar.getScene().getWindow()).close();
             } else {
                 // Deu erro. O retorno do boolean veio false
@@ -203,6 +205,10 @@ public class TelaCadastroProdutorController implements Initializable {
             e.printStackTrace();
             setErrorMessages(e.getErrors());
         }
+    }
+    
+    public Produtor getProdutorSalvo() {
+        return this.produtorSalvo;
     }
     
     private void setErrorMessages(Map<String, String> errors) {

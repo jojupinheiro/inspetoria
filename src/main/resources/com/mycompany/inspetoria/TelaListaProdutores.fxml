@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="601.0" prefWidth="947.0" stylesheets="@../../../styles/telalistas.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.inspetoria.TelaListaProdutoresController">
+<AnchorPane id="AnchorPane" prefHeight="601.0" prefWidth="947.0" stylesheets="@../../../styles/telalistas.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.inspetoria.TelaListaProdutoresController">
    <children>
       <VBox alignment="CENTER" prefHeight="110.0" prefWidth="100.0" styleClass="fundo1" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -72,7 +72,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="btnAtualizar" layoutX="902.0" layoutY="30.0" maxHeight="35.0" maxWidth="35.0" minHeight="30.0" minWidth="35.0" mnemonicParsing="false" onAction="#onLimparFiltros" prefHeight="30.0" prefWidth="35.0" style="-fx-background-color: WHITE; -fx-text-fill: BLACK; -fx-background-radius: 100;" textAlignment="RIGHT">
+                  <Button fx:id="btnAtualizar" layoutX="902.0" layoutY="30.0" maxHeight="35.0" maxWidth="35.0" minHeight="30.0" minWidth="35.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="35.0" style="-fx-background-color: WHITE; -fx-text-fill: BLACK; -fx-background-radius: 100;" textAlignment="RIGHT">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -120,7 +120,7 @@
       <TableView fx:id="tblProdutores" editable="true" layoutX="8.0" layoutY="328.0" prefHeight="200.0" prefWidth="200.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="110.0">
          <columns>
             <TableColumn fx:id="tCNome" maxWidth="350.0" minWidth="150.0" prefWidth="150.0" text="Nome" />
-            <TableColumn fx:id="tCCpfCnpj" maxWidth="115.0" minWidth="115.0" prefWidth="115.0" text="CPF/CNPJ" />
+            <TableColumn fx:id="tCCpfCnpj" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" text="CPF/CNPJ" />
             <TableColumn fx:id="tCRg" maxWidth="80.0" prefWidth="75.0" text="RG" />
             <TableColumn fx:id="tCMunicipio" maxWidth="250.0" prefWidth="120.0" text="Município" />
             <TableColumn fx:id="tCEndereco" maxWidth="350.0" prefWidth="150.0" text="Endereço" />

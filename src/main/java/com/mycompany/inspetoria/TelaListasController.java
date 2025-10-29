@@ -47,6 +47,16 @@ public class TelaListasController implements Initializable {
             vBoxLegendas.setVisible(true);
         });
         
+        btnDeclaracoesComplementares.setOnAction((t) -> {
+            try {
+                AnchorPane view = FXMLLoader.load(getClass().getResource("TelaListaDeclComp.fxml"));
+                borderPane.setCenter(view);
+            } catch (IOException ex) {
+                Logger.getLogger(TelaListasController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            vBoxLegendas.setVisible(false);
+        });
+        
         miVerProdutores.setOnAction((t) -> {
             try {
                 AnchorPane view = FXMLLoader.load(getClass().getResource("TelaListaProdutores.fxml"));

@@ -4,15 +4,20 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -130,32 +135,107 @@ public class TelaListaProdutoresController implements Initializable {
             }
         });
         
-        tblProdutores.setRowFactory(tv -> new TableRow<Produtor>() {
-            // Cria um único Tooltip por linha (mais eficiente)
-            private Tooltip tooltip = new Tooltip();
-            {
-                tooltip.setWrapText(true); // Faz o texto quebrar a linha
-                tooltip.setMaxWidth(300);  // Define uma largura máxima
-            }
-
-            @Override
-            public void updateItem(Produtor produtor, boolean empty) {
-                super.updateItem(produtor, empty);
+        tblProdutores.setRowFactory(tv -> {
+            // 1. Criamos a TableRow personalizada (com sua lógica de Tooltip)
+            final TableRow<Produtor> row = new TableRow<Produtor>() {
+                private Tooltip tooltip = new Tooltip();
+                {
+                    tooltip.setWrapText(true);
+                    tooltip.setMaxWidth(300);
+                }
                 
-                if (empty || produtor == null) {
-                    setTooltip(null);
-                } else {
-                    String obs = produtor.getObservacao();
-                    // Se a observação existir, configura e mostra o tooltip
-                    if (obs != null && !obs.trim().isEmpty()) {
-                        tooltip.setText(obs);
-                        setTooltip(tooltip);
-                    } else {
-                        // Se não houver observação, remove o tooltip
+                @Override
+                public void updateItem(Produtor produtor, boolean empty) {
+                    super.updateItem(produtor, empty);
+                    
+                    if (empty || produtor == null) {
                         setTooltip(null);
+                    } else {
+                        String obs = produtor.getObservacao();
+                        if (obs != null && !obs.trim().isEmpty()) {
+                            tooltip.setText(obs);
+                            setTooltip(tooltip);
+                        } else {
+                            setTooltip(null);
+                        }
                     }
                 }
-            }
+            }; // Fim da definição da TableRow
+
+            // 2. Criamos o ContextMenu (lógica adaptada do seu exemplo)
+            final ContextMenu rowMenu = new ContextMenu();
+            
+            // --- Item: Novo Produtor ---
+            MenuItem novo = new MenuItem("Novo Produtor");
+            novo.setOnAction(event -> {
+                // Chama a tela de cadastro (que retorna o produtor, como fizemos antes)
+                Produtor novoProdutor = Telas.cadastrarProdutor(btnNovo.getScene().getWindow());
+                if (novoProdutor != null) {
+                    // Adiciona na lista principal. O filtro e a tabela se atualizam sozinhos.
+                    observableListaProdutores.add(novoProdutor);
+                }
+            });
+
+            // --- Item: Editar Produtor ---
+            MenuItem editItem = new MenuItem("Editar Produtor");
+            editItem.setOnAction(event -> {
+                // Pega o produtor da linha e chama a edição
+                Produtor produtorParaEditar = row.getItem();
+                if(produtorParaEditar == null) return;
+                
+                Produtor produtorAtualizado = Telas.editarProdutor(produtorParaEditar, btnFiltrar.getScene().getWindow());
+                
+                if (produtorAtualizado != null) {
+                    // Atualiza o item na lista principal para forçar a UI a redesenhar
+                    int index = observableListaProdutores.indexOf(produtorParaEditar);
+                    if (index != -1) {
+                        observableListaProdutores.set(index, produtorAtualizado);
+                    }
+                }
+            });
+
+            // --- Item: Excluir Produtor ---
+            MenuItem removeItem = new MenuItem("Excluir Produtor");
+            removeItem.setOnAction(event -> {
+                Produtor produtorParaExcluir = row.getItem();
+                if(produtorParaExcluir == null) return;
+                
+                Alert al = new Alert(Alert.AlertType.CONFIRMATION);
+                al.setTitle("Confirmação");
+                al.setContentText("O produtor '" + produtorParaExcluir.getNome() + "' será excluído! Tem certeza?");
+                
+                if (al.showAndWait().get() == ButtonType.OK) {
+                    // NOTA: Isso assume que você tem um método 'excluir' no seu ProdutorService
+                    if (new ProdutorService().excluir(produtorParaExcluir)) {
+                        Alert mens = new Alert(Alert.AlertType.INFORMATION);
+                        mens.initOwner(btnFiltrar.getScene().getWindow());
+                        mens.setTitle("Excluído");
+                        mens.setContentText("Registro excluído com sucesso!");
+                        mens.showAndWait();
+                        
+                        // Remove da lista principal (a tabela atualizará sozinha)
+                        observableListaProdutores.remove(produtorParaExcluir);
+                    } else {
+                        Alert erroAlert = new Alert(Alert.AlertType.ERROR);
+                        erroAlert.setTitle("Erro");
+                        erroAlert.setContentText("Falha ao excluir o produtor. Verifique se ele está sendo usado em outro local.");
+                        erroAlert.showAndWait();
+                    }
+                }
+            });
+
+            // Adiciona os itens ao menu
+            rowMenu.getItems().addAll(novo, editItem, removeItem);
+
+            // 3. Vincula o menu à linha (lógica de 'empty' do seu exemplo)
+            row.contextMenuProperty().bind(
+                    Bindings.when(row.emptyProperty())
+                    .then((ContextMenu) null)
+                    .otherwise(rowMenu)
+            );
+            
+            // 4. Retorna a linha configurada
+            return row;
         });
         
         btnNovo.setOnAction((t) -> Telas.cadastrarProdutor(btnNovo.getScene().getWindow()));
@@ -217,6 +297,7 @@ public class TelaListaProdutoresController implements Initializable {
 
         // 6. Define a SortedList como os itens da tabela
         tblProdutores.setItems(sortedData);
+        Utils.formatTableColumnCpfOuCnpj(tCCpfCnpj);
     }
     
     private void aplicarFiltro() {

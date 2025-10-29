@@ -148,4 +148,68 @@ public class UtilitarioDAO {
     public boolean editarMunicipio (Municipio municipio){
         return true;
     }
+    
+    public List<String> getRedatores(){
+        List<String> list = new ArrayList<>();
+        ResultSet res = null;
+        PreparedStatement stmt = null;
+        
+        try {
+            String sql = "SELECT * FROM redator ORDER BY nome_redator ";
+            stmt = con.prepareStatement(sql);
+            res = stmt.executeQuery();
+            
+            while (res.next()) {
+                String nomeRedator = res.getString("nome_redator");
+                list.add(nomeRedator);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
+    public boolean salvarRedator(String redator){
+        PreparedStatement stmt = null;
+        boolean result = false;
+        try {
+            String sql = "INSERT INTO redator (nome_redator) VALUES (?)";
+            stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            stmt.setString(1, redator);
+
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                ResultSet rs = stmt.getGeneratedKeys();
+                if (rs.next()) {
+                    int id = rs.getInt(1);
+                    result = true;
+                }
+            } else {
+                throw new SQLException("Não foi possível inserir");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DB.closeStatement(stmt);
+            return result;
+        }
+    }
+    
+    public boolean excluirRedator (String redator){
+        PreparedStatement stmt = null;
+        boolean result = false;
+        try {
+            String sql = "DELETE FROM redator WHERE nome_redator = ?";
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, redator);
+            stmt.executeUpdate();
+            result = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DB.closeStatement(stmt);
+            return result;
+        }
+    }
 }

@@ -47,4 +47,16 @@ public class UtilitarioService {
             return dao.editarMunicipio(municipio);
         }
     }
+    
+    public List<String> getRedatores(){
+        return dao.getRedatores();
+    }
+    
+    public boolean salvarRedator(String redator){
+        return dao.salvarRedator(redator);
+    }
+    
+    public boolean excluirRedator (String redator){
+        return dao.excluirRedator(redator);
+    }
 }

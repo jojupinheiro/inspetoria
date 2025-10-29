@@ -91,7 +91,7 @@ public class VeterinarioDAO {
             stmt.setString(1, veterinario.getNome());
             stmt.setString(2, veterinario.getIdentidadeFuncional());
             stmt.setString(3, veterinario.getCrmv());
-            stmt.setInt(3, veterinario.getId());
+            stmt.setInt(4, veterinario.getId());
 
             //executa
             stmt.executeUpdate();

@@ -38,11 +38,12 @@ public class Telas {
         }
     }
     
-    public static void cadastrarProdutor(Window janela) {
+    public static Produtor cadastrarProdutor(Window janela) {
         try {
             URL url = Telas.class.getResource("TelaCadastroProdutor.fxml");
             FXMLLoader loader = new FXMLLoader(url);
             Parent parent = loader.load();
+            TelaCadastroProdutorController controller = loader.getController();
             Scene scene = new Scene(parent);
             Stage stage = new Stage();
             stage.setTitle("Cadastro de Produtor");
@@ -53,8 +54,10 @@ public class Telas {
             stage.initOwner(janela);
             stage.initModality(Modality.WINDOW_MODAL);
             stage.showAndWait();
+            return controller.getProdutorSalvo();
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
     }
 
@@ -81,11 +84,12 @@ public class Telas {
         }
     }
 
-    public static void editarProdutor(Produtor produtor, Window janela) {
+    public static Produtor editarProdutor(Produtor produtor, Window janela) {
         try {
             URL url = Telas.class.getResource("TelaCadastroProdutor.fxml");
             FXMLLoader loader = new FXMLLoader(url);
             Parent parent = loader.load();
+            TelaCadastroProdutorController controller = loader.getController();
             Scene scene = new Scene(parent);
             Stage stage = new Stage();
             stage.setTitle("Cadastro de Produtor");
@@ -95,11 +99,12 @@ public class Telas {
             stage.setMinHeight(800);
             stage.initOwner(janela);
             stage.initModality(Modality.WINDOW_MODAL);
-            TelaCadastroProdutorController cont = loader.getController();
-            cont.setProdutor(produtor);
+            controller.setProdutor(produtor);
             stage.showAndWait();
+            return controller.getProdutorSalvo();
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
     }
     

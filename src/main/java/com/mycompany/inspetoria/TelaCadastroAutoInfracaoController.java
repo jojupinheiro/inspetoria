@@ -13,20 +13,14 @@ import java.util.TreeMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import model.classes.MotivoInfracao;
@@ -42,7 +36,6 @@ import utils.MascarasFX;
 import utils.Utils;
 import model.classes.AutoInfracao;
 import model.services.MotivoInfracaoService;
-import model.services.VeterinarioService;
 import utils.Alertas;
 
 /**
@@ -182,10 +175,19 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
         });
         
         btnEditarProdutor.setOnAction((t) -> {
-            Telas.editarProdutor(sComboBoxAutuado.getValue(), btnCancelar.getScene().getWindow());
-            listaProdutores = new ProdutorService().getNomesECpfs(0, "");
-            ObservableList<Produtor> listaObs = FXCollections.observableArrayList(listaProdutores);
-            sComboBoxAutuado.setItems(listaObs);
+            Produtor produtorAtualizado = Telas.editarProdutor(sComboBoxAutuado.getValue(), btnSalvar.getScene().getWindow());
+            if (produtorAtualizado != null) {
+                // O objeto foi ATUALIZADO (mutado). 
+                // Para forçar o ComboBox a redesenhar o nome (caso tenha mudado),
+                // removemos e readicionamos o item.
+                int index = sComboBoxAutuado.getItems().indexOf(produtorAtualizado);
+                if (index != -1) {
+                    sComboBoxAutuado.getItems().set(index, produtorAtualizado); // Força a atualização
+                }
+
+                // Garante que ele continue selecionado
+                sComboBoxAutuado.setValue(produtorAtualizado);
+            }
         });
         
         listaMotivos = new MotivoInfracaoService().getAll();
@@ -195,8 +197,7 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
         ObservableList<Veterinario> listaObsVeterinario = FXCollections.observableArrayList(Statics.listaVeterinarios);
         sComboBoxFEA.setItems(listaObsVeterinario);
         
-        ObservableList<String> listaObsRedator = FXCollections.observableArrayList("Anderson Tasca", "Antonio Borges Werner", "Cristiano Silveira", 
-                "Igo Antonio Lobler", "João Juliano Pinheiro", "Rebeca Dopke");
+        ObservableList<String> listaObsRedator = FXCollections.observableArrayList(Statics.listaRedatores);
         sComboBoxRedator.setItems(listaObsRedator);
         
         sComboBoxMunicipio.setValue(Statics.municipioPadrao);
@@ -337,7 +338,18 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
             }
         });
         btnAtualizarHorario.setOnAction((t) -> Utils.atualizarHorario(txtHora));
-        btnInserirProdutor.setOnAction((t) -> inserirProdutor(btnSalvar.getScene().getWindow()));
+        
+        btnInserirProdutor.setOnAction((t) -> {
+            Produtor novoProdutor = Telas.cadastrarProdutor(btnSalvar.getScene().getWindow());
+            
+            // Verificar se o usuário realmente salvou um produtor (e não cancelou)
+            if (novoProdutor != null) {
+                // Adicionar o novo produtor à lista que alimenta o ComboBox
+                sComboBoxAutuado.getItems().add(novoProdutor);
+                sComboBoxAutuado.setValue(novoProdutor);
+            }
+        });
+        
         btnCancelar.setOnAction((t) -> ((Stage) btnCancelar.getScene().getWindow()).close());
         btnLimpar.setOnAction((t) -> limparCampos());
         btnSalvar.setOnAction((t) -> salvarAI());
