@@ -243,13 +243,20 @@ public class AutoInfracaoDAO {
 
                 int proximoNumero = getProximoNumeroAI(ai.getMunicipioLavratura().getId());
 
+                int idFea = 0;
+                
+                
                 dataLavratura = ai.getDataLavratura();
                 horaLavratura = ai.getHoraLocalTime();
                 dataHoraCompleta = dataLavratura.atTime(horaLavratura);
                 stmt.setInt(1, ai.getMunicipioLavratura().getId());
                 stmt.setInt(2, ai.getMotivo().getId());
                 stmt.setInt(3, ai.getAutuado().getId());
-                stmt.setInt(4, ai.getFea().getId());
+                if (ai.getFea() != null){
+                    idFea = ai.getFea().getId();
+                }else{
+                    stmt.setNull(4, java.sql.Types.INTEGER);
+                }
                 stmt.setString(5, ai.getEnquadramentoAdicional());
                 stmt.setBoolean(6, ai.isAdvertencia());
                 stmt.setBoolean(7, ai.isReincidencia());
