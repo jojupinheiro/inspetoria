@@ -84,7 +84,7 @@ public class AutoInfracaoDAO {
                 txtFiltro = "";
             }
 
-            if (filtroSelecionado == 0 || filtroSelecionado == 1 || filtroSelecionado == 3 || filtroSelecionado == 4) {
+            if (filtroSelecionado == 0 || filtroSelecionado == 1 || filtroSelecionado == 3 || filtroSelecionado == 4 || filtroSelecionado == 5) {
                 stmt.setString(1, "%" + txtFiltro + "%");
 
             } else if (filtroSelecionado == 2) {
