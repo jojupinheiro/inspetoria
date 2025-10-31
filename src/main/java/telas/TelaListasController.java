@@ -77,6 +77,7 @@ public class TelaListasController implements Initializable {
             vBoxLegendas.setVisible(false);
         });
         
+        miMotivosInfracao.setOnAction((t) -> Telas.inserirMotivo(btnAutosInfracao.getScene().getWindow()));
         miPreferencias.setOnAction((t) -> Telas.configuracoes(btnAutosInfracao.getScene().getWindow()));
         miAutoInfracao.setOnAction((t) -> Telas.cadastrarAutoInfracao(btnAutosInfracao.getScene().getWindow()));
         miCadastrarProdutor.setOnAction((t) -> Telas.cadastrarProdutor(btnAutosInfracao.getScene().getWindow()));

@@ -31,4 +31,8 @@ public class MotivoInfracaoService {
             return dao.editar(motivoInfracao);
         }
     }
+    
+    public boolean excluir(MotivoInfracao motivoInfracao) {
+        return dao.excluir(motivoInfracao);
+    }
 }

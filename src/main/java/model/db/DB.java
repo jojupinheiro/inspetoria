@@ -12,8 +12,25 @@ import java.sql.Statement;
 public class DB {
     
     public static Connection getConnection(){
+        String usuarioWindows = "root";
+        String usuarioLinux = "juliano";
+        String senhaWindows = "";
+        String senhaLinux = "5423gfe";
+        String so = System.getProperty("os.name").toLowerCase();
+
+        String usuarioUtilizado;
+        String senhaUtilizada;
+        
+        if (so.contains("win")){
+            usuarioUtilizado = usuarioWindows;
+            senhaUtilizada = senhaWindows;
+        }else{
+            usuarioUtilizado = usuarioLinux;
+            senhaUtilizada = senhaLinux;
+        }
+        
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/inspetoria","root","");
+            Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/inspetoria",usuarioUtilizado,senhaLinux);
             return con;
         } catch (Exception e) {
             e.printStackTrace();

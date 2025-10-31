@@ -1,31 +1,28 @@
 package telas;
 
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
-import model.classes.AutoInfracao;
 import model.classes.MotivoInfracao;
-import model.classes.Municipio;
-import model.classes.Produtor;
-import model.classes.Veterinario;
 import model.exceptions.ValidacaoException;
-import model.services.AutoInfracaoService;
 import model.services.MotivoInfracaoService;
 import utils.MascarasFX;
-import utils.Utils;
 
 /**
  * FXML Controller class
@@ -35,9 +32,11 @@ import utils.Utils;
 public class TelaCadastroMotivoController implements Initializable {
     
     @FXML    private Button btnCancelar;
+    @FXML    private Button btnExcluir;
     @FXML    private Button btnLimpar;
     @FXML    private Button btnSalvar;
     @FXML    private CheckBox ckbAdvertencia;
+    @FXML    private ListView<MotivoInfracao> listView;
     @FXML    private RadioButton rbDecretoOutro;
     @FXML    private RadioButton rbDecretoPrincipal;
     @FXML    private RadioButton rbLeiOutra;
@@ -56,11 +55,13 @@ public class TelaCadastroMotivoController implements Initializable {
     @FXML    private TextArea txtResumo;
     
     private MotivoInfracao motivoInfracao;
+    private List<MotivoInfracao> listaMotivos;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         MascarasFX.mascaraNumero(txtMultaInicial);
         MascarasFX.mascaraNumero(txtAdicionalAnimal);
+        btnExcluir.setVisible(false);
         rbLeiPrincipal.setSelected(true);
         rbDecretoPrincipal.setSelected(true);
         rbPenalidadePrincipal.setSelected(true);
@@ -68,6 +69,33 @@ public class TelaCadastroMotivoController implements Initializable {
         txtLeiOutra.setDisable(true);
         txtDecretoOutro.setDisable(true);
         txtPenalidadeOutra.setDisable(true);
+        
+        listView.setCellFactory(lv -> new ListCell<MotivoInfracao>() {
+            @Override
+            protected void updateItem(MotivoInfracao motivoInfracao, boolean empty) {
+                super.updateItem(motivoInfracao, empty);
+                if (empty || motivoInfracao == null) {
+                    setText(null);
+                    setTooltip(null);
+                } else {
+                    setText(motivoInfracao.getResumoDescricao());
+                }
+            }
+        });
+        
+        listView.setOnMouseClicked((mouseEvent) -> {
+            if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                btnExcluir.setVisible(true);
+            }
+        });
+        
+        btnExcluir.setOnAction((t) -> {
+            if(listView.getSelectionModel().getSelectedIndex() >= 0){
+                new MotivoInfracaoService().excluir(listView.getSelectionModel().getSelectedItem());
+            }
+            listarMotivos();
+            btnExcluir.setVisible(false);
+        });
                 
         rbLeiOutra.selectedProperty().addListener((t, ov, nv) -> txtLeiOutra.setDisable(ov));
         rbDecretoOutro.selectedProperty().addListener((t, ov, nv) -> txtDecretoOutro.setDisable(ov));
@@ -76,6 +104,8 @@ public class TelaCadastroMotivoController implements Initializable {
         btnSalvar.setOnAction((t) -> salvar() );
         btnCancelar.setOnAction((t) -> ((Stage) btnCancelar.getScene().getWindow()).close());
         btnLimpar.setOnAction((t) -> limparCampos());
+        
+        listarMotivos();
     }    
     
     private void salvar(){
@@ -142,5 +172,11 @@ public class TelaCadastroMotivoController implements Initializable {
         // Mostrar o erro no label que definimos
 //        lblErroAutuado.setText(campos.contains("autuado") ? errors.get("autuado") : "");
 
+    }
+     
+     private void listarMotivos() {                                                                                                                                               
+        this.listaMotivos = new MotivoInfracaoService().getAll();                                                                                                             
+        ObservableList<MotivoInfracao> listaObsMotivos = FXCollections.observableArrayList(listaMotivos);                                                                         
+        listView.setItems(listaObsMotivos);                                                                                                                                
     }
 }
