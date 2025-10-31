@@ -30,7 +30,7 @@ public class DB {
         }
         
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/inspetoria",usuarioUtilizado,senhaLinux);
+            Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/inspetoria",usuarioUtilizado,senhaUtilizada);
             return con;
         } catch (Exception e) {
             e.printStackTrace();

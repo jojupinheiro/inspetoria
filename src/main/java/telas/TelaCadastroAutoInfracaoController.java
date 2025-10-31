@@ -37,6 +37,7 @@ import utils.Utils;
 import model.classes.AutoInfracao;
 import model.services.MotivoInfracaoService;
 import utils.Alertas;
+import utils.ProcessoTextFormatter;
 
 /**
  * FXML Controller class
@@ -121,7 +122,7 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
         dpDtLimiteDefesa.setValue(ai.getDataCiencia() != null ? ai.getDataCiencia().plusDays(15) : null);
         sComboBoxRedator.setValue(ai.getRedator());
         sComboBoxFEA.setValue(ai.getFea());
-        txtProcesso.setText(ai.getProcesso());
+        txtProcesso.setText(ai.getProcesso() != null ? Utils.imprimeProcesso(ai.getProcesso()) : "");
         txtEnquadramentoAdicional.setText(ai.getEnquadramentoAdicional());
         txtHistorico.setText(ai.getHistorico());
         txtObservacao.setText(ai.getObservacoes());
@@ -154,6 +155,7 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
         MascarasFX.mascaraNumeroInteiro(txtAbelhas);
         MascarasFX.mascaraNumeroInteiro(txtOutra);
         MascarasFX.mascaraNumeroInteiro(txtNumeroAI);
+        txtProcesso.setTextFormatter(ProcessoTextFormatter.createFormatter());
         sComboBoxMotivo.setDisable(true);
         btnEditarProdutor.setVisible(false);
 //        atualizarHorario();

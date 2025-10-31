@@ -7,9 +7,11 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.function.UnaryOperator;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 
 /**
  *
@@ -136,6 +138,36 @@ public class Utils {
                         setText(item.substring(0, 2) + "." + item.substring(2, 5) + "." + item.substring(5, 8) + "/" + item.substring(8, 12) + "-" + item.substring(12));
                     } else {
                         setText((item.substring(0, 3) + "." + item.substring(3, 6) + "." + item.substring(6, 9) + "-" + item.substring(9, 11)));
+                    }
+                }
+            };
+            return cell;
+        });
+    }
+    
+    public static <T> void formatTableColumnProcesso(TableColumn<T, String> tableColumn) {
+        tableColumn.setCellFactory(column -> {
+            TableCell<T, String> cell = new TableCell<T, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    // 1. VERIFICAÇÃO PRINCIPAL:
+                    // Se a célula está vazia (empty)
+                    // OU se o item (a String) é nulo
+                    // OU se o item não tem os 14 caracteres esperados
+                    if (empty || item == null || item.length() != 14) {
+
+                        // Mostra a célula vazia.
+                        // (Se 'item' não for nulo, como "" ou "123", 
+                        // você poderia usar setText(item) para ver o dado inválido)
+                        setText(null);
+
+                    } else {
+                        // 2. FORMATAÇÃO SEGURA:
+                        // Neste ponto, temos certeza que item != null E item.length() == 14
+                        setText(item.substring(0, 2) + "/" + item.substring(2, 6) + "-"
+                                + item.substring(6, 13) + "-" + item.substring(13));
                     }
                 }
             };
@@ -319,6 +351,11 @@ public class Utils {
         }
     }
     
+    public static String imprimeProcesso(String processo) {
+        return (processo.substring(0, 2) + "/" + processo.substring(2, 6) + "-"
+                + processo.substring(6, 13) + "-" + processo.substring(13));
+    }
+    
     public static String imprimePeso(String valor) {
         valor = valor.replace(".", ",");
         if(valor.split(",")[1].length() < 2){
@@ -358,4 +395,6 @@ public class Utils {
 
         txt.setText(horarioFormatado);
     }
+    
+   
 }

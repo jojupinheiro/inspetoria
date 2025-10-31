@@ -357,6 +357,7 @@ public class TelaListaAIController implements Initializable {
         Utils.formatTableColumnDate(tCDtCiencia);
         Utils.formatTableColumnDate(tCDtLimiteDefesa);
         Utils.formatTableColumnCpfOuCnpj(tCCpf);
+        Utils.formatTableColumnProcesso(tCProcesso);
     }
     
 }

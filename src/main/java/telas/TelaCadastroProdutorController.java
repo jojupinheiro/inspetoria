@@ -88,6 +88,7 @@ public class TelaCadastroProdutorController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         MascarasFX.mascaraTelefone(txtTelefone1);
         MascarasFX.mascaraTelefone(txtTelefone2);
+        MascarasFX.mascaraCPF(txtCpf);
         
         txtRg.setOnKeyPressed((keyEvent) -> {
             if (keyEvent.getCode() == KeyCode.TAB) sComboBoxTipoLogradouro.requestFocus();
