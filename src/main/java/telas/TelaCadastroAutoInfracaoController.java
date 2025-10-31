@@ -10,8 +10,10 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeMap;
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -21,8 +23,14 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.util.Duration;
 import model.classes.MotivoInfracao;
 import model.classes.Municipio;
 import model.classes.Produtor;
@@ -46,8 +54,11 @@ import utils.ProcessoTextFormatter;
  */
 public class TelaCadastroAutoInfracaoController implements Initializable {
 
+    @FXML    AnchorPane anchorPane;
+    @FXML    private Button btnAtualizarDataCiencia;
     @FXML    private Button btnAtualizarHorario;
     @FXML    private Button btnCancelar;
+    @FXML    private Button btnCopiarProcesso;
     @FXML    private Button btnEditarProdutor;
     @FXML    private Button btnInserirMotivo;
     @FXML    private Button btnInserirMunicipio;
@@ -73,6 +84,7 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
     @FXML    private Label lblLotePeixes;
     @FXML    private Label lblLoteSuinos;
     @FXML    private Label lblMulta;
+    @FXML    private Label lblProcesso;
     @FXML    private SearchableComboBox<Produtor> sComboBoxAutuado;
     @FXML    private SearchableComboBox<Veterinario> sComboBoxFEA;
     @FXML    private SearchableComboBox<MotivoInfracao> sComboBoxMotivo;
@@ -122,7 +134,7 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
         dpDtLimiteDefesa.setValue(ai.getDataCiencia() != null ? ai.getDataCiencia().plusDays(15) : null);
         sComboBoxRedator.setValue(ai.getRedator());
         sComboBoxFEA.setValue(ai.getFea());
-        txtProcesso.setText(ai.getProcesso() != null ? Utils.imprimeProcesso(ai.getProcesso()) : "");
+        txtProcesso.setText(ai.getProcesso() == null || ai.getProcesso().trim().isEmpty() ? "" : Utils.imprimeProcesso(ai.getProcesso()));
         txtEnquadramentoAdicional.setText(ai.getEnquadramentoAdicional());
         txtHistorico.setText(ai.getHistorico());
         txtObservacao.setText(ai.getObservacoes());
@@ -170,11 +182,23 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
         ObservableList<Produtor> listaObsProdutor = FXCollections.observableArrayList(listaProdutores);
         sComboBoxAutuado.setItems(listaObsProdutor);
         
+        anchorPane.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                salvarAI();
+            }
+        });
+        
         sComboBoxAutuado.setOnAction((t) -> { 
             if (sComboBoxAutuado.getValue() != null){
                 sComboBoxMotivo.setDisable(false);
                 btnEditarProdutor.setVisible(true);
                 verificarReincidencia();
+            }
+        });
+        
+        sComboBoxMunicipio.setOnAction((t) -> {
+            if (sComboBoxMunicipio.getValue() != null){
+                txtNumeroAI.setText(String.valueOf(new AutoInfracaoService().getProximoNumeroAI(sComboBoxMunicipio.getValue().getId())));
             }
         });
         
@@ -191,6 +215,29 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
 
                 // Garante que ele continue selecionado
                 sComboBoxAutuado.setValue(produtorAtualizado);
+            }
+        });
+        
+        btnAtualizarDataCiencia.setOnAction((t) -> {
+            if (dpDtLavratura.getValue() != null){
+                dpDtCiencia.setValue(dpDtLavratura.getValue());
+            }
+        });
+        
+        btnCopiarProcesso.setOnAction((t) -> {
+            String textoParaCopiar = txtProcesso.getText();
+
+            if (textoParaCopiar != null && !textoParaCopiar.isEmpty()) {
+                final Clipboard clipboard = Clipboard.getSystemClipboard();
+                final ClipboardContent content = new ClipboardContent();
+                content.putString(textoParaCopiar);
+                clipboard.setContent(content);
+                lblProcesso.setText("Copiado para a área de transferência!");
+                PauseTransition pause = new PauseTransition(Duration.seconds(5));
+                pause.setOnFinished(e -> {
+                    lblProcesso.setText(""); 
+                });
+                pause.play();
             }
         });
         
@@ -619,4 +666,9 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
         }
         setValorMulta();
     }
+    
+//     @FXML
+//     private void handleSalvar(ActionEvent event) {
+//        salvarAI();
+//     }
 }

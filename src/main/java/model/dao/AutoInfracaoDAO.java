@@ -67,7 +67,7 @@ public class AutoInfracaoDAO {
                     filtroSql = "WHERE mot.resumo_descricao_motivo_ai LIKE ? ";
                     break;
                 case 4:
-                    filtroSql = "WHERE ai.fk_municipio_lavratura_ai = ? ";
+                    filtroSql = "WHERE mun.nome_municipio LIKE ? ";
                     break;
                 case 5:
                     filtroSql = "WHERE ai.numero_ai LIKE ? ";

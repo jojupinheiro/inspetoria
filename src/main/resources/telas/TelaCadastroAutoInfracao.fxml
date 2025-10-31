@@ -21,7 +21,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="642.0" prefWidth="966.0" styleClass="fundo1" stylesheets="@../styles/telalistas.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="telas.TelaCadastroAutoInfracaoController">
+<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="642.0" prefWidth="966.0" styleClass="fundo1" stylesheets="@../styles/telalistas.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="telas.TelaCadastroAutoInfracaoController">
    <children>
       <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
@@ -61,6 +61,42 @@
                   <Insets />
                </GridPane.margin>
             </VBox>
+            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+               <children>
+                  <Label text="Município da autuação*" />
+                  <HBox prefWidth="200.0">
+                     <children>
+                        <SearchableComboBox fx:id="sComboBoxMunicipio" prefWidth="250.0" />
+                        <Button fx:id="btnInserirMunicipio" mnemonicParsing="false" styleClass="botoesInserir">
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/plus.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Insere um novo município" />
+                           </tooltip>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Label fx:id="lblErroMunicipio" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets right="20.0" />
+               </padding>
+            </VBox>
             <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.columnSpan="2">
                <children>
                   <Label text="Autuado*" />
@@ -82,7 +118,7 @@
                               <Tooltip text="Inserir produtor" />
                            </tooltip>
                         </Button>
-                        <Button fx:id="btnEditarProdutor" layoutX="260.0" layoutY="10.0" mnemonicParsing="false">
+                        <Button fx:id="btnEditarProdutor" focusTraversable="false" layoutX="260.0" layoutY="10.0" mnemonicParsing="false">
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -135,10 +171,40 @@
                               </HBox>
                            </children>
                         </VBox>
-                        <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="180.0">
+                        <VBox alignment="CENTER_LEFT" prefHeight="200.0">
                            <children>
                               <Label text="Nº processo" />
-                              <TextField fx:id="txtProcesso" alignment="CENTER" prefWidth="180.0" />
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0">
+                                 <children>
+                                    <TextField fx:id="txtProcesso" alignment="CENTER" prefWidth="180.0" />
+                                    <Button fx:id="btnCopiarProcesso" mnemonicParsing="false" styleClass="botoesInserir">
+                                       <graphic>
+                                          <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../images/copiar.png" />
+                                             </image>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </ImageView>
+                                       </graphic>
+                                       <tooltip>
+                                          <Tooltip text="Copia o número do processo para a área de transferência" />
+                                       </tooltip>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Label fx:id="lblProcesso" textFill="RED">
+                                       <HBox.margin>
+                                          <Insets left="15.0" />
+                                       </HBox.margin>
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
                            </children>
                         </VBox>
                      </children>
@@ -148,21 +214,6 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-               </children>
-               <GridPane.margin>
-                  <Insets left="5.0" right="5.0" />
-               </GridPane.margin>
-            </VBox>
-            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
-               <children>
-                  <Label text="Data de Ciência" />
-                  <DatePicker fx:id="dpDtCiencia" prefWidth="250.0" />
-                  <Label layoutX="10.0" layoutY="51.0" text="Data Limite Defesa">
-                     <padding>
-                        <Insets top="15.0" />
-                     </padding>
-                  </Label>
-                  <DatePicker fx:id="dpDtLimiteDefesa" editable="false" focusTraversable="false" layoutX="10.0" layoutY="68.0" prefWidth="250.0" />
                </children>
                <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
@@ -202,6 +253,83 @@
                </children>
                <GridPane.margin>
                   <Insets left="5.0" right="5.0" />
+               </GridPane.margin>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
+               <children>
+                  <Label text="Data de Ciência" />
+                  <HBox>
+                     <children>
+                        <DatePicker fx:id="dpDtCiencia" prefWidth="250.0" />
+                        <Button fx:id="btnAtualizarDataCiencia" mnemonicParsing="false" styleClass="botoesInserir">
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/flecha.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Preenche com a data da lavratura" />
+                           </tooltip>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Label layoutX="10.0" layoutY="51.0" text="Data Limite Defesa">
+                     <padding>
+                        <Insets top="15.0" />
+                     </padding>
+                  </Label>
+                  <DatePicker fx:id="dpDtLimiteDefesa" editable="false" focusTraversable="false" layoutX="10.0" layoutY="68.0" prefWidth="250.0" />
+               </children>
+               <GridPane.margin>
+                  <Insets left="5.0" right="5.0" />
+               </GridPane.margin>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="3">
+               <children>
+                  <Label text="Redator" />
+                  <SearchableComboBox fx:id="sComboBoxRedator" prefWidth="250.0" />
+                  <Label layoutX="15.0" layoutY="50.0" text="FEA que assinou">
+                     <padding>
+                        <Insets top="15.0" />
+                     </padding>
+                  </Label>
+                  <SearchableComboBox fx:id="sComboBoxFEA" layoutX="15.0" layoutY="59.0" prefWidth="250.0" />
+               </children>
+               <padding>
+                  <Insets left="5.0" right="15.0" />
+               </padding>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <CheckBox fx:id="ckbReincidente" contentDisplay="CENTER" mnemonicParsing="false" text="Reincidente?">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </CheckBox>
+                  <CheckBox fx:id="ckbAdvertencia" mnemonicParsing="false" text="Advertência?">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </CheckBox>
+                  <CheckBox fx:id="ckbDesconto" contentDisplay="CENTER" mnemonicParsing="false" text="Desconto?">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </CheckBox>
+               </children>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+               <GridPane.margin>
+                  <Insets left="30.0" />
                </GridPane.margin>
             </VBox>
             <VBox style="-fx-border-color: black;" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="3">
@@ -356,21 +484,6 @@
                   <Insets left="20.0" top="10.0" />
                </padding>
             </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="3">
-               <children>
-                  <Label text="Redator" />
-                  <SearchableComboBox fx:id="sComboBoxRedator" prefWidth="250.0" />
-                  <Label layoutX="15.0" layoutY="50.0" text="FEA que assinou">
-                     <padding>
-                        <Insets top="15.0" />
-                     </padding>
-                  </Label>
-                  <SearchableComboBox fx:id="sComboBoxFEA" layoutX="15.0" layoutY="59.0" prefWidth="250.0" />
-               </children>
-               <padding>
-                  <Insets left="5.0" right="15.0" />
-               </padding>
-            </VBox>
             <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
                   <Label text="Observação" />
@@ -446,67 +559,6 @@
                </children>
                <padding>
                   <Insets left="5.0" />
-               </padding>
-            </VBox>
-            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <children>
-                  <CheckBox fx:id="ckbReincidente" contentDisplay="CENTER" mnemonicParsing="false" text="Reincidente?">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </CheckBox>
-                  <CheckBox fx:id="ckbAdvertencia" mnemonicParsing="false" text="Advertência?">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </CheckBox>
-                  <CheckBox fx:id="ckbDesconto" contentDisplay="CENTER" mnemonicParsing="false" text="Desconto?">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </CheckBox>
-               </children>
-               <padding>
-                  <Insets left="5.0" />
-               </padding>
-               <GridPane.margin>
-                  <Insets left="30.0" />
-               </GridPane.margin>
-            </VBox>
-            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
-               <children>
-                  <Label text="Município da autuação*" />
-                  <HBox prefWidth="200.0">
-                     <children>
-                        <SearchableComboBox fx:id="sComboBoxMunicipio" prefWidth="250.0" />
-                        <Button fx:id="btnInserirMunicipio" mnemonicParsing="false" styleClass="botoesInserir">
-                           <graphic>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../images/plus.png" />
-                                 </image>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </ImageView>
-                           </graphic>
-                           <tooltip>
-                              <Tooltip text="Insere um novo município" />
-                           </tooltip>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <Label fx:id="lblErroMunicipio" textFill="RED">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-               </children>
-               <padding>
-                  <Insets right="20.0" />
                </padding>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">

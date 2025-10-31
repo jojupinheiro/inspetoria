@@ -28,6 +28,8 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.stage.Window;
@@ -204,7 +206,42 @@ public class TelaListaAIController implements Initializable {
                         }
                     }
                 });
-                rowMenu.getItems().addAll(novo, editItem, removeItem, verAutuado);
+
+                MenuItem copiarCpfAutuado = new MenuItem("Copiar CPF do Autuado");
+                copiarCpfAutuado.setOnAction((t) -> {
+                    AutoInfracao ai = row.getItem();
+
+                    // Verifica se o item, o autuado e o CPF não são nulos
+                    if (ai != null && ai.getAutuado() != null && ai.getAutuado().getCpf() != null) {
+                        String cpf = Utils.imprimeCPFouCNPJ(ai.getAutuado().getCpf());
+
+                        if (!cpf.isEmpty()) {
+                            final Clipboard clipboard = Clipboard.getSystemClipboard();
+                            final ClipboardContent content = new ClipboardContent();
+                            content.putString(cpf);
+                            clipboard.setContent(content);
+                        }
+                    }
+                });
+
+                MenuItem copiarNomeAutuado = new MenuItem("Copiar Nome do Autuado");
+                copiarNomeAutuado.setOnAction((t) -> {
+                    AutoInfracao ai = row.getItem();
+
+                    // Verifica se o item, o autuado e o Nome não são nulos
+                    if (ai != null && ai.getAutuado() != null && ai.getAutuado().getNome() != null) {
+                        String nome = ai.getAutuado().getNome();
+
+                        if (!nome.isEmpty()) {
+                            final Clipboard clipboard = Clipboard.getSystemClipboard();
+                            final ClipboardContent content = new ClipboardContent();
+                            content.putString(nome);
+                            clipboard.setContent(content);
+                        }
+                    }
+                });
+
+                rowMenu.getItems().addAll(novo, editItem, removeItem, verAutuado, copiarCpfAutuado, copiarNomeAutuado);
 
                 // only display context menu for non-empty rows:
                 row.contextMenuProperty().bind(

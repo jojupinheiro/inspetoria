@@ -352,6 +352,20 @@ public class Utils {
     }
     
     public static String imprimeProcesso(String processo) {
+        // VERIFICAÇÃO DE SEGURANÇA:
+        // Se o processo for nulo ou vazio, retorna uma string vazia imediatamente.
+        if (processo == null || processo.trim().isEmpty()) {
+            return "";
+        }
+
+        // Se a string não for vazia, mas for curta demais para o formato,
+        // apenas a retorna como está, para evitar outro erro de "out of bounds".
+        // O seu formato precisa de, no mínimo, 14 caracteres (baseado em substring(13)).
+        if (processo.length() < 14) {
+            return processo;
+        }
+
+        // Se passou nas verificações, formata
         return (processo.substring(0, 2) + "/" + processo.substring(2, 6) + "-"
                 + processo.substring(6, 13) + "-" + processo.substring(13));
     }

@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -20,7 +21,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="640.0" prefWidth="815.0" styleClass="fundo1" stylesheets="@../styles/telalistas.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="telas.TelaCadastroProdutorController">
+<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="640.0" prefWidth="815.0" styleClass="fundo1" stylesheets="@../styles/telalistas.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="telas.TelaCadastroProdutorController">
    <children>
       <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
@@ -38,7 +39,29 @@
             <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
                <children>
                   <Label text="Nome*" />
-                  <TextField fx:id="txtNome" alignment="CENTER" maxWidth="300.0" prefWidth="250.0" />
+                  <HBox prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="txtNome" alignment="CENTER" maxWidth="300.0" prefWidth="250.0" />
+                        <Button fx:id="btnCopiarNome" mnemonicParsing="false" styleClass="botoesInserir">
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/copiar.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Copia o nome para a área de transferência" />
+                           </tooltip>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </HBox>
                   <Label fx:id="lblErroNome" textFill="RED">
                      <font>
                         <Font name="System Bold" size="15.0" />
@@ -77,23 +100,58 @@
                </GridPane.margin>
                <children>
                   <Label text="CPF ou CNPJ*" />
-                  <TextField fx:id="txtCpf" alignment="CENTER" maxWidth="300.0" prefWidth="250.0">
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
-                  </TextField>
+                  <HBox prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="txtCpf" alignment="CENTER" maxWidth="250.0" prefWidth="250.0" />
+                        <Button fx:id="btnCopiarCpf" mnemonicParsing="false" styleClass="botoesInserir">
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/copiar.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Copia o CPF para a área de transferência" />
+                           </tooltip>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </HBox>
                   <Label fx:id="lblErroCPF" textFill="RED">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
                   <Label layoutX="10.0" layoutY="41.0" text="RG" />
-                  <TextField fx:id="txtRg" alignment="CENTER" layoutX="10.0" layoutY="58.0" maxWidth="300.0" prefWidth="250.0">
+                  <TextField fx:id="txtRg" alignment="CENTER" layoutX="10.0" layoutY="58.0" maxWidth="250.0" prefWidth="250.0">
                      <VBox.margin>
                         <Insets top="5.0" />
                      </VBox.margin>
                   </TextField>
                </children>
+            </VBox>
+            <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="5.0" style="-fx-border-width: 2 0 0 2; -fx-border-color: black;" GridPane.rowIndex="1">
+               <padding>
+                  <Insets left="15.0" right="20.0" />
+               </padding>
+               <children>
+                  <Label layoutX="25.0" layoutY="73.0" text="Endereço">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="Tipo de logradouro" />
+                  <SearchableComboBox fx:id="sComboBoxTipoLogradouro" maxWidth="120.0" prefWidth="120.0" />
+               </children>
+               <GridPane.margin>
+                  <Insets top="10.0" />
+               </GridPane.margin>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" style="-fx-border-width: 0 0 2 2; -fx-border-color: black;" GridPane.rowIndex="2">
                <GridPane.margin>
@@ -114,6 +172,45 @@
                <children>
                   <Label text="Número" />
                   <TextField fx:id="txtNumero" alignment="CENTER" maxWidth="150.0" prefWidth="150.0" />
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" style="-fx-border-width: 0 2 2 0; -fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <padding>
+                  <Insets left="5.0" right="15.0" top="20.0" />
+               </padding>
+               <GridPane.margin>
+                  <Insets bottom="10.0" />
+               </GridPane.margin>
+               <children>
+                  <Label text="Município*" />
+                  <HBox prefWidth="200.0">
+                     <children>
+                        <SearchableComboBox fx:id="sComboBoxMunicipio" prefWidth="280.0" />
+                        <Button fx:id="btnInserirMunicipio" mnemonicParsing="false" styleClass="botoesInserir">
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/plus.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Insere um novo município" />
+                           </tooltip>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Label fx:id="lblErroMunicipio" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
                </children>
             </VBox>
             <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="5.0" style="-fx-border-width: 2; -fx-border-color: black;" GridPane.rowIndex="3" GridPane.rowSpan="2">
@@ -144,6 +241,15 @@
                <GridPane.margin>
                   <Insets right="5.0" top="10.0" />
                </GridPane.margin>
+            </VBox>
+            <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <children>
+                  <Label text="Observação" />
+                  <TextArea fx:id="txtObservacao" maxHeight="80.0" maxWidth="260.0" prefHeight="80.0" prefWidth="250.0" wrapText="true" />
+               </children>
+               <padding>
+                  <Insets left="15.0" />
+               </padding>
             </VBox>
             <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <padding>
@@ -210,49 +316,6 @@
                      </children>
                   </VBox>
                </children>
-            </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" style="-fx-border-width: 0 2 2 0; -fx-border-color: black;" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <padding>
-                  <Insets left="5.0" right="15.0" top="20.0" />
-               </padding>
-               <GridPane.margin>
-                  <Insets bottom="10.0" />
-               </GridPane.margin>
-               <children>
-                  <Label text="Município*" />
-                  <SearchableComboBox fx:id="sComboBoxMunicipio" prefWidth="250.0" />
-                  <Label fx:id="lblErroMunicipio" textFill="RED">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
-            <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="5.0" style="-fx-border-width: 2 0 0 2; -fx-border-color: black;" GridPane.rowIndex="1">
-               <padding>
-                  <Insets left="15.0" right="20.0" />
-               </padding>
-               <children>
-                  <Label layoutX="25.0" layoutY="73.0" text="Endereço">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label text="Tipo de logradouro" />
-                  <SearchableComboBox fx:id="sComboBoxTipoLogradouro" maxWidth="120.0" prefWidth="120.0" />
-               </children>
-               <GridPane.margin>
-                  <Insets top="10.0" />
-               </GridPane.margin>
-            </VBox>
-            <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-               <children>
-                  <Label text="Observação" />
-                  <TextArea fx:id="txtObservacao" maxHeight="80.0" maxWidth="260.0" prefHeight="80.0" prefWidth="250.0" wrapText="true" />
-               </children>
-               <padding>
-                  <Insets left="15.0" />
-               </padding>
             </VBox>
          </children>
          <padding>
