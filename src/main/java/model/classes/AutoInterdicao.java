@@ -1,6 +1,7 @@
 package model.classes;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  *
@@ -14,10 +15,12 @@ public class AutoInterdicao {
     Produtor produtor;
     Veterinario veterinario;
     LocalDate dataLavratura,
-            dataCiencia;
+            dataCiencia,
+            dataDesinterdicao;
+    LocalTime horaLavratura;
     String observacoes;
 
-    public AutoInterdicao(int id, int numero, Municipio municipio, Programa programa, Produtor produtor, Veterinario veterinario, LocalDate dataLavratura, LocalDate dataCiencia, String observacoes) {
+    public AutoInterdicao(int id, int numero, Municipio municipio, Programa programa, Produtor produtor, Veterinario veterinario, LocalDate dataLavratura, LocalDate dataCiencia, LocalDate dataDesinterdicao, LocalTime horaLavratura, String observacoes) {
         this.id = id;
         this.numero = numero;
         this.municipio = municipio;
@@ -26,10 +29,12 @@ public class AutoInterdicao {
         this.veterinario = veterinario;
         this.dataLavratura = dataLavratura;
         this.dataCiencia = dataCiencia;
+        this.dataDesinterdicao = dataDesinterdicao;
+        this.horaLavratura = horaLavratura;
         this.observacoes = observacoes;
     }
 
-    public AutoInterdicao(int numero, Municipio municipio, Programa programa, Produtor produtor, Veterinario veterinario, LocalDate dataLavratura, LocalDate dataCiencia, String observacoes) {
+    public AutoInterdicao(int numero, Municipio municipio, Programa programa, Produtor produtor, Veterinario veterinario, LocalDate dataLavratura, LocalDate dataCiencia, LocalDate dataDesinterdicao, LocalTime horaLavratura, String observacoes) {
         this.numero = numero;
         this.municipio = municipio;
         this.programa = programa;
@@ -37,7 +42,25 @@ public class AutoInterdicao {
         this.veterinario = veterinario;
         this.dataLavratura = dataLavratura;
         this.dataCiencia = dataCiencia;
+        this.dataDesinterdicao = dataDesinterdicao;
+        this.horaLavratura = horaLavratura;
         this.observacoes = observacoes;
+    }
+
+    public LocalDate getDataDesinterdicao() {
+        return dataDesinterdicao;
+    }
+
+    public void setDataDesinterdicao(LocalDate dataDesinterdicao) {
+        this.dataDesinterdicao = dataDesinterdicao;
+    }
+
+    public LocalTime getHoraLavratura() {
+        return horaLavratura;
+    }
+
+    public void setHoraLavratura(LocalTime horaLavratura) {
+        this.horaLavratura = horaLavratura;
     }
 
     public int getId() {

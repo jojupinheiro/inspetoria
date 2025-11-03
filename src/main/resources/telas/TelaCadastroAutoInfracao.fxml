@@ -21,7 +21,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="642.0" prefWidth="966.0" styleClass="fundo1" stylesheets="@../styles/telalistas.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="telas.TelaCadastroAutoInfracaoController">
+<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="642.0" prefWidth="966.0" styleClass="fundo1" stylesheets="@../styles/telalistas.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="telas.TelaCadastroAutoInfracaoController">
    <children>
       <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
@@ -66,7 +66,7 @@
                   <Label text="Município da autuação*" />
                   <HBox prefWidth="200.0">
                      <children>
-                        <SearchableComboBox fx:id="sComboBoxMunicipio" prefWidth="250.0" />
+                        <SearchableComboBox fx:id="scmbMunicipio" prefWidth="250.0" />
                         <Button fx:id="btnInserirMunicipio" mnemonicParsing="false" styleClass="botoesInserir">
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
@@ -102,7 +102,7 @@
                   <Label text="Autuado*" />
                   <HBox prefWidth="200.0">
                      <children>
-                        <SearchableComboBox fx:id="sComboBoxAutuado" prefWidth="450.0" />
+                        <SearchableComboBox fx:id="scmbAutuado" prefWidth="450.0" />
                         <Button fx:id="btnInserirProdutor" mnemonicParsing="false">
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
@@ -224,7 +224,7 @@
                   <Label text="Motivo*" />
                   <HBox prefWidth="200.0">
                      <children>
-                        <SearchableComboBox fx:id="sComboBoxMotivo" prefWidth="250.0" />
+                        <SearchableComboBox fx:id="scmbMotivo" prefWidth="250.0" />
                         <Button fx:id="btnInserirMotivo" mnemonicParsing="false" styleClass="botoesInserir">
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
@@ -295,13 +295,13 @@
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="3">
                <children>
                   <Label text="Redator" />
-                  <SearchableComboBox fx:id="sComboBoxRedator" prefWidth="250.0" />
+                  <SearchableComboBox fx:id="scmbRedator" prefWidth="250.0" />
                   <Label layoutX="15.0" layoutY="50.0" text="FEA que assinou">
                      <padding>
                         <Insets top="15.0" />
                      </padding>
                   </Label>
-                  <SearchableComboBox fx:id="sComboBoxFEA" layoutX="15.0" layoutY="59.0" prefWidth="250.0" />
+                  <SearchableComboBox fx:id="scmbFEA" layoutX="15.0" layoutY="59.0" prefWidth="250.0" />
                </children>
                <padding>
                   <Insets left="5.0" right="15.0" />

@@ -85,11 +85,11 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
     @FXML    private Label lblLoteSuinos;
     @FXML    private Label lblMulta;
     @FXML    private Label lblProcesso;
-    @FXML    private SearchableComboBox<Produtor> sComboBoxAutuado;
-    @FXML    private SearchableComboBox<Veterinario> sComboBoxFEA;
-    @FXML    private SearchableComboBox<MotivoInfracao> sComboBoxMotivo;
-    @FXML    private SearchableComboBox<Municipio> sComboBoxMunicipio;
-    @FXML    private SearchableComboBox<String> sComboBoxRedator;
+    @FXML    private SearchableComboBox<Produtor> scmbAutuado;
+    @FXML    private SearchableComboBox<Veterinario> scmbFEA;
+    @FXML    private SearchableComboBox<MotivoInfracao> scmbMotivo;
+    @FXML    private SearchableComboBox<Municipio> scmbMunicipio;
+    @FXML    private SearchableComboBox<String> scmbRedator;
     @FXML    private TextField txtAbelhas;
     @FXML    private TextField txtAves;
     @FXML    private TextField txtBovinos;
@@ -127,13 +127,13 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
         this.animaisEnvolvidos = animaisEnvolvidos;
         txtNumeroAI.setText(String.valueOf(ai.getNumeroAi()));
         dpDtLavratura.setValue(ai.getDataLavratura());
-        sComboBoxAutuado.setValue(ai.getAutuado());
-        sComboBoxMunicipio.setValue(ai.getMunicipioLavratura());
-        sComboBoxMotivo.setValue(ai.getMotivo());
+        scmbAutuado.setValue(ai.getAutuado());
+        scmbMunicipio.setValue(ai.getMunicipioLavratura());
+        scmbMotivo.setValue(ai.getMotivo());
         dpDtCiencia.setValue(ai.getDataCiencia());
         dpDtLimiteDefesa.setValue(ai.getDataCiencia() != null ? ai.getDataCiencia().plusDays(15) : null);
-        sComboBoxRedator.setValue(ai.getRedator());
-        sComboBoxFEA.setValue(ai.getFea());
+        scmbRedator.setValue(ai.getRedator());
+        scmbFEA.setValue(ai.getFea());
         txtProcesso.setText(ai.getProcesso() == null || ai.getProcesso().trim().isEmpty() ? "" : Utils.imprimeProcesso(ai.getProcesso()));
         txtEnquadramentoAdicional.setText(ai.getEnquadramentoAdicional());
         txtHistorico.setText(ai.getHistorico());
@@ -142,7 +142,7 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
         ckbAdvertencia.setSelected(ai.isAdvertencia());
         ckbDesconto.setSelected(ai.isDesconto());
         ckbReincidente.setSelected(ai.isReincidencia());
-        sComboBoxMotivo.setDisable(false);
+        scmbMotivo.setDisable(false);
         
         setAnimaisEnvolvidos(animaisEnvolvidos);
     }
@@ -168,7 +168,7 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
         MascarasFX.mascaraNumeroInteiro(txtOutra);
         MascarasFX.mascaraNumeroInteiro(txtNumeroAI);
         txtProcesso.setTextFormatter(ProcessoTextFormatter.createFormatter());
-        sComboBoxMotivo.setDisable(true);
+        scmbMotivo.setDisable(true);
         btnEditarProdutor.setVisible(false);
 //        atualizarHorario();
         Utils.atualizarHorario(txtHora);
@@ -176,11 +176,11 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
         
         listaMunicipios = new UtilitarioService().getMunicipios();
         ObservableList<Municipio> listaObsMunicipios = FXCollections.observableArrayList(listaMunicipios);
-        sComboBoxMunicipio.setItems(listaObsMunicipios);
+        scmbMunicipio.setItems(listaObsMunicipios);
         
         listaProdutores = new ProdutorService().getNomesECpfs(0, "");
         ObservableList<Produtor> listaObsProdutor = FXCollections.observableArrayList(listaProdutores);
-        sComboBoxAutuado.setItems(listaObsProdutor);
+        scmbAutuado.setItems(listaObsProdutor);
         
         anchorPane.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode() == KeyCode.ENTER) {
@@ -188,33 +188,33 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
             }
         });
         
-        sComboBoxAutuado.setOnAction((t) -> { 
-            if (sComboBoxAutuado.getValue() != null){
-                sComboBoxMotivo.setDisable(false);
+        scmbAutuado.setOnAction((t) -> { 
+            if (scmbAutuado.getValue() != null){
+                scmbMotivo.setDisable(false);
                 btnEditarProdutor.setVisible(true);
                 verificarReincidencia();
             }
         });
         
-        sComboBoxMunicipio.setOnAction((t) -> {
-            if (sComboBoxMunicipio.getValue() != null){
-                txtNumeroAI.setText(String.valueOf(new AutoInfracaoService().getProximoNumeroAI(sComboBoxMunicipio.getValue().getId())));
+        scmbMunicipio.setOnAction((t) -> {
+            if (scmbMunicipio.getValue() != null){
+                txtNumeroAI.setText(String.valueOf(new AutoInfracaoService().getProximoNumeroAI(scmbMunicipio.getValue().getId())));
             }
         });
         
         btnEditarProdutor.setOnAction((t) -> {
-            Produtor produtorAtualizado = Telas.editarProdutor(sComboBoxAutuado.getValue(), btnSalvar.getScene().getWindow());
+            Produtor produtorAtualizado = Telas.editarProdutor(scmbAutuado.getValue(), btnSalvar.getScene().getWindow());
             if (produtorAtualizado != null) {
                 // O objeto foi ATUALIZADO (mutado). 
                 // Para forçar o ComboBox a redesenhar o nome (caso tenha mudado),
                 // removemos e readicionamos o item.
-                int index = sComboBoxAutuado.getItems().indexOf(produtorAtualizado);
+                int index = scmbAutuado.getItems().indexOf(produtorAtualizado);
                 if (index != -1) {
-                    sComboBoxAutuado.getItems().set(index, produtorAtualizado); // Força a atualização
+                    scmbAutuado.getItems().set(index, produtorAtualizado); // Força a atualização
                 }
 
                 // Garante que ele continue selecionado
-                sComboBoxAutuado.setValue(produtorAtualizado);
+                scmbAutuado.setValue(produtorAtualizado);
             }
         });
         
@@ -243,16 +243,16 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
         
         listaMotivos = new MotivoInfracaoService().getAll();
         ObservableList<MotivoInfracao> listaObsMotivos = FXCollections.observableArrayList(listaMotivos);
-        sComboBoxMotivo.setItems(listaObsMotivos);
+        scmbMotivo.setItems(listaObsMotivos);
         
         ObservableList<Veterinario> listaObsVeterinario = FXCollections.observableArrayList(Statics.listaVeterinarios);
-        sComboBoxFEA.setItems(listaObsVeterinario);
+        scmbFEA.setItems(listaObsVeterinario);
         
         ObservableList<String> listaObsRedator = FXCollections.observableArrayList(Statics.listaRedatores);
-        sComboBoxRedator.setItems(listaObsRedator);
+        scmbRedator.setItems(listaObsRedator);
         
-        sComboBoxMunicipio.setValue(Statics.municipioPadrao);
-        txtNumeroAI.setText(String.valueOf(new AutoInfracaoService().getProximoNumeroAI(sComboBoxMunicipio.getValue().getId())));
+        scmbMunicipio.setValue(Statics.municipioPadrao);
+        txtNumeroAI.setText(String.valueOf(new AutoInfracaoService().getProximoNumeroAI(scmbMunicipio.getValue().getId())));
         
         txtOvinos.setOnAction((t) -> lblLoteOvinos.setText(calcularLote("ovinos", txtOvinos.getText())  + " (lote de 5)" ) );
         txtCaprinos.setOnAction((t) -> lblLoteCaprinos.setText(calcularLote("caprinos", txtCaprinos.getText()) + " (lote de 5)"));
@@ -264,7 +264,7 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
             setValorMulta();
             if (ckbReincidente.isSelected()) {
                 ckbAdvertencia.setDisable(true);
-            } else if (!ckbReincidente.isSelected() && sComboBoxMotivo.getValue().isPreveAdv()) {
+            } else if (!ckbReincidente.isSelected() && scmbMotivo.getValue().isPreveAdv()) {
                 ckbAdvertencia.setDisable(false);
             }
         });
@@ -372,10 +372,10 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
             setValorMulta();
         });
         
-        sComboBoxMotivo.setOnAction((t) -> {
+        scmbMotivo.setOnAction((t) -> {
             setValorMulta();
-            if (sComboBoxMotivo.getValue() != null) {
-                ckbAdvertencia.setDisable(!sComboBoxMotivo.getValue().isPreveAdv());
+            if (scmbMotivo.getValue() != null) {
+                ckbAdvertencia.setDisable(!scmbMotivo.getValue().isPreveAdv());
                 verificarReincidencia();
             }
         });
@@ -396,8 +396,8 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
             // Verificar se o usuário realmente salvou um produtor (e não cancelou)
             if (novoProdutor != null) {
                 // Adicionar o novo produtor à lista que alimenta o ComboBox
-                sComboBoxAutuado.getItems().add(novoProdutor);
-                sComboBoxAutuado.setValue(novoProdutor);
+                scmbAutuado.getItems().add(novoProdutor);
+                scmbAutuado.setValue(novoProdutor);
             }
         });
         
@@ -412,22 +412,22 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
         Telas.cadastrarProdutor(janela);
         listaProdutores = new ProdutorService().getNomesECpfs(0, "");
         ObservableList<Produtor> listaObsProdutor = FXCollections.observableArrayList(listaProdutores);
-        sComboBoxAutuado.setItems(listaObsProdutor);
+        scmbAutuado.setItems(listaObsProdutor);
     }
     
     private void limparCampos(){
         animaisEnvolvidos.clear();
         dpDtLavratura.setValue(LocalDate.now());
         txtHora.setText("");
-        sComboBoxAutuado.setValue(null);
+        scmbAutuado.setValue(null);
         txtProcesso.setText("");
-        sComboBoxMunicipio.setValue(Statics.municipioPadrao);
-        txtNumeroAI.setText(String.valueOf(new AutoInfracaoService().getProximoNumeroAI(sComboBoxMunicipio.getValue().getId())));
-        sComboBoxMotivo.setValue(null);
+        scmbMunicipio.setValue(Statics.municipioPadrao);
+        txtNumeroAI.setText(String.valueOf(new AutoInfracaoService().getProximoNumeroAI(scmbMunicipio.getValue().getId())));
+        scmbMotivo.setValue(null);
         dpDtCiencia.setValue(null);
         dpDtLimiteDefesa.setValue(null);
-        sComboBoxRedator.setValue(null);
-        sComboBoxFEA.setValue(null);
+        scmbRedator.setValue(null);
+        scmbFEA.setValue(null);
         txtHistorico.setText("");
         txtObservacao.setText("");
         ckbAdvertencia.setSelected(false);
@@ -455,14 +455,14 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
         Telas.inserirMunicipio(janela);
         listaMunicipios = new UtilitarioService().getMunicipios();
         ObservableList<Municipio> listaObsMunicipios = FXCollections.observableArrayList(listaMunicipios);
-        sComboBoxMunicipio.setItems(listaObsMunicipios);
+        scmbMunicipio.setItems(listaObsMunicipios);
     }
     
     private void inserirMotivo(Window janela) {
         Telas.inserirMotivo(janela);
         listaMotivos = new MotivoInfracaoService().getAll();
         ObservableList<MotivoInfracao> listaObsMotivos = FXCollections.observableArrayList(listaMotivos);
-        sComboBoxMotivo.setItems(listaObsMotivos);
+        scmbMotivo.setItems(listaObsMotivos);
     }
     
     private void salvarAI(){
@@ -478,19 +478,19 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
             LocalDate dtLavratura = dpDtLavratura.getValue();
             LocalTime horaLavratura = LocalTime.parse(txtHora.getText(), formatador);
             LocalDate dtCiencia = dpDtCiencia.getValue();
-            String redator = sComboBoxRedator.getValue();
-            Veterinario fea = sComboBoxFEA.getValue();
+            String redator = scmbRedator.getValue();
+            Veterinario fea = scmbFEA.getValue();
             boolean reincidente = ckbReincidente.isSelected();
             boolean advertencia = ckbAdvertencia.isSelected();
             boolean desconto = ckbDesconto.isSelected();
-            Municipio municipio = sComboBoxMunicipio.getValue();
-            Produtor autuado = sComboBoxAutuado.getValue();
-            MotivoInfracao motivo = sComboBoxMotivo.getValue();
+            Municipio municipio = scmbMunicipio.getValue();
+            Produtor autuado = scmbAutuado.getValue();
+            MotivoInfracao motivo = scmbMotivo.getValue();
             
             if (txtNumeroAI.getText().equals("")) exc.adicionarErro("numero", "Insira um número válido para o AI!");
-            if (sComboBoxMunicipio.getValue() == null) exc.adicionarErro("municipio", "Selecione o município de lavratura!");
-            if (sComboBoxAutuado.getValue() == null) exc.adicionarErro("autuado", "Selecione o produtor autuado!");
-            if (sComboBoxMotivo.getValue() == null) exc.adicionarErro("motivo", "Selecione o motivo da infração!");
+            if (scmbMunicipio.getValue() == null) exc.adicionarErro("municipio", "Selecione o município de lavratura!");
+            if (scmbAutuado.getValue() == null) exc.adicionarErro("autuado", "Selecione o produtor autuado!");
+            if (scmbMotivo.getValue() == null) exc.adicionarErro("motivo", "Selecione o motivo da infração!");
             if (dpDtLavratura.getValue() == null) exc.adicionarErro("dtLavratura", "Insira a data de lavratura!");
             if (txtHora.getText().equals("")) exc.adicionarErro("horaLavratura", "Insira a hora da lavratura!");
             
@@ -558,12 +558,12 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
     }
     
     private void setValorMulta(){
-        if (sComboBoxMotivo.getValue() != null && sComboBoxMotivo.getValue().getMultaInicial() > 0){
-            float valorMulta = sComboBoxMotivo.getValue().getMultaInicial();
+        if (scmbMotivo.getValue() != null && scmbMotivo.getValue().getMultaInicial() > 0){
+            float valorMulta = scmbMotivo.getValue().getMultaInicial();
             float valorAdicional = 0;
             for (String especie : animaisEnvolvidos.keySet()) {
                 int lotes = Integer.parseInt(calcularLote(especie, String.valueOf(animaisEnvolvidos.get(especie))));
-                valorAdicional += lotes * sComboBoxMotivo.getValue().getAdicionalAnimal();
+                valorAdicional += lotes * scmbMotivo.getValue().getAdicionalAnimal();
             }
             float multaTotal = Math.round(valorMulta + valorAdicional);
             if (ckbReincidente.isSelected()) multaTotal *= 2;
@@ -600,8 +600,8 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
     }
     
     private void verificarReincidencia() {
-        if (sComboBoxAutuado.getValue() != null && sComboBoxMotivo.getValue() != null) {
-            List<AutoInfracao> list = new AutoInfracaoService().verificarReincidencia(sComboBoxAutuado.getValue(), sComboBoxMotivo.getValue());
+        if (scmbAutuado.getValue() != null && scmbMotivo.getValue() != null) {
+            List<AutoInfracao> list = new AutoInfracaoService().verificarReincidencia(scmbAutuado.getValue(), scmbMotivo.getValue());
             if (!list.isEmpty()) {
                 String titulo = "ATENÇÃO";
                 String cabecalho = "Reincidência encontrada";
@@ -611,11 +611,11 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
                     for (AutoInfracao ai : list) {
                         autos += " " + ai.getNumeroAi() + ",";
                     }
-                    conteudo = "O produtor " + sComboBoxAutuado.getValue().getNome() + " já foi autuado por esse motivo nos últimos 5 anos (Autos nº" + autos + ").";
+                    conteudo = "O produtor " + scmbAutuado.getValue().getNome() + " já foi autuado por esse motivo nos últimos 5 anos (Autos nº" + autos + ").";
                     Alertas.exibirInformacao(titulo, cabecalho, conteudo);
                 } else {
                     autos = " " + list.get(0).getNumeroAi();
-                    conteudo = "O produtor " + sComboBoxAutuado.getValue().getNome() + " já foi autuado por esse motivo nos últimos 5 anos (Auto nº" + autos + ").";
+                    conteudo = "O produtor " + scmbAutuado.getValue().getNome() + " já foi autuado por esse motivo nos últimos 5 anos (Auto nº" + autos + ").";
                     Alertas.exibirInformacao(titulo, cabecalho, conteudo);
                 }
             }

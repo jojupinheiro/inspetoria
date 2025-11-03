@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="517.0" prefWidth="1194.0" stylesheets="@../styles/telalistas.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="telas.TelaListaAutoInterdicaoController">
+<AnchorPane id="AnchorPane" prefHeight="517.0" prefWidth="1194.0" stylesheets="@../styles/telalistas.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="telas.TelaListaAutoInterdicaoController">
    <children>
       <VBox alignment="CENTER" prefHeight="110.0" prefWidth="100.0" styleClass="fundo1" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -115,6 +115,7 @@
             <TableColumn fx:id="tCMotivo" maxWidth="500.0" prefWidth="180.0" text="Motivo" />
             <TableColumn fx:id="tCFEA" maxWidth="180.0" prefWidth="75.0" text="FEA" visible="false" />
             <TableColumn fx:id="tCObs" maxWidth="500.0" prefWidth="75.0" text="Observação" visible="false" />
+            <TableColumn fx:id="tCDesinterdicao" maxWidth="80.0" minWidth="80.0" text="Desinterdição" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
