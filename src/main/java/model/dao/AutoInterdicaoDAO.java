@@ -178,9 +178,14 @@ public class AutoInterdicaoDAO {
             stmt.setTime(7, Time.valueOf(horaLavratura));
             if (ai.getDataCiencia() != null){
                 stmt.setDate(8, Date.valueOf(ai.getDataCiencia()));
+            }else{
+                stmt.setNull(8, java.sql.Types.DATE);
             }
+            
             if (ai.getDataDesinterdicao()!= null){
                 stmt.setDate(9, Date.valueOf(ai.getDataDesinterdicao()));
+            }else{
+                stmt.setNull(9, java.sql.Types.DATE);
             }
             stmt.setString(10, ai.getObservacoes());
 

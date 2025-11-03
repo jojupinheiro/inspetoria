@@ -12,6 +12,7 @@ import javafx.stage.Window;
 import model.classes.AutoInfracao;
 import model.classes.AutoInterdicao;
 import model.classes.Produtor;
+import model.classes.Programa;
 
 /**
  *
@@ -79,6 +80,30 @@ public class Telas {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.showAndWait();
             return controller.getProdutorSalvo();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public static Programa cadastrarPrograma(Window janela) {
+        try {
+            URL url = Telas.class.getResource("TelaCadastroPrograma.fxml");
+            FXMLLoader loader = new FXMLLoader(url);
+            Parent parent = loader.load();
+//            TelaCadastroProgramaController controller = loader.getController();
+            Scene scene = new Scene(parent);
+            Stage stage = new Stage();
+            stage.setTitle("Cadastro de Produtor");
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.setMinWidth(800);
+            stage.setMinHeight(690);
+            stage.initOwner(janela);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.showAndWait();
+//            return controller.getProgramaSalvo();
+            return null;
         } catch (IOException e) {
             e.printStackTrace();
             return null;

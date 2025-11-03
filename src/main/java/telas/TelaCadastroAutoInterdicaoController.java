@@ -2,12 +2,17 @@ package telas;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -15,12 +20,15 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import model.classes.AutoInterdicao;
 import model.classes.MotivoInfracao;
 import model.classes.Municipio;
 import model.classes.Produtor;
 import model.classes.Programa;
 import model.classes.Veterinario;
+import model.exceptions.ValidacaoException;
+import model.services.AutoInfracaoService;
 import model.services.AutoInterdicaoService;
 import model.services.ProdutorService;
 import model.services.ProgramaService;
@@ -80,6 +88,7 @@ public class TelaCadastroAutoInterdicaoController implements Initializable {
         MascarasFX.mascaraData(dpDtLavratura);
         MascarasFX.mascaraHorario(txtHora);
         Utils.atualizarHorario(txtHora);
+        MascarasFX.mascaraNumeroInteiro(txtNumeroAI);
         btnEditarProdutor.setVisible(false);
         
         btnAtualizarDataCiencia.setOnAction((t) -> {
@@ -144,6 +153,7 @@ public class TelaCadastroAutoInterdicaoController implements Initializable {
             }
         });
         
+        btnInserirMunicipio.setOnAction((t) -> inserirMunicipio(btnCancelar.getScene().getWindow()));
         btnSalvar.setOnAction((t) -> salvar());
         btnCancelar.setOnAction((t) -> ((Stage) btnCancelar.getScene().getWindow()).close());
         btnLimpar.setOnAction((t) -> limpaCampos());
@@ -166,6 +176,13 @@ public class TelaCadastroAutoInterdicaoController implements Initializable {
         }
     }
     
+    private void inserirMunicipio(Window janela){
+        Telas.inserirMunicipio(janela);
+        listaMunicipios = new UtilitarioService().getMunicipios();
+        ObservableList<Municipio> listaObsMunicipios = FXCollections.observableArrayList(listaMunicipios);
+        scmbMunicipio.setItems(listaObsMunicipios);
+    }
+    
     private void limpaCampos(){
         scmbMunicipio.setValue(Statics.municipioPadrao);
         dpDtLavratura.setValue(LocalDate.now());
@@ -183,6 +200,68 @@ public class TelaCadastroAutoInterdicaoController implements Initializable {
     }
     
     private void salvar(){
+        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("HH:mm");
+        ValidacaoException exc = new ValidacaoException("Erro validando!!");
         
+        try {
+            int numeroAI = Integer.parseInt(txtNumeroAI.getText());
+            LocalDate dtLavratura = dpDtLavratura.getValue();
+            LocalDate dtCiencia = dpDtCiencia.getValue();
+            LocalDate dtDesinterdicao = dpDtDesinterdicao.getValue();
+            Produtor produtor = scmbAutuado.getValue();
+            LocalTime horaLavratura = LocalTime.parse(txtHora.getText(), formatador);
+            Municipio municipioLavratura = scmbMunicipio.getValue();
+            Programa programa = scmbMotivo.getValue();
+            Veterinario fea = scmbFEA.getValue();
+            String observacao = txtObservacao.getText();
+            
+            if (txtNumeroAI.getText().equals("")) exc.adicionarErro("numero", "Insira um número válido para o AI!");
+            if (scmbMunicipio.getValue() == null) exc.adicionarErro("municipio", "Selecione o município de lavratura!");
+            if (scmbAutuado.getValue() == null) exc.adicionarErro("autuado", "Selecione o produtor autuado!");
+            if (scmbMotivo.getValue() == null) exc.adicionarErro("motivo", "Selecione o motivo da infração!");
+            if (dpDtLavratura.getValue() == null) exc.adicionarErro("dtLavratura", "Insira a data de lavratura!");
+            if (txtHora.getText().equals("")) exc.adicionarErro("horaLavratura", "Insira a hora da lavratura!");
+            
+            if (ai == null){
+                ai = new AutoInterdicao(numeroAI, municipioLavratura, programa, produtor, fea, dtLavratura, dtCiencia, dtDesinterdicao, horaLavratura, observacao);
+            }else{
+                int id = ai.getId();
+                ai = new AutoInterdicao(id, numeroAI, municipioLavratura, programa, produtor, fea, dtLavratura, dtCiencia, dtDesinterdicao, horaLavratura, observacao);
+            }
+            
+            if (!exc.getErrors().isEmpty()) {
+                throw exc;
+            }
+
+            if (new AutoInterdicaoService().salvarOuAtualizar(ai)) {
+                Alert al = new Alert(Alert.AlertType.INFORMATION);
+                al.setTitle("Sucesso");
+                al.setContentText("Auto de Interdição inserido com sucesso!");
+                al.showAndWait();
+            } else {
+                // Deu erro. O retorno do boolean veio false
+                Alert al = new Alert(Alert.AlertType.ERROR);
+                al.setTitle("ERRO");
+                al.setContentText("Ocorreu um erro ao inserir!");
+                al.showAndWait();
+            }
+        } catch (ValidacaoException e) {
+            e.printStackTrace();
+            setErrorMessages(e.getErrors());
+        }
+
+    }
+    
+    private void setErrorMessages(Map<String, String> errors) {
+        // Pegar todos os campos de erro
+        Set<String> campos = errors.keySet();
+
+        // Mostrar o erro no label que definimos
+        lblErroAutuado.setText(campos.contains("autuado") ? errors.get("autuado") : "");
+        lblErroDtLavratura.setText(campos.contains("dtLavratura") ? errors.get("dtLavratura") : "");
+        lblErroHoraLavratura.setText(campos.contains("horaLavratura") ? errors.get("horaLavratura") : "");
+        lblErroMotivo.setText(campos.contains("motivo") ? errors.get("motivo") : "");
+        lblErroMunicipio.setText(campos.contains("municipio") ? errors.get("municipio") : "");
+        lblErroNumero.setText(campos.contains("numero") ? errors.get("numero") : "");
     }
 }
