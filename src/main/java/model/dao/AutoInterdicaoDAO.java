@@ -109,21 +109,46 @@ public class AutoInterdicaoDAO {
     }
     
 
-    public int getProximoNumeroAI(int idMunicipio) {
-        PreparedStatement stmt = null;
-        ResultSet res = null;
-        int proximoNumero = 0;
+    public int getProximoNumeroAI(int idMunicipio, int ano) {
+    PreparedStatement stmt = null;
+    ResultSet res = null;
+    
+    // Inicia em 1. Se o SELECT não retornar nada (ou MAX for NULL), 
+    // o primeiro número será 1.
+    int proximoNumero = 1; 
+    
         try {
-            String sql = "SELECT MAX(numero_ai) AS valor_maximo FROM auto_interdicao WHERE fk_municipio_lavratura_ai = ?;";
+
+            // 2. SQL alterada para filtrar pelo município E pelo ano atual
+            String sql = "SELECT MAX(numero_ai) AS valor_maximo "
+                    + "FROM auto_interdicao "
+                    + "WHERE fk_municipio_lavratura_ai = ? AND YEAR(data_ai) = ?;";
+
             stmt = con.prepareStatement(sql);
+
+            // 3. Definir os DOIS parâmetros
             stmt.setInt(1, idMunicipio);
+            stmt.setInt(2, ano);
+
             res = stmt.executeQuery();
 
-            while (res.next()) {
-                proximoNumero = res.getInt("valor_maximo") + 1;
+            // 4. Usar 'if' é mais adequado que 'while' para MAX(), que sempre retorna 1 linha
+            if (res.next()) {
+                // res.getInt() retorna 0 se o valor no banco for NULL (ex: nenhum registro encontrado)
+                int valorMaximo = res.getInt("valor_maximo");
+                proximoNumero = valorMaximo + 1;
             }
+
         } catch (Exception e) {
             e.printStackTrace();
+            // Em caso de erro no banco, retorna 1 (ou pode-se optar por lançar a exceção)
+        } finally {
+            try {
+                res.close();
+                stmt.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         return proximoNumero;

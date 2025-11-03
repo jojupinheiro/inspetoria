@@ -21,8 +21,8 @@ public class AutoInterdicaoService {
         return dao.getAll();
     }
     
-    public int getProximoNumeroAI(int idMunicipio){
-        return dao.getProximoNumeroAI(idMunicipio);
+    public int getProximoNumeroAI(int idMunicipio, int ano){
+        return dao.getProximoNumeroAI(idMunicipio, ano);
     }
 
 
