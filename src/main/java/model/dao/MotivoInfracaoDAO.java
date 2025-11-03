@@ -28,6 +28,45 @@ public class MotivoInfracaoDAO {
         PreparedStatement stmt = null;
         
         try {
+            String sql = "SELECT * FROM motivo_ai "
+                    + "ORDER BY resumo_descricao_motivo_ai ";
+            
+            stmt = con.prepareStatement(sql);
+            
+            res = stmt.executeQuery();
+            
+            while (res.next()) {
+                
+                int idMotivo = res.getInt("pk_id_motivo_ai");
+                boolean preveAdv = res.getBoolean("preve_adv_motivo_ai");
+                String lei = res.getString("lei_motivo_ai");
+                String artLei = res.getString("art_lei_motivo_ai");
+                String decreto = res.getString("decreto_motivo_ai");
+                String artDecreto = res.getString("art_decreto_motivo_ai");
+                String penalidade = res.getString("penalidade_decreto_motivo_ai");
+                String artPenalidade = res.getString("art_penalidade_decreto_motivo_ai");
+                float multaInicial = res.getFloat("multa_inicial_motivo_ai");
+                float adicionalAnimal = res.getFloat("adicional_animal_motivo_ai");
+                String descricao = res.getString("descricao_motivo_ai");
+                String resumoDescricao = res.getString("resumo_descricao_motivo_ai");
+                MotivoInfracao motivoInfracao = new MotivoInfracao(idMotivo, preveAdv, lei, artLei, decreto, 
+                        artDecreto, penalidade, artPenalidade, multaInicial, adicionalAnimal, descricao, resumoDescricao);
+                                
+                list.add(motivoInfracao);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return list;
+    }
+    
+    public List<MotivoInfracao> getInformacoesPrincipais() {
+        List<MotivoInfracao> list = new ArrayList<>();
+        ResultSet res = null;
+        PreparedStatement stmt = null;
+        
+        try {
             String sql = "SELECT pk_id_motivo_ai, resumo_descricao_motivo_ai, multa_inicial_motivo_ai, adicional_animal_motivo_ai, preve_adv_motivo_ai FROM motivo_ai "
                     + "ORDER BY resumo_descricao_motivo_ai ";
             
@@ -120,6 +159,39 @@ public class MotivoInfracaoDAO {
     }
     
     public boolean editar(MotivoInfracao motivoInfracao) {
-        return true;
+        PreparedStatement stmt = null;
+        boolean result = false;
+        try {
+            String sql = "UPDATE motivo_ai SET preve_adv_motivo_ai = ?, lei_motivo_ai = ?, "
+                    + "art_lei_motivo_ai = ?, decreto_motivo_ai = ?, art_decreto_motivo_ai = ?, "
+                    + "penalidade_decreto_motivo_ai = ?, art_penalidade_decreto_motivo_ai = ?, "
+                    + "multa_inicial_motivo_ai = ?, adicional_animal_motivo_ai = ?, descricao_motivo_ai = ?, "
+                    + "resumo_descricao_motivo_ai = ? WHERE pk_id_motivo_ai = ?;";
+            stmt = con.prepareStatement(sql);
+            //troca os parâmetros
+            stmt.setBoolean(1, motivoInfracao.isPreveAdv() );
+            stmt.setString(2, motivoInfracao.getLei() );
+            stmt.setString(3, motivoInfracao.getArtLei() );
+            stmt.setString(4, motivoInfracao.getDecreto() );
+            stmt.setString(5, motivoInfracao.getArtDecreto() );
+            stmt.setString(6, motivoInfracao.getPenalidade() );
+            stmt.setString(7, motivoInfracao.getArtPenalidade() );
+            stmt.setFloat(8, motivoInfracao.getMultaInicial() );
+            stmt.setFloat(9, motivoInfracao.getAdicionalAnimal() );
+            stmt.setString(10, motivoInfracao.getDescricao() );
+            stmt.setString(11, motivoInfracao.getResumoDescricao() );
+            stmt.setInt(12, motivoInfracao.getId());
+
+            //executa
+            stmt.executeUpdate();
+
+            result = true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DB.closeStatement(stmt);
+            return result;
+        }
     }
 }

@@ -264,7 +264,7 @@ public class TelaListaAIController implements Initializable {
             }
         });
         
-        listaMotivos = new MotivoInfracaoService().getAll();
+        listaMotivos = new MotivoInfracaoService().getInformacoesPrincipais();
         listaMunicipios = new AutoInfracaoService().getMunicipiosComAI();
         ObservableList<MotivoInfracao> listaObsMotivos = FXCollections.observableArrayList(listaMotivos);
       

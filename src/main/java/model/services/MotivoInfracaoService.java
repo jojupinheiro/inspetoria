@@ -21,6 +21,10 @@ public class MotivoInfracaoService {
         return dao.getAll();
     }
     
+    public List<MotivoInfracao> getInformacoesPrincipais() {
+        return dao.getInformacoesPrincipais();
+    }
+    
     public boolean salvarOuAtualizar(MotivoInfracao motivoInfracao) {
         //Tenho que testar se é uma inclusão ou alteração
         if (motivoInfracao.getId() <= 0) {

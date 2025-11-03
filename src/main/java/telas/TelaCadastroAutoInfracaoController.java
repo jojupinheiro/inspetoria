@@ -241,7 +241,7 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
             }
         });
         
-        listaMotivos = new MotivoInfracaoService().getAll();
+        listaMotivos = new MotivoInfracaoService().getInformacoesPrincipais();
         ObservableList<MotivoInfracao> listaObsMotivos = FXCollections.observableArrayList(listaMotivos);
         sComboBoxMotivo.setItems(listaObsMotivos);
         
@@ -460,7 +460,7 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
     
     private void inserirMotivo(Window janela) {
         Telas.inserirMotivo(janela);
-        listaMotivos = new MotivoInfracaoService().getAll();
+        listaMotivos = new MotivoInfracaoService().getInformacoesPrincipais();
         ObservableList<MotivoInfracao> listaObsMotivos = FXCollections.observableArrayList(listaMotivos);
         sComboBoxMotivo.setItems(listaObsMotivos);
     }

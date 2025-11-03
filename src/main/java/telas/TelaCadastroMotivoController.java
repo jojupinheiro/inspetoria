@@ -54,7 +54,7 @@ public class TelaCadastroMotivoController implements Initializable {
     @FXML    private TextField txtPenalidadeOutra;
     @FXML    private TextArea txtResumo;
     
-    private MotivoInfracao motivoInfracao;
+    private MotivoInfracao mi;
     private List<MotivoInfracao> listaMotivos;
     
     @Override
@@ -86,6 +86,42 @@ public class TelaCadastroMotivoController implements Initializable {
         listView.setOnMouseClicked((mouseEvent) -> {
             if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
                 btnExcluir.setVisible(true);
+            }
+            
+            if (mouseEvent.getClickCount() == 2 && mouseEvent.getButton().equals(MouseButton.PRIMARY) && listView.getSelectionModel().getSelectedItem() != null) {
+                mi = listView.getSelectionModel().getSelectedItem();
+                ckbAdvertencia.setSelected(mi.isPreveAdv());
+                txtMultaInicial.setText(String.valueOf(mi.getMultaInicial()));
+                txtAdicionalAnimal.setText(String.valueOf(mi.getAdicionalAnimal()));
+                txtResumo.setText(mi.getResumoDescricao());
+                txtDescricao.setText(mi.getDescricao());
+                
+                if (mi.getLei().equals("13.467/2010")){
+                    rbLeiPrincipal.setSelected(true);
+                }else{
+                    rbLeiOutra.setSelected(true);
+                    txtLeiOutra.setDisable(false);
+                    txtLeiOutra.setText(mi.getLei());
+                }
+                txtArtigoLei.setText(mi.getArtLei());
+                
+                if (mi.getDecreto().equals("52.434/2015")){
+                    rbDecretoPrincipal.setSelected(true);
+                }else{
+                    rbDecretoOutro.setSelected(true);
+                    txtDecretoOutro.setDisable(false);
+                    txtDecretoOutro.setText(mi.getDecreto());
+                }
+                txtArtigoDecreto.setText(mi.getArtDecreto());
+                
+                if (mi.getPenalidade().equals("52.434/2015")){
+                    rbPenalidadePrincipal.setSelected(true);
+                }else{
+                    rbPenalidadeOutra.setSelected(true);
+                    txtPenalidadeOutra.setDisable(false);
+                    txtPenalidadeOutra.setText(mi.getPenalidade());
+                }
+                txtArtigoPenalidade.setText(mi.getArtPenalidade());
             }
         });
         
@@ -124,17 +160,25 @@ public class TelaCadastroMotivoController implements Initializable {
             float multaInicial = Float.parseFloat(txtMultaInicial.getText());
             float adicionalAnimal = Float.parseFloat(txtAdicionalAnimal.getText());
             
-            if (motivoInfracao == null) motivoInfracao = new MotivoInfracao(preveAdv, lei, artigoLei, decreto, 
+            if (mi == null) {
+                mi = new MotivoInfracao(preveAdv, lei, artigoLei, decreto, 
                     artigoDecreto, penalidade, artigoPenalidade, multaInicial, adicionalAnimal, descricao, resumoDescricao);
+            }else{
+                mi = new MotivoInfracao(mi.getId(), preveAdv, lei, artigoLei, decreto, 
+                    artigoDecreto, penalidade, artigoPenalidade, multaInicial, adicionalAnimal, descricao, resumoDescricao);
+            }
             
             if (!exc.getErrors().isEmpty()) {
                 throw exc;
             }
             
-            if (new MotivoInfracaoService().salvarOuAtualizar(motivoInfracao)) {
-                // Deu certo
-                // Posso fechar a janela
-                ((Stage) btnCancelar.getScene().getWindow()).close();
+            if (new MotivoInfracaoService().salvarOuAtualizar(mi)) {
+                Alert al = new Alert(Alert.AlertType.INFORMATION);
+                al.setTitle("Sucesso");
+                al.setContentText("Motivo de infração inserido com sucesso!");
+                al.showAndWait();
+                limparCampos();
+                listarMotivos();
             } else {
                 // Deu erro. O retorno do boolean veio false
                 Alert al = new Alert(Alert.AlertType.ERROR);
@@ -163,6 +207,8 @@ public class TelaCadastroMotivoController implements Initializable {
         rbDecretoPrincipal.setSelected(true);
         rbLeiPrincipal.setSelected(true);
         rbPenalidadePrincipal.setSelected(true);
+        mi = null;
+        btnExcluir.setVisible(false);
     }
     
      private void setErrorMessages(Map<String, String> errors) {
