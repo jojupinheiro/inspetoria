@@ -117,3 +117,7 @@
 }
 
 /* --- FIM DAS REGRAS DA TABELA --- */
+
+#numero-auto{
+    -fx-alignment: center-right;
+}

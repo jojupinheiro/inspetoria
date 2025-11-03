@@ -28,31 +28,23 @@ public class ProgramaDAO {
         PreparedStatement stmt = null;
         
         try {
-            String sql = "SELECT * FROM motivo_ai "
-                    + "ORDER BY resumo_descricao_motivo_ai ";
+            String sql = "SELECT * FROM programa "
+                    + "ORDER BY sigla_programa;";
             
             stmt = con.prepareStatement(sql);
             
             res = stmt.executeQuery();
             
             while (res.next()) {
-//                
-//                int idMotivo = res.getInt("pk_id_motivo_ai");
-//                boolean preveAdv = res.getBoolean("preve_adv_motivo_ai");
-//                String lei = res.getString("lei_motivo_ai");
-//                String artLei = res.getString("art_lei_motivo_ai");
-//                String decreto = res.getString("decreto_motivo_ai");
-//                String artDecreto = res.getString("art_decreto_motivo_ai");
-//                String penalidade = res.getString("penalidade_decreto_motivo_ai");
-//                String artPenalidade = res.getString("art_penalidade_decreto_motivo_ai");
-//                float multaInicial = res.getFloat("multa_inicial_motivo_ai");
-//                float adicionalAnimal = res.getFloat("adicional_animal_motivo_ai");
-//                String descricao = res.getString("descricao_motivo_ai");
-//                String resumoDescricao = res.getString("resumo_descricao_motivo_ai");
-//                Programa programa = new Programa(idMotivo, preveAdv, lei, artLei, decreto, 
-//                        artDecreto, penalidade, artPenalidade, multaInicial, adicionalAnimal, descricao, resumoDescricao);
+                
+                int idPrograma = res.getInt("pk_id_programa");
+                String nome = res.getString("nome_programa");
+                String sigla = res.getString("sigla_programa");
+                String observacoes = res.getString("observacoes_programa");
+
+                Programa programa = new Programa(idPrograma, sigla, nome, observacoes);
                                 
-//                list.add(programa);
+                list.add(programa);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,47 +54,31 @@ public class ProgramaDAO {
     }
     
         
-    public boolean inserir(Programa motivoInfracao) {
+    public boolean inserir(Programa programa) {
         PreparedStatement stmt = null;
         boolean result = false;
         try {
-//            String sql = "INSERT INTO motivo_ai (preve_adv_motivo_ai, lei_motivo_ai, art_lei_motivo_ai, "
-//                    + "decreto_motivo_ai, art_decreto_motivo_ai, penalidade_decreto_motivo_ai, "
-//                    + "art_penalidade_decreto_motivo_ai, multa_inicial_motivo_ai, adicional_animal_motivo_ai, "
-//                    + "descricao_motivo_ai, resumo_descricao_motivo_ai) VALUES (?,?,?,?,?,?,?,?,?,?,?);";
-//            
-//            stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-//            
-//            stmt.setBoolean(1, motivoInfracao.isPreveAdv() );
-//            stmt.setString(2, motivoInfracao.getLei() );
-//            stmt.setString(3, motivoInfracao.getArtLei() );
-//            stmt.setString(4, motivoInfracao.getDecreto() );
-//            stmt.setString(5, motivoInfracao.getArtDecreto() );
-//            stmt.setString(6, motivoInfracao.getPenalidade() );
-//            stmt.setString(7, motivoInfracao.getArtPenalidade() );
-//            stmt.setFloat(8, motivoInfracao.getMultaInicial() );
-//            stmt.setFloat(9, motivoInfracao.getAdicionalAnimal() );
-//            stmt.setString(10, motivoInfracao.getDescricao() );
-//            stmt.setString(11, motivoInfracao.getResumoDescricao() );
-//            
-//            int rowsAffected = stmt.executeUpdate();
-//            if (rowsAffected > 0) {
-//                // Deu certo
-//                // Pegando o código gerado no insert
-//                ResultSet rs = stmt.getGeneratedKeys();
-//                if (rs.next()) {
-//                    // getInt(1) pega o código que foi gerado e que está no primeiro campo do resultSet
-//                    int id = rs.getInt(1);
-//                    //Atualiza o ID do tutor no parâmetro que foi recebido pelo método
-//                    motivoInfracao.setId(id);
-//                    result = true;
-//                    //Depois daqui vai para o finally
-//                }
-//            } else {
-//                //falhou e vamos gerar uma exception para que o código caia automaticamente dentro do catch e depois no finally
-//                throw new SQLException("Não foi possível inserir");
-//            }
-//            
+            String sql = "INSERT INTO programa (nome_programa, "
+                    + "sigla_programa, observacoes_programa) VALUES (?, ?, ?);";
+            
+            stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            
+            stmt.setString(1, programa.getNome());
+            stmt.setString(2, programa.getSigla());
+            stmt.setString(3, programa.getObservacao());
+                
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                ResultSet rs = stmt.getGeneratedKeys();
+                if (rs.next()) {
+                    int id = rs.getInt(1);
+                    programa.setId(id);
+                    result = true;
+                }
+            } else {
+                throw new SQLException("Não foi possível inserir");
+            }
+            
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -115,7 +91,7 @@ public class ProgramaDAO {
         PreparedStatement stmt = null;
         boolean result = false;
         try {
-            String sql = "delete from motivo_ai where pk_id_motivo_ai = ?";
+            String sql = "delete from programa where pk_id_programa = ?";
             stmt = con.prepareStatement(sql);
             stmt.setInt(1, programa.getId());
             stmt.executeUpdate();
@@ -132,28 +108,17 @@ public class ProgramaDAO {
         PreparedStatement stmt = null;
         boolean result = false;
         try {
-//            String sql = "UPDATE motivo_ai SET preve_adv_motivo_ai = ?, lei_motivo_ai = ?, "
-//                    + "art_lei_motivo_ai = ?, decreto_motivo_ai = ?, art_decreto_motivo_ai = ?, "
-//                    + "penalidade_decreto_motivo_ai = ?, art_penalidade_decreto_motivo_ai = ?, "
-//                    + "multa_inicial_motivo_ai = ?, adicional_animal_motivo_ai = ?, descricao_motivo_ai = ?, "
-//                    + "resumo_descricao_motivo_ai = ? WHERE pk_id_motivo_ai = ?;";
-//            stmt = con.prepareStatement(sql);
-//            //troca os parâmetros
-//            stmt.setBoolean(1, motivoInfracao.isPreveAdv() );
-//            stmt.setString(2, motivoInfracao.getLei() );
-//            stmt.setString(3, motivoInfracao.getArtLei() );
-//            stmt.setString(4, motivoInfracao.getDecreto() );
-//            stmt.setString(5, motivoInfracao.getArtDecreto() );
-//            stmt.setString(6, motivoInfracao.getPenalidade() );
-//            stmt.setString(7, motivoInfracao.getArtPenalidade() );
-//            stmt.setFloat(8, motivoInfracao.getMultaInicial() );
-//            stmt.setFloat(9, motivoInfracao.getAdicionalAnimal() );
-//            stmt.setString(10, motivoInfracao.getDescricao() );
-//            stmt.setString(11, motivoInfracao.getResumoDescricao() );
-//            stmt.setInt(12, motivoInfracao.getId());
-//
-//            //executa
-//            stmt.executeUpdate();
+            String sql = "UPDATE programa SET nome_programa = ?, "
+                    + "sigla_programa = ?, observacoes_programa = ? "
+                    + "WHERE pk_id_programa = ?;";
+            stmt = con.prepareStatement(sql);
+
+            stmt.setString(1, programa.getNome());
+            stmt.setString(2, programa.getSigla());
+            stmt.setString(3, programa.getObservacao());
+            stmt.setInt(4, programa.getId());
+
+            stmt.executeUpdate();
 
             result = true;
 

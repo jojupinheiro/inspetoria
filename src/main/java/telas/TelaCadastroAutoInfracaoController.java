@@ -188,17 +188,17 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
             }
         });
         
+        scmbMunicipio.setOnAction((t) -> {
+            if (scmbMunicipio.getValue() != null){
+                txtNumeroAI.setText(String.valueOf(new AutoInfracaoService().getProximoNumeroAI(scmbMunicipio.getValue().getId())));
+            }
+        });
+        
         scmbAutuado.setOnAction((t) -> { 
             if (scmbAutuado.getValue() != null){
                 scmbMotivo.setDisable(false);
                 btnEditarProdutor.setVisible(true);
                 verificarReincidencia();
-            }
-        });
-        
-        scmbMunicipio.setOnAction((t) -> {
-            if (scmbMunicipio.getValue() != null){
-                txtNumeroAI.setText(String.valueOf(new AutoInfracaoService().getProximoNumeroAI(scmbMunicipio.getValue().getId())));
             }
         });
         

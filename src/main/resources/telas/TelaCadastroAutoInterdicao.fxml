@@ -20,7 +20,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="642.0" prefWidth="966.0" styleClass="fundo1" stylesheets="@../styles/telalistas.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="telas.TelaCadastroAutoInterdicaoController">
+<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="642.0" prefWidth="966.0" styleClass="fundo1" stylesheets="@../styles/telalistas.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="telas.TelaCadastroAutoInterdicaoController">
    <children>
       <GridPane prefHeight="627.0" prefWidth="923.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="43.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
@@ -38,7 +38,16 @@
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
                   <Label text="Número do auto*" />
-                  <TextField fx:id="txtNumeroAI" alignment="CENTER" maxWidth="100.0" prefWidth="100.0" />
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <TextField id="numero-auto" fx:id="txtNumeroAI" alignment="CENTER_RIGHT" maxWidth="100.0" prefWidth="70.0" />
+                        <Label fx:id="lblAno">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
                   <Label fx:id="lblErroNumero" textFill="RED">
                      <font>
                         <Font name="System Bold" size="15.0" />
