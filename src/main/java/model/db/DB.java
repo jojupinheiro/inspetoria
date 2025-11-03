@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import telas.Statics;
 
 /**
  *
@@ -12,25 +13,9 @@ import java.sql.Statement;
 public class DB {
     
     public static Connection getConnection(){
-        String usuarioWindows = "root";
-        String usuarioLinux = "juliano";
-        String senhaWindows = "";
-        String senhaLinux = "5423gfe";
-        String so = System.getProperty("os.name").toLowerCase();
-
-        String usuarioUtilizado;
-        String senhaUtilizada;
-        
-        if (so.contains("win")){
-            usuarioUtilizado = usuarioWindows;
-            senhaUtilizada = senhaWindows;
-        }else{
-            usuarioUtilizado = usuarioLinux;
-            senhaUtilizada = senhaLinux;
-        }
         
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/inspetoria",usuarioUtilizado,senhaUtilizada);
+            Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/inspetoria", Statics.usuarioBD, Statics.senhaBD);
             return con;
         } catch (Exception e) {
             e.printStackTrace();
