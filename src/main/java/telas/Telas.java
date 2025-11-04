@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import model.classes.AutoInfracao;
 import model.classes.AutoInterdicao;
+import model.classes.Empresa;
 import model.classes.Produtor;
 import model.classes.Programa;
 
@@ -58,6 +59,30 @@ public class Telas {
             if (ai != null) controller.setAI(ai);
             stage.showAndWait();
             return controller.getAISalvo();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public static Empresa cadastrarEmpresa(Empresa empresa, Window janela) {
+        try {
+            URL url = Telas.class.getResource("TelaCadastroEmpresa.fxml");
+            FXMLLoader loader = new FXMLLoader(url);
+            Parent parent = loader.load();
+            TelaCadastroEmpresaController controller = loader.getController();
+            Scene scene = new Scene(parent);
+            Stage stage = new Stage();
+            stage.setTitle("Cadastro de Empresa");
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.setMinWidth(815);
+            stage.setMinHeight(640);
+            stage.initOwner(janela);
+            stage.initModality(Modality.WINDOW_MODAL);
+            if (empresa != null) controller.setEmpresa(empresa);
+            stage.showAndWait();
+            return controller.getEmpresaSalva();
         } catch (IOException e) {
             e.printStackTrace();
             return null;

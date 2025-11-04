@@ -23,7 +23,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
+import model.classes.Contato;
 import model.classes.Empresa;
+import model.classes.Endereco;
 import model.classes.Municipio;
 import model.classes.Produtor;
 import model.exceptions.ValidacaoException;
@@ -32,6 +34,7 @@ import model.services.ProdutorService;
 import model.services.UtilitarioService;
 import org.controlsfx.control.SearchableComboBox;
 import utils.MascarasFX;
+import utils.Utils;
 
 /**
  * FXML Controller class
@@ -69,8 +72,13 @@ public class TelaCadastroEmpresaController implements Initializable {
     @FXML    private TextField txtTelefone2;
     
     private List<Municipio> listaMunicipios;
+    private List<Produtor> listaProdutores;
     private Empresa empresa;
     private Empresa empresaSalva;
+    
+    public void setEmpresa(Empresa empresa){
+        this.empresa = empresa;
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -158,6 +166,9 @@ public class TelaCadastroEmpresaController implements Initializable {
             }
         });
         
+        ObservableList<String> listaObsTipoLogradouro = FXCollections.observableArrayList("Avenida", "Estrada", "Linha", "Rua","Travessa", "Vila");
+        scmbTipoLogradouro.setItems(listaObsTipoLogradouro);
+        
         scmbTipoLogradouro.setOnAction((t) -> {
             if(scmbTipoLogradouro.getValue() != null){
                 switch(scmbTipoLogradouro.getValue()){
@@ -173,6 +184,10 @@ public class TelaCadastroEmpresaController implements Initializable {
             }
         });
         
+        listaProdutores = new ProdutorService().getNomesECpfs(0, "");
+        ObservableList<Produtor> listaObsProdutor = FXCollections.observableArrayList(listaProdutores);
+        scmbRepresentante.setItems(listaObsProdutor);
+        
         btnSalvar.setOnAction((t) -> salvar() );
         btnCancelar.setOnAction((t) -> ((Stage) btnCancelar.getScene().getWindow()).close() );
         btnLimpar.setOnAction((t) -> limparCampos());
@@ -187,8 +202,44 @@ public class TelaCadastroEmpresaController implements Initializable {
         ValidacaoException exc = new ValidacaoException("Erro validando!!");
 
         try {
+            Produtor produtor = null;
+            if (scmbRepresentante.getValue() == null){
+                exc.adicionarErro("representante", "Selecione um representante!");
+            }else{
+                produtor = new ProdutorService().getProdutor(scmbRepresentante.getValue());
+            }
+            
+            String razaoSocial = txtRazaoSocial.getText();
+            if (razaoSocial.equals("")) exc.adicionarErro("razaoSocial", "Insira a razão social da empresa!");
+            int registro = 0;
+            try {
+                registro = Integer.parseInt(txtRegistro.getText());
+            } catch (Exception e) {
+                exc.adicionarErro("registro", "Insira o n");
+            }
 
-            //Salvar os campos
+            String cnpj = Utils.formataDados(txtCnpj.getText());
+            if (cnpj.equals("")) exc.adicionarErro("cnpj", "Insira o cnpj da empresa!");
+            Municipio municipio = scmbMunicipio.getValue();
+            if (municipio == null) exc.adicionarErro("municipio", "Selecione o município da empresa!");
+            String observacao = txtObservacao.getText();
+            
+            String tipoLogradouro = scmbTipoLogradouro.getValue();
+            String logradouro = txtLogradouro.getText();
+            String numero = txtNumero.getText();
+            Endereco endereco = new Endereco(tipoLogradouro, logradouro, numero);
+            
+            String telefone1 = txtTelefone1.getText();
+            String telefone2 = txtTelefone2.getText();
+            String email = txtEmail.getText();
+            Contato contato = new Contato(telefone1, telefone2, email);
+            
+            if (empresa == null){
+                empresa = new Empresa(registro, endereco, municipio, contato, produtor, razaoSocial, cnpj, observacao);
+            }else{
+                empresa = new Empresa(empresa.getId(), registro, endereco, municipio, contato, produtor, razaoSocial, cnpj, observacao);
+            }
+            
             
             if (!exc.getErrors().isEmpty()) {
                 throw exc;

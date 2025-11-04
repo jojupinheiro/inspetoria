@@ -29,6 +29,7 @@ public class TelaListasController implements Initializable {
     @FXML    private Button btnDeclaracoesNC;
     @FXML    private MenuItem miAutoInfracao;
     @FXML    private MenuItem miMotivosInfracao;
+    @FXML    private MenuItem miCadastrarEmpresa;
     @FXML    private MenuItem miCadastrarProdutor;
     @FXML    private MenuItem miPreferencias;
     @FXML    private MenuItem miVerProdutores;
@@ -78,6 +79,7 @@ public class TelaListasController implements Initializable {
             vBoxLegendas.setVisible(false);
         });
         
+        miCadastrarEmpresa.setOnAction((t) -> Telas.cadastrarEmpresa(null, btnAutosInfracao.getScene().getWindow()));
         miMotivosInfracao.setOnAction((t) -> Telas.inserirMotivo(btnAutosInfracao.getScene().getWindow()));
         miPreferencias.setOnAction((t) -> Telas.configuracoes(btnAutosInfracao.getScene().getWindow()));
         miAutoInfracao.setOnAction((t) -> Telas.cadastrarAutoInfracao(btnAutosInfracao.getScene().getWindow()));

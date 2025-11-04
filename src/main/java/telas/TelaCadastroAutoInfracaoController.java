@@ -118,9 +118,9 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
     private int lotePeixes = 0;
     private int loteAves = 0;
     private int loteAbelhas = 0;
-    List<Municipio> listaMunicipios;
-    List<Produtor> listaProdutores;
-    List<MotivoInfracao> listaMotivos;
+    private List<Municipio> listaMunicipios;
+    private List<Produtor> listaProdutores;
+    private List<MotivoInfracao> listaMotivos;
     
     public void setAI (AutoInfracao ai, Map<String, Integer> animaisEnvolvidos){
         this.autoInfracao = ai;
@@ -409,10 +409,14 @@ public class TelaCadastroAutoInfracaoController implements Initializable {
     }    
     
     public void inserirProdutor(Window janela) {
-        Telas.cadastrarProdutor(janela);
-        listaProdutores = new ProdutorService().getNomesECpfs(0, "");
-        ObservableList<Produtor> listaObsProdutor = FXCollections.observableArrayList(listaProdutores);
-        scmbAutuado.setItems(listaObsProdutor);
+        Produtor novoProdutor = Telas.cadastrarProdutor(btnSalvar.getScene().getWindow());
+            
+            // Verificar se o usuário realmente salvou um produtor (e não cancelou)
+            if (novoProdutor != null) {
+                // Adicionar o novo produtor à lista que alimenta o ComboBox
+                scmbAutuado.getItems().add(novoProdutor);
+                scmbAutuado.setValue(novoProdutor);
+            }
     }
     
     private void limparCampos(){

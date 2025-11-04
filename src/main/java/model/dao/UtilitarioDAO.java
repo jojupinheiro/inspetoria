@@ -57,7 +57,7 @@ public class UtilitarioDAO {
         ResultSet res = null;
         PreparedStatement stmt = null;
         try {
-            String sql = "SELECT mp.fk_id_municipio, m.* FROM municipioPadrao mp "
+            String sql = "SELECT mp.fk_id_municipio, m.* FROM municipiopadrao mp "
                     + "JOIN municipio m ON (m.pk_id_municipio = mp.fk_id_municipio) ";
             stmt = con.prepareStatement(sql);
             res = stmt.executeQuery();
