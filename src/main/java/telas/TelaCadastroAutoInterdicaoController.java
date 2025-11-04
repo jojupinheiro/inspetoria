@@ -81,6 +81,21 @@ public class TelaCadastroAutoInterdicaoController implements Initializable {
     private List<Produtor> listaProdutores;
     private List<Programa> listaProgramas;
     
+    public void setAI (AutoInterdicao ai){
+        this.ai = ai;
+        txtNumeroAI.setText(String.valueOf(ai.getNumero()));
+        dpDtLavratura.setValue(ai.getDataLavratura());
+        scmbAutuado.setValue(ai.getProdutor());
+        txtHora.setText(String.valueOf(ai.getHoraLavratura()));
+        scmbMunicipio.setValue(ai.getMunicipio());
+        scmbMotivo.setValue(ai.getPrograma());
+        dpDtCiencia.setValue(ai.getDataCiencia());
+        dpDtDesinterdicao.setValue(ai.getDataDesinterdicao());
+        scmbFEA.setValue(ai.getVeterinario());
+        txtObservacao.setText(ai.getObservacoes());
+        lblAno.setText("/" + ai.getDataLavratura().getYear());
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         MascarasFX.mascaraData(dpDtCiencia);
@@ -152,6 +167,8 @@ public class TelaCadastroAutoInterdicaoController implements Initializable {
                 scmbAutuado.setValue(produtorAtualizado);
             }
         });
+        
+        dpDtLavratura.setOnAction((t) -> calcularNumeroDoAuto());
         
         btnInserirMunicipio.setOnAction((t) -> inserirMunicipio(btnCancelar.getScene().getWindow()));
         btnSalvar.setOnAction((t) -> salvar());
@@ -238,6 +255,7 @@ public class TelaCadastroAutoInterdicaoController implements Initializable {
                 al.setTitle("Sucesso");
                 al.setContentText("Auto de Interdição inserido com sucesso!");
                 al.showAndWait();
+                ((Stage) btnCancelar.getScene().getWindow()).close();
             } else {
                 // Deu erro. O retorno do boolean veio false
                 Alert al = new Alert(Alert.AlertType.ERROR);
@@ -249,7 +267,7 @@ public class TelaCadastroAutoInterdicaoController implements Initializable {
             e.printStackTrace();
             setErrorMessages(e.getErrors());
         }
-
+        limpaCampos();
     }
     
     private void setErrorMessages(Map<String, String> errors) {

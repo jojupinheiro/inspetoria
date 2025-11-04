@@ -107,19 +107,16 @@
          <columns>
             <TableColumn fx:id="tCNumero" maxWidth="100.0" minWidth="60.0" prefWidth="100.0" text="Nº" />
             <TableColumn fx:id="tCData" maxWidth="80.0" minWidth="80.0" text="Data" />
-            <TableColumn fx:id="tCProdutor" maxWidth="300.0" minWidth="90.0" prefWidth="120.0" text="Produtor" />
+            <TableColumn fx:id="tCProdutor" maxWidth="450.0" minWidth="115.0" prefWidth="200.0" text="Produtor" />
             <TableColumn fx:id="tCCpf" maxWidth="115.0" minWidth="115.0" prefWidth="115.0" text="CPF" />
-            <TableColumn fx:id="tCMunicipioAutuado" maxWidth="250.0" minWidth="90.0" prefWidth="120.0" text="Município do autuado" />
-            <TableColumn fx:id="tCMunicipioLavratura" maxWidth="250.0" minWidth="90.0" text="Município lavratura" />
+            <TableColumn fx:id="tCMunicipioAutuado" maxWidth="250.0" minWidth="120.0" prefWidth="120.0" text="Município do autuado" />
+            <TableColumn fx:id="tCMunicipioLavratura" maxWidth="250.0" minWidth="120.0" prefWidth="120.0" text="Município lavratura" />
             <TableColumn fx:id="tCDtCiencia" maxWidth="80.0" minWidth="80.0" text="Ciência" />
-            <TableColumn fx:id="tCMotivo" maxWidth="500.0" prefWidth="180.0" text="Motivo" />
+            <TableColumn fx:id="tCMotivo" maxWidth="200.0" minWidth="90.0" prefWidth="180.0" text="Motivo" />
             <TableColumn fx:id="tCFEA" maxWidth="180.0" prefWidth="75.0" text="FEA" visible="false" />
             <TableColumn fx:id="tCObs" maxWidth="500.0" prefWidth="75.0" text="Observação" visible="false" />
-            <TableColumn fx:id="tCDesinterdicao" maxWidth="80.0" minWidth="80.0" text="Desinterdição" />
+            <TableColumn fx:id="tCDesinterdicao" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Desinterdição" />
          </columns>
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
       </TableView>
    </children>
 </AnchorPane>

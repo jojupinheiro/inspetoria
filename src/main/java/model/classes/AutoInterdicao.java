@@ -2,6 +2,7 @@ package model.classes;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 /**
  *
@@ -73,6 +74,21 @@ public class AutoInterdicao {
 
     public int getNumero() {
         return numero;
+    }
+    
+    public String getNumeroCompleto() {
+        if (numero > 1000) {
+            return String.valueOf(numero);
+        }
+        
+        // %03d significa:
+        // % = Inicia o formatador
+        // 0 = Preencha com zeros à esquerda
+        // 3 = Tenha uma largura total de 3 caracteres
+        // d = O valor é um inteiro decimal (int)
+        String numeroFormatado = String.format("%03d", numero);
+
+        return numeroFormatado + "/" + dataLavratura.getYear();
     }
 
     public void setNumero(int numero) {
@@ -147,5 +163,27 @@ public class AutoInterdicao {
     public String toString() {
         return "AutoInterdicao{" + "id=" + id + ", numero=" + numero + ", municipio=" + municipio + ", programa=" + programa + ", produtor=" + produtor + ", veterinario=" + veterinario + ", dataLavratura=" + dataLavratura + ", dataCiencia=" + dataCiencia + ", observacoes=" + observacoes + '}';
     }
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 41 * hash + this.id;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final AutoInterdicao other = (AutoInterdicao) obj;
+        return this.id == other.id;
+    }
+
 }

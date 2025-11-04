@@ -40,7 +40,7 @@ public class Telas {
         }
     }
     
-    public static AutoInterdicao cadastrarAutoInterdicao(Window janela) {
+    public static AutoInterdicao cadastrarAutoInterdicao(AutoInterdicao ai, Window janela) {
         try {
             URL url = Telas.class.getResource("TelaCadastroAutoInterdicao.fxml");
             FXMLLoader loader = new FXMLLoader(url);
@@ -55,6 +55,7 @@ public class Telas {
             stage.setMinHeight(690);
             stage.initOwner(janela);
             stage.initModality(Modality.WINDOW_MODAL);
+            if (ai != null) controller.setAI(ai);
             stage.showAndWait();
             return controller.getAISalvo();
         } catch (IOException e) {
@@ -132,6 +133,8 @@ public class Telas {
             e.printStackTrace();
         }
     }
+    
+    
 
     public static Produtor editarProdutor(Produtor produtor, Window janela) {
         try {

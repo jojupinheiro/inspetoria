@@ -46,7 +46,7 @@ public class AutoInterdicaoDAO {
                     + "LEFT JOIN produtor p ON (ai.fk_produtor_ai = p.pk_id_produtor) "
                     + "LEFT JOIN municipio mp ON (p.fk_id_municipio = mp.pk_id_municipio) "
                     + "LEFT JOIN veterinario v ON (ai.fk_id_veterinario_ai = v.pk_id_veterinario) "
-                    + "ORDER BY numero_ai DESC;";
+                    + "ORDER BY data_ai DESC;";
 
             stmt = con.prepareStatement(sql);
             res = stmt.executeQuery();

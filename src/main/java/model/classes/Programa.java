@@ -1,5 +1,7 @@
 package model.classes;
 
+import java.util.Objects;
+
 /**
  *
  * @author João Juliano Pinheiro
@@ -59,6 +61,36 @@ public class Programa {
     @Override
     public String toString() {
         return sigla;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + this.id;
+        hash = 97 * hash + Objects.hashCode(this.sigla);
+        hash = 97 * hash + Objects.hashCode(this.nome);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Programa other = (Programa) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (!Objects.equals(this.sigla, other.sigla)) {
+            return false;
+        }
+        return Objects.equals(this.nome, other.nome);
     }
     
 }

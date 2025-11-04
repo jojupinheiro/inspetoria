@@ -1,7 +1,6 @@
 package model.services;
 
 import java.util.List;
-import java.util.Map;
 import model.classes.AutoInterdicao;
 import model.dao.AutoInterdicaoDAO;
 import model.db.DB;
