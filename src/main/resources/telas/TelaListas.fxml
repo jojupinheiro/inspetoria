@@ -49,7 +49,12 @@
          <children>
             <VBox layoutX="-19.0" layoutY="31.0" prefHeight="646.0" prefWidth="20.0" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Button fx:id="btnAutosInfracao" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="60.0" styleClass="btn-listas" text="Autos de infração" textAlignment="CENTER" wrapText="true">
+                  <Button fx:id="btnAutosInfracao" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="60.0" styleClass="btn-listas" text="Autos de infração DEFESA" textAlignment="CENTER" wrapText="true">
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </Button>
+                  <Button fx:id="btnAutosInfracaoDipoa" layoutX="25.0" layoutY="25.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="60.0" styleClass="btn-listas" text="Autos de infração DIPOA" textAlignment="CENTER" wrapText="true">
                      <padding>
                         <Insets left="10.0" right="10.0" />
                      </padding>

@@ -203,7 +203,7 @@ public class TelaCadastroProdutorController implements Initializable {
         });
         
         btnInserirMunicipio.setOnAction((t) -> inserirMunicipio(btnCancelar.getScene().getWindow()));
-        List<Municipio> listaMunicipios = new UtilitarioService().getMunicipios();
+        listaMunicipios = new UtilitarioService().getMunicipios();
         ObservableList<Municipio> listaObsMunicipios = FXCollections.observableArrayList(listaMunicipios);
         sComboBoxMunicipio.setItems(listaObsMunicipios);
         

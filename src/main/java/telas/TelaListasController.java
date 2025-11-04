@@ -23,6 +23,7 @@ public class TelaListasController implements Initializable {
     
     @FXML    private BorderPane borderPane;
     @FXML    private Button btnAutosInfracao;
+    @FXML    private Button btnAutosInfracaoDipoa;
     @FXML    private Button btnAutosInterdicao;
     @FXML    private Button btnDeclaracoesComplementares;
     @FXML    private Button btnDeclaracoesNC;
