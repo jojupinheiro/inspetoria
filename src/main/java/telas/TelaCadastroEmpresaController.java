@@ -87,6 +87,8 @@ public class TelaCadastroEmpresaController implements Initializable {
         MascarasFX.mascaraTelefone(txtTelefone1);
         MascarasFX.mascaraTelefone(txtTelefone2);
         
+        btnEditarProdutor.setVisible(false);
+        
         anchorPane.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 salvar();
@@ -246,7 +248,7 @@ public class TelaCadastroEmpresaController implements Initializable {
             }
 
             if (new EmpresaService().salvarOuAtualizar(empresa)) {
-                this.empresaSalva = this.empresa;
+                this.empresaSalva = empresa;
                 ((Stage) btnCancelar.getScene().getWindow()).close();
             } else {
                 Alert al = new Alert(Alert.AlertType.ERROR);

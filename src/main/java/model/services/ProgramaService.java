@@ -1,5 +1,6 @@
 package model.services;
 
+import java.sql.SQLException;
 import java.util.List;
 import model.classes.Programa;
 import model.dao.ProgramaDAO;
@@ -14,7 +15,11 @@ public class ProgramaService {
     private ProgramaDAO dao;
     
     public ProgramaService() {
-        dao = new ProgramaDAO(DB.getConnection());
+        try {
+            dao = new ProgramaDAO(DB.getConnection());
+        } catch (SQLException ex) {
+            System.getLogger(ProgramaService.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }
     
     public List<Programa> getAll() {

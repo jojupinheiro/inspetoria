@@ -1,5 +1,6 @@
 package model.services;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import model.dao.AutoInfracaoDAO;
@@ -17,7 +18,11 @@ public class AutoInfracaoService {
     private AutoInfracaoDAO dao;
 
     public AutoInfracaoService() {
-        dao = new AutoInfracaoDAO(DB.getConnection());
+        try {
+            dao = new AutoInfracaoDAO(DB.getConnection());
+        } catch (SQLException ex) {
+            System.getLogger(AutoInfracaoService.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }
 
     public List<AutoInfracao> getAll(int filtroSelecionado, String txtFiltro) {

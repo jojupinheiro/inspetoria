@@ -1,5 +1,6 @@
 package model.services;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import model.classes.DeclaracaoComplementar;
@@ -16,7 +17,11 @@ public class DeclaracaoComplementarService {
     private DeclaracaoComplementarDAO dao;
 
     public DeclaracaoComplementarService() {
-        dao = new DeclaracaoComplementarDAO(DB.getConnection());
+        try {
+            dao = new DeclaracaoComplementarDAO(DB.getConnection());
+        } catch (SQLException ex) {
+            System.getLogger(DeclaracaoComplementarService.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }
 
     public List<DeclaracaoComplementar> getAll() {

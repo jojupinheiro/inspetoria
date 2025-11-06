@@ -1,5 +1,6 @@
 package model.services;
 
+import java.sql.SQLException;
 import java.util.List;
 import model.classes.AutoInterdicao;
 import model.dao.AutoInterdicaoDAO;
@@ -13,7 +14,11 @@ public class AutoInterdicaoService {
     private AutoInterdicaoDAO dao;
 
     public AutoInterdicaoService() {
-        dao = new AutoInterdicaoDAO(DB.getConnection());
+        try {
+            dao = new AutoInterdicaoDAO(DB.getConnection());
+        } catch (SQLException ex) {
+            System.getLogger(AutoInterdicaoService.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }
 
     public List<AutoInterdicao> getAll(int filtroSelecionado, String txtFiltro) {

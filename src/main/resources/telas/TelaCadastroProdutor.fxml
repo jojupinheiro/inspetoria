@@ -42,7 +42,7 @@
                   <HBox prefWidth="200.0">
                      <children>
                         <TextField fx:id="txtNome" alignment="CENTER" maxWidth="300.0" prefWidth="250.0" />
-                        <Button fx:id="btnCopiarNome" mnemonicParsing="false" styleClass="botoesInserir">
+                        <Button fx:id="btnCopiarNome" focusTraversable="false" mnemonicParsing="false" styleClass="botoesInserir">
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -103,7 +103,7 @@
                   <HBox prefWidth="200.0">
                      <children>
                         <TextField fx:id="txtCpf" alignment="CENTER" maxWidth="250.0" prefWidth="250.0" />
-                        <Button fx:id="btnCopiarCpf" mnemonicParsing="false" styleClass="botoesInserir">
+                        <Button fx:id="btnCopiarCpf" focusTraversable="false" mnemonicParsing="false" styleClass="botoesInserir">
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

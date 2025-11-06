@@ -74,6 +74,18 @@ public class Empresa {
     public Endereco getEndereco() {
         return endereco;
     }
+    
+    public String getEnderecoCompleto() {
+        if(endereco.getNumero() == null) endereco.setNumero("");
+        if(endereco.getTipoLogradouro() == null) endereco.setTipoLogradouro("");
+        if(endereco.getLogradouro() == null) endereco.setLogradouro("");
+        
+        if(!endereco.getNumero().equals("")){
+            return endereco.getTipoLogradouro() + " " + endereco.getLogradouro() + ", " + endereco.getNumero();
+        }else{
+            return endereco.getTipoLogradouro() + " " + endereco.getLogradouro();
+        }
+    }
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;

@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,6 +24,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -66,6 +68,7 @@ public class TelaListaAIController implements Initializable {
     @FXML    private DatePicker dpDataFim;
     @FXML    private DatePicker dpDataInicio;
     @FXML    private HBox boxDatas;
+    @FXML    private ProgressIndicator spinnerCarregamento;
     @FXML    private TableColumn<AutoInfracao, String> tCAdvertencia;
     @FXML    private TableColumn<AutoInfracao, Produtor> tCAutuado;
     @FXML    private TableColumn<AutoInfracao, String> tCCpf;
@@ -380,21 +383,161 @@ public class TelaListaAIController implements Initializable {
         
         btnAtualizar.setOnAction((t) -> atualizaTabela(filtroSelecionado, txtFiltro));
         
-        atualizaTabela(filtroSelecionado, txtFiltro);
-    }    
+//        atualizaTabela(filtroSelecionado, txtFiltro);
+        carregarDadosIniciais();
+    }
     
+    /**
+     * Inicia uma Task em segundo plano para carregar TODOS os dados
+     * iniciais (Motivos, Municípios e Autos) sem travar a UI.
+     */
+    private void carregarDadosIniciais() {
+        spinnerCarregamento.setVisible(true);
+        tableViewAutosInfracao.setDisable(true);
+
+        Task<InitialData> task = new Task<>() {
+            @Override
+            protected InitialData call() throws Exception {
+                // ISSO RODA EM SEGUNDO PLANO (BACKGROUND THREAD)
+                // É seguro chamar o banco daqui
+                List<MotivoInfracao> motivos = new MotivoInfracaoService().getInformacoesPrincipais();
+                List<String> municipios = new AutoInfracaoService().getMunicipiosComAI();
+                // Usa os filtros padrão (-1, null) para a primeira carga
+                List<AutoInfracao> autos = new AutoInfracaoService().getAll(-1, null);
+
+                return new InitialData(motivos, municipios, autos);
+            }
+        };
+
+        // O que fazer quando a Task TERMINAR COM SUCESSO
+        task.setOnSucceeded(e -> {
+            // ISSO RODA NA UI THREAD
+            InitialData data = task.getValue();
+
+            // 1. Popula as variáveis da classe
+            listaMotivos = data.motivos;
+            listaMunicipios = data.municipios;
+            listaAI = data.autos;
+
+            // 2. Popula a tabela
+            ObservableList<AutoInfracao> listaObs = FXCollections.observableArrayList(listaAI);
+            tableViewAutosInfracao.setItems(listaObs);
+            formatarColunasTabela(); // Formata as colunas
+
+            // 3. Esconde o spinner e re-abilita a tabela
+            spinnerCarregamento.setVisible(false);
+            tableViewAutosInfracao.setDisable(false);
+        });
+
+        // O que fazer quando a Task FALHAR
+        task.setOnFailed(e -> {
+            // ISSO RODA NA UI THREAD
+            spinnerCarregamento.setVisible(false);
+            tableViewAutosInfracao.setDisable(true); // Deixa desabilitada se falhar
+            
+            // Pega o erro real e mostra o alerta
+            mostrarAlertaErro(task.getException());
+        });
+
+        // Inicia a Task
+        new Thread(task).start();
+    }
+    
+    /**
+     * Atualiza a tabela de Autos de Infração com base nos filtros.
+     * Roda a busca no banco em uma Task separada.
+     */
     public void atualizaTabela(int filtroSelecionado, String txtFiltro) {
-        // Buscar os dados no banco de dados na tabela ai
-        listaAI = new AutoInfracaoService().getAll(filtroSelecionado, txtFiltro);
-        // ObservableList
-        ObservableList<AutoInfracao> listaObs = FXCollections.observableArrayList(listaAI);
-        //Vinculando a lista observável com a TableView
-        tableViewAutosInfracao.setItems(listaObs);
+        spinnerCarregamento.setVisible(true);
+        spinnerCarregamento.setManaged(true);
+        tableViewAutosInfracao.setDisable(true);
+        tableViewAutosInfracao.setVisible(false);
+        tableViewAutosInfracao.setManaged(false);
+
+        Task<List<AutoInfracao>> task = new Task<>() {
+            @Override
+            protected List<AutoInfracao> call() throws Exception {
+                // ISSO RODA EM SEGUNDO PLANO (BACKGROUND THREAD)
+                return new AutoInfracaoService().getAll(filtroSelecionado, txtFiltro);
+            }
+        };
+
+        // O que fazer quando a Task TERMINAR COM SUCESSO
+        task.setOnSucceeded(e -> {
+            // ISSO RODA NA UI THREAD
+            listaAI = task.getValue(); // Atualiza a lista da classe
+            ObservableList<AutoInfracao> listaObs = FXCollections.observableArrayList(listaAI);
+            tableViewAutosInfracao.setItems(listaObs);
+            
+            formatarColunasTabela(); // Formata as colunas
+
+            spinnerCarregamento.setVisible(false);
+            spinnerCarregamento.setManaged(false);
+            tableViewAutosInfracao.setDisable(false);
+            tableViewAutosInfracao.setVisible(true);
+            tableViewAutosInfracao.setManaged(true);
+        });
+
+        // O que fazer quando a Task FALHAR
+        task.setOnFailed(e -> {
+            // ISSO RODA NA UI THREAD
+            spinnerCarregamento.setVisible(false);
+            spinnerCarregamento.setManaged(false);
+            tableViewAutosInfracao.setDisable(false);
+            tableViewAutosInfracao.setVisible(true);
+            tableViewAutosInfracao.setManaged(true);
+            mostrarAlertaErro(task.getException());
+        });
+
+        // Inicia a Task
+        new Thread(task).start();
+    }
+    
+    /**
+     * Centraliza a lógica de formatação das colunas da tabela.
+     */
+    private void formatarColunasTabela() {
         Utils.formatTableColumnDate(tCData);
         Utils.formatTableColumnDate(tCDtCiencia);
         Utils.formatTableColumnDate(tCDtLimiteDefesa);
         Utils.formatTableColumnCpfOuCnpj(tCCpf);
         Utils.formatTableColumnProcesso(tCProcesso);
     }
+
+    /**
+     * Mostra um Alerta de Erro padrão na UI Thread.
+     * @param ex A exceção que causou a falha.
+     */
+    private void mostrarAlertaErro(Throwable ex) {
+        // Garante que a janela obtenha o foco correto
+        Window owner = (spinnerCarregamento != null && spinnerCarregamento.getScene() != null) 
+                ? spinnerCarregamento.getScene().getWindow() 
+                : null;
+        
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.initOwner(owner);
+        alert.setTitle("Erro de Conexão");
+        alert.setHeaderText("Não foi possível carregar os dados do banco.");
+        alert.setContentText("Ocorreu um erro: " + ex.getMessage());
+        
+        // Imprime o stack trace no console para depuração
+        ex.printStackTrace(); 
+        
+        alert.showAndWait();
+    }
     
+}
+
+// Classe auxiliar para guardar os dados carregados pela Task inicial.
+
+class InitialData {
+    final List<MotivoInfracao> motivos;
+    final List<String> municipios;
+    final List<AutoInfracao> autos;
+
+    public InitialData(List<MotivoInfracao> motivos, List<String> municipios, List<AutoInfracao> autos) {
+        this.motivos = motivos;
+        this.municipios = municipios;
+        this.autos = autos;
+    }
 }

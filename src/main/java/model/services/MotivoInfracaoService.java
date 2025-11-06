@@ -1,5 +1,6 @@
 package model.services;
 
+import java.sql.SQLException;
 import java.util.List;
 import model.dao.MotivoInfracaoDAO;
 import model.classes.MotivoInfracao;
@@ -14,7 +15,11 @@ public class MotivoInfracaoService {
     private MotivoInfracaoDAO dao;
     
     public MotivoInfracaoService() {
-        dao = new MotivoInfracaoDAO(DB.getConnection());
+        try {
+            dao = new MotivoInfracaoDAO(DB.getConnection());
+        } catch (SQLException ex) {
+            System.getLogger(MotivoInfracaoService.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }
     
     public List<MotivoInfracao> getAll() {

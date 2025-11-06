@@ -269,7 +269,7 @@ public class TelaListaProdutoresController implements Initializable {
     public void atualizaTabela() {
         // 1. Buscar os dados atualizados no banco de dados
         listaProdutores = new ProdutorService().getAll(-1, null); // -1 e null para buscar tudo
-        
+
         // 2. Atualizar a lista observável principal.
         //    O FilteredList e o SortedList reagirão automaticamente
         //    e manterão os filtros atuais.
@@ -278,7 +278,7 @@ public class TelaListaProdutoresController implements Initializable {
         // 3. Formatar a coluna (se necessário)
         Utils.formatTableColumnCpfOuCnpj(tCCpfCnpj);
     }
-    
+
     private void carregarDadosEConfigurarFiltros() {
         // 1. Carrega TODOS os produtores do banco
         listaProdutores = new ProdutorService().getAll(-1, null); // -1 e null para buscar tudo
@@ -303,13 +303,13 @@ public class TelaListaProdutoresController implements Initializable {
         tblProdutores.setItems(sortedData);
         Utils.formatTableColumnCpfOuCnpj(tCCpfCnpj);
     }
-    
+
     private void aplicarFiltro() {
         String filtroSelecionado = cmbFiltro.getValue();
         String textoBusca = txtBusca.getText();
 
         filteredListaProdutores.setPredicate(produtor -> {
-            
+
             // Caso 1: Nenhum filtro selecionado
             if (filtroSelecionado == null) {
                 return true; // Mostra todos
@@ -318,17 +318,16 @@ public class TelaListaProdutoresController implements Initializable {
             // Caso 2: Filtros que NÃO usam o texto de busca
             if (filtroSelecionado.equals("Pessoa física")) {
                 // (Assumindo que seu boolean é 'false' para Física e 'true' para Jurídica)
-                return !produtor.isTipoProdutor(); 
+                return !produtor.isTipoProdutor();
             }
             if (filtroSelecionado.equals("Pessoa Jurídica")) {
                 return produtor.isTipoProdutor();
             }
-            if (filtroSelecionado.equals("Possui observação")){
+            if (filtroSelecionado.equals("Possui observação")) {
                 return produtor.getObservacao() != null && !produtor.getObservacao().equals("");
             }
 
             // Caso 3: Filtros que USAM o texto de busca
-            
             // Se o texto estiver vazio, mostra todos (para os filtros de texto)
             if (textoBusca == null || textoBusca.isEmpty()) {
                 return true;
@@ -346,15 +345,15 @@ public class TelaListaProdutoresController implements Initializable {
                     return produtor.getNome() != null && produtor.getNome().toLowerCase().contains(lowerCaseFilter);
                 default:
                     // Se o filtro for "Pessoa Física/Jurídica" mas tiver texto, não mostra
-                    return false; 
+                    return false;
             }
         });
     }
-    
+
     /**
-     * Ação para o botão "Limpar" (btnLimpar).
-     * Você precisa vincular este método ao seu botão no FXML:
-     * No SceneBuilder, selecione o btnLimpar e em "On Action" digite "onLimparFiltros"
+     * Ação para o botão "Limpar" (btnLimpar). Você precisa vincular este método
+     * ao seu botão no FXML: No SceneBuilder, selecione o btnLimpar e em "On
+     * Action" digite "onLimparFiltros"
      */
     @FXML
     private void onLimparFiltros() {

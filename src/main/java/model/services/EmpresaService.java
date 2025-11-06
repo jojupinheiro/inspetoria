@@ -1,5 +1,6 @@
 package model.services;
 
+import java.sql.SQLException;
 import java.util.List;
 import model.classes.Empresa;
 import model.dao.EmpresaDAO;
@@ -14,10 +15,14 @@ public class EmpresaService {
     private EmpresaDAO dao;
 
     public EmpresaService() {
-        dao = new EmpresaDAO(DB.getConnection());
+        try {
+            dao = new EmpresaDAO(DB.getConnection());
+        } catch (SQLException ex) {
+            System.getLogger(EmpresaService.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }
 
-    public List<Empresa> getAll(int filtroSelecionado, String txtFiltro) {
+    public List<Empresa> getAll() {
         return dao.getAll();
     }
 

@@ -7,6 +7,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -162,5 +163,7 @@
             <TableColumn fx:id="tCHistorico" maxWidth="500.0" minWidth="120.0" prefWidth="120.0" text="Histórico" visible="false" />
         </columns>
       </TableView>
+      <AnchorPane prefWidth="1051.0" />
+      <ProgressIndicator fx:id="spinnerCarregamento" prefHeight="433.0" prefWidth="677.0" progress="0.0" AnchorPane.leftAnchor="600.0" AnchorPane.topAnchor="300.0" />
    </children>
 </AnchorPane>

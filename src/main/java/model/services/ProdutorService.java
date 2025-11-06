@@ -1,5 +1,6 @@
 package model.services;
 
+import java.sql.SQLException;
 import java.util.List;
 import model.dao.ProdutorDAO;
 import model.db.DB;
@@ -14,7 +15,11 @@ public class ProdutorService {
     private ProdutorDAO dao;
 
     public ProdutorService() {
-        dao = new ProdutorDAO(DB.getConnection());
+        try {
+            dao = new ProdutorDAO(DB.getConnection());
+        } catch (SQLException ex) {
+            System.getLogger(ProdutorService.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }
 
     public List<Produtor> getAll(int filtroSelecionado, String txtFiltro) {

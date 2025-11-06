@@ -40,7 +40,7 @@
                   <HBox prefWidth="200.0">
                      <children>
                         <TextField fx:id="txtRazaoSocial" alignment="CENTER" maxWidth="300.0" prefWidth="250.0" />
-                        <Button fx:id="btnCopiarRazaoSocial" mnemonicParsing="false" styleClass="botoesInserir">
+                        <Button fx:id="btnCopiarRazaoSocial" focusTraversable="false" mnemonicParsing="false" styleClass="botoesInserir">
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -69,7 +69,7 @@
                   <HBox prefWidth="200.0">
                      <children>
                         <TextField fx:id="txtRegistro" alignment="CENTER" maxWidth="300.0" prefWidth="100.0" />
-                        <Button fx:id="btnCopiarRegistro" mnemonicParsing="false" styleClass="botoesInserir">
+                        <Button fx:id="btnCopiarRegistro" focusTraversable="false" mnemonicParsing="false" styleClass="botoesInserir">
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -111,7 +111,7 @@
                   <HBox prefWidth="200.0">
                      <children>
                         <TextField fx:id="txtCnpj" alignment="CENTER" maxWidth="250.0" prefWidth="250.0" />
-                        <Button fx:id="btnCopiarCnpj" mnemonicParsing="false" styleClass="botoesInserir">
+                        <Button fx:id="btnCopiarCnpj" focusTraversable="false" mnemonicParsing="false" styleClass="botoesInserir">
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

@@ -1,5 +1,6 @@
 package model.services;
 
+import java.sql.SQLException;
 import java.util.List;
 import model.classes.Municipio;
 import model.classes.Programa;
@@ -15,7 +16,11 @@ public class UtilitarioService {
     private UtilitarioDAO dao;
     
     public UtilitarioService() {
-        dao = new UtilitarioDAO(DB.getConnection());
+        try {
+            dao = new UtilitarioDAO(DB.getConnection());
+        } catch (SQLException ex) {
+            System.getLogger(UtilitarioService.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }
     
     public List<Municipio> getMunicipios() {

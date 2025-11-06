@@ -1,5 +1,6 @@
 package model.services;
 
+import java.sql.SQLException;
 import java.util.List;
 import model.dao.VeterinarioDAO;
 import model.db.DB;
@@ -14,7 +15,11 @@ public class VeterinarioService {
     private VeterinarioDAO dao;
     
     public VeterinarioService() {
-        dao = new VeterinarioDAO(DB.getConnection());
+        try {
+            dao = new VeterinarioDAO(DB.getConnection());
+        } catch (SQLException ex) {
+            System.getLogger(VeterinarioService.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }
     
     public List<Veterinario> getAll() {

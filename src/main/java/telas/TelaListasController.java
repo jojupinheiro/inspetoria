@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import java.util.logging.Logger;
 import java.util.logging.Level;
+import javafx.event.ActionEvent;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 
@@ -27,7 +28,7 @@ public class TelaListasController implements Initializable {
     @FXML    private Button btnAutosInterdicao;
     @FXML    private Button btnDeclaracoesComplementares;
     @FXML    private Button btnDeclaracoesNC;
-    @FXML    private MenuItem miAutoInfracao;
+    @FXML    private MenuItem miCadastrarAutoInfracao;
     @FXML    private MenuItem miMotivosInfracao;
     @FXML    private MenuItem miCadastrarEmpresa;
     @FXML    private MenuItem miCadastrarProdutor;
@@ -82,8 +83,27 @@ public class TelaListasController implements Initializable {
         miCadastrarEmpresa.setOnAction((t) -> Telas.cadastrarEmpresa(null, btnAutosInfracao.getScene().getWindow()));
         miMotivosInfracao.setOnAction((t) -> Telas.inserirMotivo(btnAutosInfracao.getScene().getWindow()));
         miPreferencias.setOnAction((t) -> Telas.configuracoes(btnAutosInfracao.getScene().getWindow()));
-        miAutoInfracao.setOnAction((t) -> Telas.cadastrarAutoInfracao(btnAutosInfracao.getScene().getWindow()));
+        miCadastrarAutoInfracao.setOnAction((t) -> Telas.cadastrarAutoInfracao(btnAutosInfracao.getScene().getWindow()));
         miCadastrarProdutor.setOnAction((t) -> Telas.cadastrarProdutor(btnAutosInfracao.getScene().getWindow()));
     }    
     
+    @FXML    void verAIDipoa(ActionEvent event) {
+        try {
+                AnchorPane view = FXMLLoader.load(getClass().getResource("TelaListaAIDipoa.fxml"));
+                borderPane.setCenter(view);
+            } catch (IOException ex) {
+                Logger.getLogger(TelaListasController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            vBoxLegendas.setVisible(false);
+    }
+    
+    @FXML    void verEmpresas(ActionEvent event) {
+        try {
+                AnchorPane view = FXMLLoader.load(getClass().getResource("TelaListaEmpresas.fxml"));
+                borderPane.setCenter(view);
+            } catch (IOException ex) {
+                Logger.getLogger(TelaListasController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            vBoxLegendas.setVisible(false);
+    }   
 }
